@@ -65,7 +65,7 @@ public abstract class DungeonLoader {
             break;
         // TODO Handle other possible entities
         case "boulder":
-            Boulder boulder = new Boulder(x, y);
+            Boulder boulder = new Boulder(dungeon, x, y);
             onLoad(boulder);
             entity = boulder;
             break;
@@ -75,7 +75,7 @@ public abstract class DungeonLoader {
             entity = door;
             break;
         case "enemy":
-            Enemy enemy = new Enemy(x, y);
+            Enemy enemy = new Enemy(dungeon, x, y);
             onLoad(enemy);
             entity = enemy;
             break;
