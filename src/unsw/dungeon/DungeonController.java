@@ -11,7 +11,7 @@ import javafx.scene.layout.GridPane;
 
 import java.io.File;
 
-import unsw.dungeon.entity.*;
+import unsw.dungeon.entity.model.Player;
 
 /**
  * A JavaFX controller for the dungeon.

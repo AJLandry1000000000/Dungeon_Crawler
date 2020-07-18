@@ -7,7 +7,8 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
-import unsw.dungeon.entity.*;
+import unsw.dungeon.entity.Entity;
+import unsw.dungeon.entity.model.*;
 
 /**
  * Loads a dungeon from a .json file.
