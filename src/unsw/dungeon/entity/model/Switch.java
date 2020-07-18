@@ -1,5 +1,11 @@
 package unsw.dungeon.entity.model;
 
-public class Switch {
-    
+import unsw.dungeon.entity.Entity;
+import unsw.dungeon.entity.Interactable;
+
+public class Switch extends Entity implements Interactable {
+
+    public Switch(int x, int y) {
+        super(x, y);
+    }
 }

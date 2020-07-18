@@ -14,7 +14,7 @@ import javafx.scene.layout.GridPane;
 import java.io.File;
 
 import unsw.dungeon.entity.Entity;
-import unsw.dungeon.entity.model.Wall;
+import unsw.dungeon.entity.model.*;
 
 
 /**
@@ -31,12 +31,36 @@ public class DungeonControllerLoader extends DungeonLoader {
     private Image playerImage;
     private Image wallImage;
 
+    private Image boulderImage;
+    private Image doorOpenImage;
+    private Image doorClosedImage;
+    private Image enemyImage;
+    private Image exitImage;
+    private Image keyImage;
+    private Image portalImage;
+    private Image potionImage;
+    private Image switchImage;
+    private Image swordImage;
+    private Image treasureImage;
+
     public DungeonControllerLoader(String filename)
             throws FileNotFoundException {
         super(filename);
         entities = new ArrayList<>();
         playerImage = new Image((new File("images/human_new.png")).toURI().toString());
         wallImage = new Image((new File("images/brick_brown_0.png")).toURI().toString());
+
+        boulderImage = new Image((new File("images/boulder.png")).toURI().toString());
+        doorOpenImage = new Image((new File("images/open_door.png")).toURI().toString());
+        doorClosedImage = new Image((new File("images/closed_door.png")).toURI().toString());
+        enemyImage = new Image((new File("images/deep_elf_master_archer.png")).toURI().toString());
+        exitImage = new Image((new File("images/exit.png")).toURI().toString());
+        keyImage = new Image((new File("images/key.png")).toURI().toString());
+        portalImage = new Image((new File("images/portal.png")).toURI().toString());
+        potionImage = new Image((new File("images/brilliant_blue_new.png")).toURI().toString());
+        switchImage = new Image((new File("images/pressure_plate.png")).toURI().toString());
+        swordImage = new Image((new File("images/greatsword_1_new.png")).toURI().toString());
+        treasureImage = new Image((new File("images/gold_pile.png")).toURI().toString());
     }
 
     @Override
@@ -49,6 +73,47 @@ public class DungeonControllerLoader extends DungeonLoader {
     public void onLoad(Wall wall) {
         ImageView view = new ImageView(wallImage);
         addEntity(wall, view);
+    }
+
+    public void onLoad(Boulder boulder) {
+        ImageView view = new ImageView(boulderImage);
+        addEntity(boulder, view);
+    }
+    public void onLoad(Door door) {
+        ImageView view = new ImageView(doorOpenImage);
+        addEntity(door, view);
+    }
+    public void onLoad(Enemy enemy) {
+        ImageView view = new ImageView(enemyImage);
+        addEntity(enemy, view);
+    }
+    public void onLoad(Exit exit) {
+        ImageView view = new ImageView(exitImage);
+        addEntity(exit, view);
+    }
+    public void onLoad(Key key) {
+        ImageView view = new ImageView(keyImage);
+        addEntity(key, view);
+    }
+    public void onLoad(Portal portal) {
+        ImageView view = new ImageView(portalImage);
+        addEntity(portal, view);
+    }
+    public void onLoad(Potion potion) {
+        ImageView view = new ImageView(potionImage);
+        addEntity(potion, view);
+    }
+    public void onLoad(Switch floor) {
+        ImageView view = new ImageView(switchImage);
+        addEntity(floor, view);
+    }
+    public void onLoad(Sword sword) {
+        ImageView view = new ImageView(swordImage);
+        addEntity(sword, view);
+    }
+    public void onLoad(Treasure treasure) {
+        ImageView view = new ImageView(treasureImage);
+        addEntity(treasure, view);
     }
 
     private void addEntity(Entity entity, ImageView view) {

@@ -3,7 +3,6 @@ package unsw.dungeon.entity.model;
 import unsw.dungeon.entity.Entity;
 import unsw.dungeon.Dungeon;
 
-
 /**
  * The player entity
  * @author Robert Clifton-Everest

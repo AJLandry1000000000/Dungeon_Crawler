@@ -1,5 +1,5 @@
 package unsw.dungeon.entity;
 
-public class Moveable {
+public interface Moveable {
     
 }
