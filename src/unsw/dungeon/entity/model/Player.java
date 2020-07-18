@@ -14,7 +14,7 @@ public class Player extends Entity {
 
     /**
      * Create a player positioned in square (x,y)
-     * @param xs
+     * @param x
      * @param y
      */
     public Player(Dungeon dungeon, int x, int y) {
