@@ -13,6 +13,8 @@ import javafx.scene.layout.GridPane;
 
 import java.io.File;
 
+import unsw.dungeon.entity.*;
+
 /**
  * A DungeonLoader that also creates the necessary ImageViews for the UI,
  * connects them via listeners to the model, and creates a controller.
