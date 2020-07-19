@@ -1,5 +1,6 @@
 package unsw.dungeon;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,9 +10,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 
-import java.io.File;
-
+import unsw.dungeon.entity.Direction;
 import unsw.dungeon.entity.model.Player;
+
 
 /**
  * A JavaFX controller for the dungeon.
@@ -55,28 +56,29 @@ public class DungeonController {
     public void handleKeyPress(KeyEvent event) {
         switch (event.getCode()) {
         case UP:
-            player.moveUp();
+            player.move(Direction.UP);
             break;
         case DOWN:
-            player.moveDown();
+            player.move(Direction.DOWN);
             break;
         case LEFT:
-            player.moveLeft();
+            player.move(Direction.LEFT);
             break;
         case RIGHT:
-            player.moveRight();
+            player.move(Direction.RIGHT);
             break;
+        // WASD Controls
         case W:
-            player.moveUp();
+            player.move(Direction.UP);
             break;
         case S:
-            player.moveDown();
+            player.move(Direction.DOWN);
             break;
         case A:
-            player.moveLeft();
+            player.move(Direction.LEFT);
             break;
         case D:
-            player.moveRight();
+            player.move(Direction.RIGHT);
             break;
         default:
             break;

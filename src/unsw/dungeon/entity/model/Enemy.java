@@ -1,9 +1,10 @@
 package unsw.dungeon.entity.model;
 
-import unsw.dungeon.entity.Entity;
-import unsw.dungeon.entity.Moveable;
-import unsw.dungeon.entity.Interactable;
 import unsw.dungeon.Dungeon;
+import unsw.dungeon.entity.Direction;
+import unsw.dungeon.entity.Entity;
+import unsw.dungeon.entity.Interactable;
+import unsw.dungeon.entity.Moveable;
 
 public class Enemy extends Entity implements Moveable, Interactable {
 
@@ -14,27 +15,24 @@ public class Enemy extends Entity implements Moveable, Interactable {
         this.dungeon = dungeon;
     }
 
-    @Override
-    public void moveUp() {
-        if (getY() > 0)
-            y().set(getY() - 1);
-    }
-    
-    @Override
-    public void moveDown() {
-        if (getY() < dungeon.getHeight() - 1)
-            y().set(getY() + 1);
+    public Dungeon getDungeon() {
+        return this.dungeon;
     }
 
-    @Override
-    public void moveLeft() {
-        if (getX() > 0)
-            x().set(getX() - 1);
+    public Entity entityAtPosition(int x, int y) {
+        return this.getDungeon().getEntity(x, y);
     }
 
-    @Override
-    public void moveRight() {
-        if (getX() < dungeon.getWidth() - 1)
-            x().set(getX() + 1);
+    public void move(Direction direction) {
+        int newX = getX() + direction.getX();
+        int newY = getY() + direction.getY();
+
+        Entity checkEntity = entityAtPosition(newX, newY);
+        if (checkEntity != null) {
+            System.out.println(checkEntity);
+        }
+
+        x().set(newX);
+        y().set(newY);
     }
 }
