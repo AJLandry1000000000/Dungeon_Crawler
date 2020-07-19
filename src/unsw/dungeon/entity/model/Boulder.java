@@ -29,7 +29,7 @@ public class Boulder extends Entity implements Moveable, Interactable {
 
         Entity checkEntity = entityAtPosition(newX, newY);
         if (checkEntity != null) {
-            System.out.println(checkEntity);
+            return false;
         }
 
         if (this.dungeon.checkBoundaries(newX, newY)) {
