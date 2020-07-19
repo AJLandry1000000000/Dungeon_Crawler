@@ -17,6 +17,7 @@ public class Player extends Entity implements Moveable {
     private Dungeon dungeon;
     private Sword sword;
     private int amountTreasures;
+    private Potion potion;
 
     /**
      * Create a player positioned in square (x,y)
@@ -28,6 +29,7 @@ public class Player extends Entity implements Moveable {
         this.dungeon = dungeon;
         this.sword = null;
         this.amountTreasures = 0;
+        this.potion = null;
     }
 
     public Dungeon getDungeon() {
@@ -77,7 +79,12 @@ public class Player extends Entity implements Moveable {
     public int getAmountTreasures() {
         return amountTreasures;
     }
-
-
     
+    public boolean hasPotion() {
+        return this.potion != null;
+    }
+
+    public void givePotion(Potion newPotion) {
+        this.potion = newPotion;
+    }
 }
