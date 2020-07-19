@@ -19,6 +19,7 @@ public class Boulder extends Entity implements Moveable, Interactable {
         return this.dungeon;
     }
 
+    // entityAtPosition is just a wrapper function which is implemented the same everywhere. Why include it in the Moveable interface.
     public Entity entityAtPosition(int x, int y) {
         return this.getDungeon().getEntity(x, y);
     }
