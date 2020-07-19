@@ -25,17 +25,17 @@ public class Boulder extends Entity implements Moveable, Interactable {
     }
 
     public Boolean move(Direction direction) {
-        int newX = getX() + direction.getX();
-        int newY = getY() + direction.getY();
+        int newPositionX = getX() + direction.getX();
+        int newPositionY = getY() + direction.getY();
 
-        Entity checkEntity = entityAtPosition(newX, newY);
+        Entity checkEntity = entityAtPosition(newPositionX, newPositionY);
         if (checkEntity != null) {
             return false;
         }
 
-        if (this.dungeon.checkBoundaries(newX, newY)) {
-            x().set(newX);
-            y().set(newY);
+        if (this.dungeon.checkBoundaries(newPositionX, newPositionY)) {
+            x().set(newPositionX);
+            y().set(newPositionY);
             return true;
         }
         return false;
