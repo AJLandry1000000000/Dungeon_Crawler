@@ -4,6 +4,7 @@ import unsw.dungeon.entity.Direction;
 import unsw.dungeon.entity.Entity;
 import unsw.dungeon.entity.Interactable;
 import unsw.dungeon.entity.Moveable;
+import unsw.dungeon.entity.model.*;
 import unsw.dungeon.Dungeon;
 
 /**
@@ -14,7 +15,8 @@ import unsw.dungeon.Dungeon;
 public class Player extends Entity implements Moveable {
 
     private Dungeon dungeon;
-    private Sword sword = null;
+    private Sword sword;
+    private int amountTreasures;
 
     /**
      * Create a player positioned in square (x,y)
@@ -24,6 +26,8 @@ public class Player extends Entity implements Moveable {
     public Player(Dungeon dungeon, int x, int y) {
         super(x, y);
         this.dungeon = dungeon;
+        this.sword = null;
+        this.amountTreasures = 0;
     }
 
     public Dungeon getDungeon() {
@@ -62,5 +66,18 @@ public class Player extends Entity implements Moveable {
 
     public void giveSword(Sword newSword) {
         this.sword = newSword;
+        this.dungeon.removeEntity(newSword);
     }
+
+    public void giveTreasure(Treasure newTreasure) {
+        this.amountTreasures++;
+        this.dungeon.removeEntity(newTreasure);
+    }
+
+    public int getAmountTreasures() {
+        return amountTreasures;
+    }
+
+
+    
 }

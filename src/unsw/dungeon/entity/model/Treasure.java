@@ -12,7 +12,14 @@ public class Treasure extends Entity implements Interactable, Collectable {
 
     @Override
     public Boolean interact(Entity entity) {
-        return false;
+        // If the entity interacting with the treasure is not the player, return false.
+        if (!(entity instanceof Player)) {
+            return false;
+        }
+        Player player = (Player) entity;
+        // Give the player the treasure, remove it from the dungeon list of entities, then return true.
+        player.giveTreasure(this);
+        return true;
     }
 
 }
