@@ -46,8 +46,8 @@ public class Boulder extends Entity implements Moveable, Interactable {
         if (!(entity instanceof Player)) {
             return false;
         }
-        int newX = getX() - entity.getX();
-        int newY = getY() - entity.getY();
+        int newX = this.getX() - entity.getX();
+        int newY = this.getY() - entity.getY();
         return this.move(Direction.getDirection(newX, newY));
     }
 }
