@@ -47,15 +47,10 @@ public class Switch extends Entity implements Interactable {
                 return false;
             }
         } 
-        // If a player walks on a switch with no boulder on it
-        else if (entity instanceof Player && !isActivated()) {
-            return true;
-        } 
         // If a boulder is pushed onto an empty switch
         else if (entity instanceof Boulder && !isActivated()) {
             this.activateSwitch(entity);
-            return true;
         }
-        return false;
+        return true;
     }
 }
