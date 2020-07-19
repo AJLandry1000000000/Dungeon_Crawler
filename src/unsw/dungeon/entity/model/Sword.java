@@ -6,8 +6,11 @@ import unsw.dungeon.entity.Interactable;
 
 public class Sword extends Entity implements Interactable, Collectable {
 
+    private int hits;
+
     public Sword(int x, int y) {
         super(x, y);
+        this.hits = 5;
     }
 
     @Override
@@ -27,5 +30,14 @@ public class Sword extends Entity implements Interactable, Collectable {
             return false;
         }  
     }
+
+    public void decrementHits() {
+        hits--;
+    }
+
+    public int getHits() {
+        return hits;
+    }
+    
 
 }

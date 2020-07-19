@@ -4,6 +4,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import java.util.Collections;
+
 import javafx.fxml.FXML;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -12,6 +14,7 @@ import javafx.scene.layout.GridPane;
 
 import unsw.dungeon.entity.Direction;
 import unsw.dungeon.entity.model.Enemy;
+import unsw.dungeon.entity.Entity;
 import unsw.dungeon.entity.model.Player;
 
 /**
@@ -32,12 +35,12 @@ public class DungeonController {
 
     private int moves;
 
-    private ArrayList<Enemy> enemies;
+    private ArrayList<Entity> enemies;
 
     public DungeonController(Dungeon dungeon, List<ImageView> initialEntities) {
         this.dungeon = dungeon;
         this.player = dungeon.getPlayer();
-        // Initialise the enemies list.
+        this.enemies = dungeon.getEnemies();
         this.initialEntities = new ArrayList<>(initialEntities);
     }
 
@@ -61,19 +64,90 @@ public class DungeonController {
         this.moves++;
     }
 
-    private void notifyObservers() {
-        // Notify Player with the current move total.
 
-        // Move each enemy closer to the Player.
+
+    // Returns the Euclidean distance from the Player to the Enemy's new coordinates 
+    private double distanceToPlayer(int newX, int newY) {
+        return Math.sqrt( Math.pow((player.getX() - newX), 2) + Math.pow((player.getY() - newY), 2) );
     }
 
-    public Dungeon getDungeon() {
-        return this.dungeon;
+    private void optimalMove(Enemy en, String minOrMax, double left, double right, double up, double down, double stay) {
+        ArrayList<Double> moves = new ArrayList<Double>();
+        moves.add(left);
+        moves.add(right);
+        moves.add(up);
+        moves.add(down);
+        moves.add(stay);
+        
+        if (minOrMax.equals("minimise")) {
+            while (!moves.isEmpty()) {
+                double min = Collections.min(moves);
+                if (min == left) {
+                    if (en.move(Direction.LEFT)) { return; }
+                } else if (min == right) {
+                    if (en.move(Direction.RIGHT)) { return; }
+                } else if (min == up) {
+                    if (en.move(Direction.UP)) { return; }
+                } else if (min == down) {
+                    if (en.move(Direction.DOWN)) { return; }
+                } else {
+                    // The minimum distance must be from staying. Don't move.
+                    return;
+                }
+                moves.remove(min);
+            }
+        } else {
+            while (!moves.isEmpty()) {
+                double max = Collections.max(moves);
+                if (max == left) {
+                    if (en.move(Direction.LEFT)) { return; }
+                } else if (max == right) {
+                    if (en.move(Direction.RIGHT)) { return; }
+                } else if (max == up) {
+                    if (en.move(Direction.UP)) { return; }
+                } else if (max == down) {
+                    if (en.move(Direction.DOWN)) { return; }
+                } else {
+                    // The minimum distance must be from staying. Don't move.
+                    return;
+                }
+                moves.remove(max);
+            }
+        }
+
+    }
+
+    private void notifyObservers() {
+        // Notify Player with the current move total.
+        player.decrementPotionSteps();
+
+        // Consider all the possible moves for each enemy, and make the move which minimises or maximises the distance between Player and Enemy depending on if the Player has a potion.
+        for (Entity e : this.enemies) {
+            Enemy en = (Enemy) e;
+            // Move left.
+            double left = distanceToPlayer(en.getX() - 1, en.getY());
+            // Move right.
+            double right = distanceToPlayer(en.getX() + 1, en.getY());
+            // Move up.
+            double up = distanceToPlayer(en.getX(), en.getY() - 1);
+            // Move down.
+            double down = distanceToPlayer(en.getX(), en.getY() + 1);
+            // Move stay.
+            double stay = distanceToPlayer(en.getX(), en.getY());
+    
+            if (!player.hasPotion()) {
+                // Play does not have a potion. So move the enemies closer to the player.
+                optimalMove(en, "minimise", left, right, up, down, stay);
+            } else {
+                // Play does have a potion. So move the enemies further from the player.
+                optimalMove(en, "maximise", left, right, up, down, stay);
+            }
+        }
     }
 
     @FXML
     public void handleKeyPress(KeyEvent event) {
-        if (getDungeon().checkLevelCompleted()) {
+        if (this.dungeon.checkLevelCompleted()) {
             return;
         }
         switch (event.getCode()) {

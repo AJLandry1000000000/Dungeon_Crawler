@@ -18,8 +18,6 @@ public class Potion extends Entity implements Interactable, Collectable {
         }
         Player player = (Player)entity;
         if (!player.hasPotion()) {
-            Dungeon dungeon = player.getDungeon();
-            dungeon.removeEntity(this);
             player.givePotion();
             return true;
         } else {
