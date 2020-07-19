@@ -8,7 +8,26 @@ import org.json.JSONObject;
 import org.json.JSONTokener;
 
 import unsw.dungeon.entity.Entity;
-import unsw.dungeon.entity.model.*;
+import unsw.dungeon.entity.goals.Goal;
+import unsw.dungeon.entity.goals.GoalAND;
+import unsw.dungeon.entity.goals.GoalBoulders;
+import unsw.dungeon.entity.goals.GoalComposite;
+import unsw.dungeon.entity.goals.GoalEnemies;
+import unsw.dungeon.entity.goals.GoalExit;
+import unsw.dungeon.entity.goals.GoalOR;
+import unsw.dungeon.entity.goals.GoalTreasure;
+import unsw.dungeon.entity.model.Boulder;
+import unsw.dungeon.entity.model.Door;
+import unsw.dungeon.entity.model.Enemy;
+import unsw.dungeon.entity.model.Exit;
+import unsw.dungeon.entity.model.Key;
+import unsw.dungeon.entity.model.Player;
+import unsw.dungeon.entity.model.Portal;
+import unsw.dungeon.entity.model.Potion;
+import unsw.dungeon.entity.model.Switch;
+import unsw.dungeon.entity.model.Sword;
+import unsw.dungeon.entity.model.Treasure;
+import unsw.dungeon.entity.model.Wall;
 
 /**
  * Loads a dungeon from a .json file.
@@ -43,12 +62,36 @@ public abstract class DungeonLoader {
             loadEntity(dungeon, jsonEntities.getJSONObject(i));
         }
 
-        JSONObject goalConditions = json.getJSONObject("goal-condition");
-        JSONObject jsonGoals = (JSONObject) json.get("goal-condition");
-        System.out.println(goalConditions.toString()); 
-        System.out.println(jsonGoals.toString());
-        
+        JSONObject jsonGoals = (JSONObject)json.get("goal-condition");
+        dungeon.setGoal(processGoals(dungeon, jsonGoals));
         return dungeon;
+    }
+
+    public Goal processGoals(Dungeon dungeon, JSONObject jsonGoals) {
+        String goalCondition = jsonGoals.getString("goal");
+        GoalComposite goal = null;
+        switch (goalCondition) {
+        case "exit":
+            return new GoalExit(dungeon);
+        case "enemies":
+            return new GoalEnemies(dungeon);
+        case "boulders":
+            return new GoalBoulders(dungeon);
+        case "treasure":
+            return new GoalTreasure(dungeon);
+        case "AND":
+            goal = new GoalAND(dungeon);
+            break;
+        case "OR":
+            goal = new GoalOR(dungeon);
+            break;
+        }
+
+        JSONArray subGoals = jsonGoals.getJSONArray("subgoals");
+        for (Object sub : subGoals) {
+            goal.add(processGoals(dungeon, (JSONObject)sub));
+        }
+        return ((Goal)goal);
     }
 
     private void loadEntity(Dungeon dungeon, JSONObject json) {

@@ -4,9 +4,9 @@
 package unsw.dungeon;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import unsw.dungeon.entity.Entity;
+import unsw.dungeon.entity.goals.Goal;
 import unsw.dungeon.entity.model.Player;
 import unsw.dungeon.entity.model.Portal;
 
@@ -22,14 +22,15 @@ import unsw.dungeon.entity.model.Portal;
 public class Dungeon {
 
     private int width, height;
-    private List<Entity> entities;
+    private ArrayList<Entity> entities;
     private Player player;
     private boolean levelCompleted;
+    private Goal goal;
 
     public Dungeon(int width, int height) {
         this.width = width;
         this.height = height;
-        this.entities = new ArrayList<>();
+        this.entities = new ArrayList<Entity>();
         this.player = null;
         this.levelCompleted = false;
     }
@@ -67,7 +68,6 @@ public class Dungeon {
         return null;
     }
 
-    
     public ArrayList<Entity> getEntities(int x, int y) {
         ArrayList<Entity> check = new ArrayList<Entity>();
         for (Entity e : entities) {
@@ -76,6 +76,10 @@ public class Dungeon {
             }
         }
         return check;
+    }
+
+    public ArrayList<Entity> getEntities() {
+        return this.entities;
     }
 
     public Portal getPortal(Portal portal) {
@@ -100,5 +104,13 @@ public class Dungeon {
 
     public void setLevelCompleted() {
         this.levelCompleted = true;
+    }
+
+    public void setGoal(Goal goal) {
+        this.goal = goal;
+    }
+
+    public Goal getGoal() {
+        return this.goal;
     }
 }
