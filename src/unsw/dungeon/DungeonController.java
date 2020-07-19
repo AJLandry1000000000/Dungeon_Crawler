@@ -37,7 +37,7 @@ public class DungeonController {
     public DungeonController(Dungeon dungeon, List<ImageView> initialEntities) {
         this.dungeon = dungeon;
         this.player = dungeon.getPlayer();
-        // Initialise the enemies list.
+        this.enemies = dungeon.getEnemies();
         this.initialEntities = new ArrayList<>(initialEntities);
     }
 
@@ -65,8 +65,8 @@ public class DungeonController {
         // Notify Player with the current move total.
 
         // Move each enemy closer to the Player.
-    }
 
+    }
 
     @FXML
     public void handleKeyPress(KeyEvent event) {

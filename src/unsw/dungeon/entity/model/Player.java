@@ -12,7 +12,7 @@ import unsw.dungeon.Dungeon;
  * @author Sean Smith & Austin Landry
  *
  */
-public class Player extends Entity implements Moveable {
+public class Player extends Entity implements Moveable, Interactable {
 
     private Dungeon dungeon;
     private Sword sword;
@@ -37,7 +37,54 @@ public class Player extends Entity implements Moveable {
     public Dungeon getDungeon() {
         return this.dungeon;
     }
-
+    
+    public void teleport(int x, int y) {
+        x().set(x);
+        y().set(y); 
+    }
+    
+    public boolean hasSword() {
+        return this.sword != null;
+    }
+    
+    public void giveSword(Sword newSword) {
+        this.sword = newSword;
+        this.dungeon.removeEntity(newSword);
+    }
+    
+    public boolean hasKey() {
+        return this.key != null;
+    }
+    
+    public void giveKey(Key newKey) {
+        this.key = newKey;
+        this.dungeon.removeEntity(newKey);
+    }
+    
+    public Key getKey() {
+        return this.key;
+    }
+    
+    public void takeKey() {
+        this.key = null;
+    }
+    
+    public void giveTreasure(Treasure newTreasure) {
+        this.amountTreasures++;
+        this.dungeon.removeEntity(newTreasure);
+    }
+    
+    public int getAmountTreasures() {
+        return amountTreasures;
+    }
+    
+    public boolean hasPotion() {
+        return this.potion != null;
+    }
+    
+    public void givePotion(Potion newPotion) {
+        this.potion = newPotion;
+    }
 
     public Boolean move(Direction direction) {
         int newX = getX() + direction.getX();
@@ -58,7 +105,7 @@ public class Player extends Entity implements Moveable {
             return true;
         }
         // If the player can interact with an entity, it can move onto the entities coordinates, so allow the player to change its coordinates to the new X & Y.
-        // If the player cannot interact with an entity, maybe its because there is no entity to interact with, and the player is moving to an empty space. If the space is empty, allow the player to move there.
+        // If the player cannot interact with an entity, maybe its because there is no entity to interact with, and the player is moving to an empty space. If the space is empty, allow the player to move their.
         // Always check that the new spot is within the dungeon boundaries.
         else if ((canInteract || checkEntity == null) && this.dungeon.checkBoundaries(newX, newY)) {
             x().set(newX);
@@ -68,51 +115,18 @@ public class Player extends Entity implements Moveable {
         return false;
     }
 
-    public void teleport(int x, int y) {
-        x().set(x);
-        y().set(y); 
-    }
+    // This method is used by enemy to interact with the player (Enemy attacks the Player).
+    // Note that we only have to return false if the Enemy cannot attack the Player because the Player has an Invincibility potion or if they have a Sword. 
+    @Override
+    public Boolean interact(Entity entity) {
+        Enemy attackingEnemy = (Enemy) entity;
 
-    public boolean hasSword() {
-        return this.sword != null;
-    }
-    
-    public void giveSword(Sword newSword) {
-        this.sword = newSword;
-        this.dungeon.removeEntity(newSword);
-    }
+        // If the Player has an Invincibility potion, destroy the Enemy, and return false.
 
-    public boolean hasKey() {
-        return this.key != null;
-    }
+        // If the Player has a Sword, destroy the Enemy, change the Sword hits, and return false.
 
-    public void giveKey(Key newKey) {
-        this.key = newKey;
-        this.dungeon.removeEntity(newKey);
-    }
+        // Otherwise, destroy the Player, and return true.
 
-    public Key getKey() {
-        return this.key;
-    }
-
-    public void takeKey() {
-        this.key = null;
-    }
-
-    public void giveTreasure(Treasure newTreasure) {
-        this.amountTreasures++;
-        this.dungeon.removeEntity(newTreasure);
-    }
-
-    public int getAmountTreasures() {
-        return amountTreasures;
-    }
-    
-    public boolean hasPotion() {
-        return this.potion != null;
-    }
-
-    public void givePotion(Potion newPotion) {
-        this.potion = newPotion;
+        return false;
     }
 }

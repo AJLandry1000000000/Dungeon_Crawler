@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import unsw.dungeon.entity.Entity;
+import unsw.dungeon.entity.model.Enemy;
 import unsw.dungeon.entity.model.Player;
 import unsw.dungeon.entity.model.Portal;
 
@@ -65,6 +66,16 @@ public class Dungeon {
         return null;
     }
 
+    // Returns a list of all enemies in the dungeon.
+    public ArrayList<Entity> getEnemies() {
+        ArrayList<Entity> enemies = new ArrayList<Entity>();
+        for (Entity e : entities) {
+            if (e instanceof Enemy) {
+                enemies.add(e);
+            }
+        }
+        return enemies;
+    }
     
     public ArrayList<Entity> getEntities(int x, int y) {
         ArrayList<Entity> check = new ArrayList<Entity>();
