@@ -14,7 +14,8 @@ import unsw.dungeon.Dungeon;
 public class Player extends Entity implements Moveable {
 
     private Dungeon dungeon;
-    private Sword sword = null;
+    private Sword sword;
+    private Potion potion;
 
     /**
      * Create a player positioned in square (x,y)
@@ -24,6 +25,8 @@ public class Player extends Entity implements Moveable {
     public Player(Dungeon dungeon, int x, int y) {
         super(x, y);
         this.dungeon = dungeon;
+        this.sword = null;
+        this.potion = null;
     }
 
     public Dungeon getDungeon() {
@@ -62,5 +65,13 @@ public class Player extends Entity implements Moveable {
 
     public void giveSword(Sword newSword) {
         this.sword = newSword;
+    }
+
+    public boolean hasPotion() {
+        return this.potion != null;
+    }
+
+    public void givePotion(Potion newPotion) {
+        this.potion = newPotion;
     }
 }
