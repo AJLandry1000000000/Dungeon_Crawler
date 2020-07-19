@@ -1,5 +1,6 @@
 package unsw.dungeon;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,7 +10,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 
-import java.io.File;
+import unsw.dungeon.entity.Direction;
+import unsw.dungeon.entity.model.Enemy;
+import unsw.dungeon.entity.model.Player;
 
 /**
  * A JavaFX controller for the dungeon.
@@ -27,9 +30,14 @@ public class DungeonController {
 
     private Dungeon dungeon;
 
+    private int moves;
+
+    private ArrayList<Enemy> enemies;
+
     public DungeonController(Dungeon dungeon, List<ImageView> initialEntities) {
         this.dungeon = dungeon;
         this.player = dungeon.getPlayer();
+        // Initialise the enemies list.
         this.initialEntities = new ArrayList<>(initialEntities);
     }
 
@@ -49,24 +57,57 @@ public class DungeonController {
 
     }
 
+    private void addMove() {
+        this.moves++;
+    }
+
+    private void notifyObservers() {
+        // Notify Player with the current move total.
+
+        // Move each enemy closer to the Player.
+    }
+
+    public Dungeon getDungeon() {
+        return this.dungeon;
+    }
+
     @FXML
     public void handleKeyPress(KeyEvent event) {
+        if (getDungeon().checkLevelCompleted()) {
+            return;
+        }
         switch (event.getCode()) {
         case UP:
-            player.moveUp();
+            player.move(Direction.UP);
             break;
         case DOWN:
-            player.moveDown();
+            player.move(Direction.DOWN);
             break;
         case LEFT:
-            player.moveLeft();
+            player.move(Direction.LEFT);
             break;
         case RIGHT:
-            player.moveRight();
+            player.move(Direction.RIGHT);
+            break;
+        // WASD Controls
+        case W:
+            player.move(Direction.UP);
+            break;
+        case S:
+            player.move(Direction.DOWN);
+            break;
+        case A:
+            player.move(Direction.LEFT);
+            break;
+        case D:
+            player.move(Direction.RIGHT);
             break;
         default:
             break;
         }
+        addMove();
+        // Update all enemies.
+        notifyObservers();
     }
 
 }

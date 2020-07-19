@@ -7,6 +7,9 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
+import unsw.dungeon.entity.Entity;
+import unsw.dungeon.entity.model.*;
+
 /**
  * Loads a dungeon from a .json file.
  *
@@ -39,6 +42,12 @@ public abstract class DungeonLoader {
         for (int i = 0; i < jsonEntities.length(); i++) {
             loadEntity(dungeon, jsonEntities.getJSONObject(i));
         }
+
+        JSONObject goalConditions = json.getJSONObject("goal-condition");
+        JSONObject jsonGoals = (JSONObject) json.get("goal-condition");
+        System.out.println(goalConditions.toString()); 
+        System.out.println(jsonGoals.toString());
+        
         return dungeon;
     }
 
@@ -46,6 +55,7 @@ public abstract class DungeonLoader {
         String type = json.getString("type");
         int x = json.getInt("x");
         int y = json.getInt("y");
+        int id = 0;
 
         Entity entity = null;
         switch (type) {
@@ -61,14 +71,94 @@ public abstract class DungeonLoader {
             entity = wall;
             break;
         // TODO Handle other possible entities
+        case "boulder":
+            Boulder boulder = new Boulder(dungeon, x, y);
+            onLoad(boulder);
+            entity = boulder;
+            break;
+        case "door":
+            id = json.getInt("id");
+            Door door = new Door(dungeon, x, y, id);
+            onLoad(door);
+            entity = door;
+            break;
+        case "enemy":
+            Enemy enemy = new Enemy(dungeon, x, y);
+            onLoad(enemy);
+            entity = enemy;
+            break;
+        case "exit":
+            Exit exit = new Exit(dungeon, x, y);
+            onLoad(exit);
+            entity = exit;
+            break;
+        case "key":
+            id = json.getInt("id");
+            Key key = new Key(dungeon, x, y, id);
+            onLoad(key);
+            entity = key;
+            break;
+        case "portal":
+            id = json.getInt("id");
+            Portal portal = new Portal(dungeon, x, y, id);
+            onLoad(portal);
+            entity = portal;
+            break;
+        case "invincibility":
+            Potion potion = new Potion(x, y);
+            onLoad(potion);
+            entity = potion;
+            break;
+        case "switch":
+            Switch floor = new Switch(x, y);
+            onLoad(floor);
+            entity = floor;
+            break;
+        case "sword":
+            Sword sword = new Sword(x, y);
+            onLoad(sword);
+            entity = sword;
+            break;
+        case "treasure":
+            Treasure treasure = new Treasure(x, y);
+            onLoad(treasure);
+            entity = treasure;
+            break;
+        default:
+            break;
+        }
+        if (!checkEntityLocation(dungeon, entity, x, y)) {
+            System.out.println("Too many entities on same position");
         }
         dungeon.addEntity(entity);
     }
 
+    private Boolean checkEntityLocation(Dungeon dungeon, Entity entity, int x, int y) {
+        if (dungeon.getEntities(x, y).size() > 0) {
+            Entity check = dungeon.getEntity(x, y);
+            if (check instanceof Boulder) {
+                ((Switch)entity).activateSwitch(check);
+            } else if (check instanceof Switch) {
+                ((Switch)check).activateSwitch(entity);
+            } else {
+                return false;
+            }
+        }
+        return true;
+    }
+
     public abstract void onLoad(Entity player);
-
     public abstract void onLoad(Wall wall);
-
     // TODO Create additional abstract methods for the other entities
+    public abstract void onLoad(Boulder boulder);
+    public abstract void onLoad(Door door);
+    public abstract void onLoad(Enemy enemy);
+    public abstract void onLoad(Exit exit);
+    public abstract void onLoad(Key key);
+    public abstract void onLoad(Portal portal);
+    public abstract void onLoad(Potion potion);
+    public abstract void onLoad(Switch floor);
+    public abstract void onLoad(Sword sword);
+    public abstract void onLoad(Treasure treasure);
 
 }
