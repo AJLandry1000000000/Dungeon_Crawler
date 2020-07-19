@@ -60,6 +60,16 @@ public class Dungeon {
         return null;
     }
 
+    public ArrayList<Entity> getEntities(int x, int y) {
+        ArrayList<Entity> check = new ArrayList<Entity>();
+        for (Entity e : entities) {
+            if (e.getX() == x && e.getY() == y) {
+                check.add(e);
+            }
+        }
+        return check;
+    }
+
     public boolean checkBoundaries(int x, int y) {
         return ((x >= 0 && x < getWidth()) && (y >= 0 && y < getHeight()));
     }

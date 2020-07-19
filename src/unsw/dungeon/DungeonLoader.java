@@ -2,6 +2,7 @@ package unsw.dungeon;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.util.ArrayList;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -117,13 +118,28 @@ public abstract class DungeonLoader {
         default:
             break;
         }
+        if (!checkEntityLocation(dungeon, entity, x, y)) {
+            System.out.println("Too many entities on same position");
+        }
         dungeon.addEntity(entity);
     }
 
+    private Boolean checkEntityLocation(Dungeon dungeon, Entity entity, int x, int y) {
+        if (dungeon.getEntities(x, y).size() > 0) {
+            Entity check = dungeon.getEntity(x, y);
+            if (check instanceof Boulder) {
+                ((Switch)entity).activateSwitch(check);
+            } else if (check instanceof Switch) {
+                ((Switch)check).activateSwitch(entity);
+            } else {
+                return false;
+            }
+        }
+        return true;
+    }
+
     public abstract void onLoad(Entity player);
-
     public abstract void onLoad(Wall wall);
-
     // TODO Create additional abstract methods for the other entities
     public abstract void onLoad(Boulder boulder);
     public abstract void onLoad(Door door);
