@@ -29,6 +29,9 @@ public class Boulder extends Entity implements Moveable, Interactable {
         int newPositionY = this.getY() + direction.getY();
 
         Entity checkEntity = entityAtPosition(newPositionX, newPositionY);
+        
+        // Check if the entity is a floor switch
+        
         if (checkEntity != null) {
             return false;
         }
