@@ -1,7 +1,6 @@
 package unsw.dungeon.entity.model;
 
 import unsw.dungeon.entity.Entity;
-import unsw.dungeon.Dungeon;
 import unsw.dungeon.entity.Collectable;
 import unsw.dungeon.entity.Interactable;
 

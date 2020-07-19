@@ -4,7 +4,6 @@ import unsw.dungeon.entity.Direction;
 import unsw.dungeon.entity.Entity;
 import unsw.dungeon.entity.Interactable;
 import unsw.dungeon.entity.Moveable;
-import unsw.dungeon.entity.model.*;
 import unsw.dungeon.Dungeon;
 
 /**
@@ -17,7 +16,7 @@ public class Player extends Entity implements Moveable {
     private Dungeon dungeon;
     private Sword sword;
     private int amountTreasures;
-    private Potion potion;
+    private int potion;
     private Key key;
 
     /**
@@ -30,7 +29,7 @@ public class Player extends Entity implements Moveable {
         this.dungeon = dungeon;
         this.sword = null;
         this.amountTreasures = 0;
-        this.potion = null;
+        this.potion = 0;
         this.key = null;
     }
 
@@ -40,6 +39,7 @@ public class Player extends Entity implements Moveable {
 
 
     public Boolean move(Direction direction) {
+        decrementPotionSteps();
         int newX = getX() + direction.getX();
         int newY = getY() + direction.getY();
 
@@ -109,10 +109,17 @@ public class Player extends Entity implements Moveable {
     }
     
     public boolean hasPotion() {
-        return this.potion != null;
+        return this.potion > 0 ? true : false;
     }
 
-    public void givePotion(Potion newPotion) {
-        this.potion = newPotion;
+    public void givePotion() {
+        this.potion = 10;
+    }
+
+    public void decrementPotionSteps() {
+        if (this.hasPotion()) {
+            System.out.println("Player has " + this.potion + " steps of potion left");
+            this.potion--;
+        }
     }
 }

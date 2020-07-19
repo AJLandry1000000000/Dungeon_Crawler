@@ -16,15 +16,13 @@ public class Potion extends Entity implements Interactable, Collectable {
         if (!(entity instanceof Player)) {
             return false;
         }
-        Player player = (Player) entity;
-        
-        // If the player has no sword, give it to the player and remove this sword from the dungeons list of entities. Then return true.
+        Player player = (Player)entity;
         if (!player.hasPotion()) {
             Dungeon dungeon = player.getDungeon();
             dungeon.removeEntity(this);
+            player.givePotion();
             return true;
         } else {
-            // If the player has a sword, do not let them interact with the sword. Just return false.
            return false;
         }
     }

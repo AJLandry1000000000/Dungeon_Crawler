@@ -30,7 +30,7 @@ public class DungeonController {
 
     private Dungeon dungeon;
 
-    private static int moves;
+    private int moves;
 
     private ArrayList<Enemy> enemies;
 
@@ -99,6 +99,7 @@ public class DungeonController {
         default:
             break;
         }
+        addMove();
         // Update all enemies.
         notifyObservers();
     }

@@ -33,7 +33,6 @@ public class Switch extends Entity implements Interactable {
         return this.boulder;
     }
 
-
     @Override
     public Boolean interact(Entity entity) {
         // If a player walks on a switch with a boulder on it
