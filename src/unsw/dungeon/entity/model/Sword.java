@@ -9,4 +9,8 @@ public class Sword extends Entity implements Interactable, Collectable {
     public Sword(int x, int y) {
         super(x, y);
     }
+    @Override
+    public Boolean interact(Entity entity) {
+        return false;
+    }
 }

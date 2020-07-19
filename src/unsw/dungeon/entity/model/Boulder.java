@@ -23,7 +23,7 @@ public class Boulder extends Entity implements Moveable, Interactable {
         return this.getDungeon().getEntity(x, y);
     }
 
-    public void move(Direction direction) {
+    public Boolean move(Direction direction) {
         int newX = getX() + direction.getX();
         int newY = getY() + direction.getY();
 
@@ -32,7 +32,21 @@ public class Boulder extends Entity implements Moveable, Interactable {
             System.out.println(checkEntity);
         }
 
-        x().set(newX);
-        y().set(newY);
+        if (this.dungeon.checkBoundaries(newX, newY)) {
+            x().set(newX);
+            y().set(newY);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public Boolean interact(Entity entity) {
+        if (!(entity instanceof Player)) {
+            return false;
+        }
+        int newX = getX() - entity.getX();
+        int newY = getY() - entity.getY();
+        return this.move(Direction.getDirection(newX, newY));
     }
 }

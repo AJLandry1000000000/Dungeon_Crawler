@@ -8,4 +8,8 @@ public class Switch extends Entity implements Interactable {
     public Switch(int x, int y) {
         super(x, y);
     }
+    @Override
+    public Boolean interact(Entity entity) {
+        return false;
+    }
 }

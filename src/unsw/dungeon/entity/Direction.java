@@ -19,4 +19,13 @@ public enum Direction {
     public int getY() {
         return this.y;
     }
+
+    public static Direction getDirection(int x, int y) {
+        for (Direction d : Direction.values()) {
+            if (d.getX() == x && d.getY() == y) {
+                return d;
+            }
+        }
+        return null;
+    }
 }

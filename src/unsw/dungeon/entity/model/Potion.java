@@ -9,4 +9,8 @@ public class Potion extends Entity implements Interactable, Collectable {
     public Potion(int x, int y) {
         super(x, y);
     }
+    @Override
+    public Boolean interact(Entity entity) {
+        return false;
+    }
 }

@@ -2,6 +2,7 @@ package unsw.dungeon.entity.model;
 
 import unsw.dungeon.entity.Direction;
 import unsw.dungeon.entity.Entity;
+import unsw.dungeon.entity.Interactable;
 import unsw.dungeon.entity.Moveable;
 import unsw.dungeon.Dungeon;
 
@@ -32,16 +33,22 @@ public class Player extends Entity implements Moveable {
         return this.getDungeon().getEntity(x, y);
     }
 
-    public void move(Direction direction) {
+    public Boolean move(Direction direction) {
         int newX = getX() + direction.getX();
         int newY = getY() + direction.getY();
 
         Entity checkEntity = entityAtPosition(newX, newY);
-        if (checkEntity != null) {
+        Boolean canInteract = true;
+        if (checkEntity instanceof Interactable) {
             System.out.println(checkEntity);
+            canInteract = ((Interactable)checkEntity).interact(this);
         }
 
-        x().set(newX);
-        y().set(newY);
+        if (canInteract && this.dungeon.checkBoundaries(newX, newY)) {
+            x().set(newX);
+            y().set(newY);
+            return true;
+        }
+        return false;
     }
 }

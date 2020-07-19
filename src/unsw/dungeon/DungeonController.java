@@ -13,7 +13,6 @@ import javafx.scene.layout.GridPane;
 import unsw.dungeon.entity.Direction;
 import unsw.dungeon.entity.model.Player;
 
-
 /**
  * A JavaFX controller for the dungeon.
  * @author Robert Clifton-Everest

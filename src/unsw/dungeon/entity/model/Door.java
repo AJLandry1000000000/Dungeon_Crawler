@@ -8,4 +8,8 @@ public class Door extends Entity implements Interactable {
     public Door(int x, int y) {
         super(x, y);
     }
+    @Override
+    public Boolean interact(Entity entity) {
+        return false;
+    }
 }
