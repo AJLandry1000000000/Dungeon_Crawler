@@ -80,7 +80,7 @@ public class DungeonControllerLoader extends DungeonLoader {
         addEntity(boulder, view);
     }
     public void onLoad(Door door) {
-        ImageView view = new ImageView(doorOpenImage);
+        ImageView view = new ImageView(doorClosedImage);
         addEntity(door, view);
     }
     public void onLoad(Enemy enemy) {

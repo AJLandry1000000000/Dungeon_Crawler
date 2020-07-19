@@ -8,6 +8,7 @@ import java.util.List;
 
 import unsw.dungeon.entity.Entity;
 import unsw.dungeon.entity.model.Player;
+import unsw.dungeon.entity.model.Portal;
 
 /**
  * A dungeon in the interactive dungeon player.
@@ -64,6 +65,7 @@ public class Dungeon {
         return null;
     }
 
+    
     public ArrayList<Entity> getEntities(int x, int y) {
         ArrayList<Entity> check = new ArrayList<Entity>();
         for (Entity e : entities) {
@@ -72,6 +74,18 @@ public class Dungeon {
             }
         }
         return check;
+    }
+
+    public Portal getPortal(Portal portal) {
+        for (Entity e : entities) {
+            if (e instanceof Portal) {
+                Portal p = ((Portal)e);
+                if (p.getID() == portal.getID() && p != portal) {
+                    return p;
+                }
+            }
+        }
+        return null;
     }
 
     public boolean checkBoundaries(int x, int y) {

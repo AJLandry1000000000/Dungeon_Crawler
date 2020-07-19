@@ -15,11 +15,24 @@ public class Portal extends Entity implements Interactable {
         this.id = id;
     }
 
+    public int getID() {
+        return this.id;
+    }
+
+    public Dungeon getDungeon() {
+        return this.dungeon;
+    }
+
     @Override
     public Boolean interact(Entity entity) {
         if (!(entity instanceof Player)) {
             return false;
         }
+        Portal portal = this.getDungeon().getPortal(this);
+        if (portal == null) {
+            return false;
+        }
+        ((Player)entity).teleport(portal.getX(), portal.getY());
         return true;
     }
 }
