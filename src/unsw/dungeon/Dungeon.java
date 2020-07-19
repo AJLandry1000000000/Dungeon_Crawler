@@ -8,7 +8,6 @@ import java.util.List;
 
 import unsw.dungeon.entity.Entity;
 import unsw.dungeon.entity.model.Player;
-import unsw.dungeon.DungeonController;
 
 /**
  * A dungeon in the interactive dungeon player.
