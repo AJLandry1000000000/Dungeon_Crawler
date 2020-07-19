@@ -18,6 +18,7 @@ public class Player extends Entity implements Moveable {
     private Sword sword;
     private int amountTreasures;
     private Potion potion;
+    private Key key;
 
     /**
      * Create a player positioned in square (x,y)
@@ -30,11 +31,13 @@ public class Player extends Entity implements Moveable {
         this.sword = null;
         this.amountTreasures = 0;
         this.potion = null;
+        this.key = null;
     }
 
     public Dungeon getDungeon() {
         return this.dungeon;
     }
+
 
     public Boolean move(Direction direction) {
         int newX = getX() + direction.getX();
@@ -73,10 +76,27 @@ public class Player extends Entity implements Moveable {
     public boolean hasSword() {
         return this.sword != null;
     }
-
+    
     public void giveSword(Sword newSword) {
         this.sword = newSword;
         this.dungeon.removeEntity(newSword);
+    }
+
+    public boolean hasKey() {
+        return this.key != null;
+    }
+
+    public void giveKey(Key newKey) {
+        this.key = newKey;
+        this.dungeon.removeEntity(newKey);
+    }
+
+    public Key getKey() {
+        return this.key;
+    }
+
+    public void takeKey() {
+        this.key = null;
     }
 
     public void giveTreasure(Treasure newTreasure) {

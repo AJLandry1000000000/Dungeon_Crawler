@@ -11,6 +11,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 
 import unsw.dungeon.entity.Direction;
+import unsw.dungeon.entity.model.Enemy;
 import unsw.dungeon.entity.model.Player;
 
 /**
@@ -29,9 +30,14 @@ public class DungeonController {
 
     private Dungeon dungeon;
 
+    private static int moves;
+
+    private ArrayList<Enemy> enemies;
+
     public DungeonController(Dungeon dungeon, List<ImageView> initialEntities) {
         this.dungeon = dungeon;
         this.player = dungeon.getPlayer();
+        // Initialise the enemies list.
         this.initialEntities = new ArrayList<>(initialEntities);
     }
 
@@ -50,6 +56,17 @@ public class DungeonController {
             squares.getChildren().add(entity);
 
     }
+
+    private void addMove() {
+        this.moves++;
+    }
+
+    private void notifyObservers() {
+        // Notify Player with the current move total.
+
+        // Move each enemy closer to the Player.
+    }
+
 
     @FXML
     public void handleKeyPress(KeyEvent event) {
@@ -82,6 +99,8 @@ public class DungeonController {
         default:
             break;
         }
+        // Update all enemies.
+        notifyObservers();
     }
 
 }

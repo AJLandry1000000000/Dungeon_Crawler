@@ -13,8 +13,7 @@ public class Sword extends Entity implements Interactable, Collectable {
 
     @Override
     public Boolean interact(Entity entity) {
-        // If the entity interacting with the sword is not the player, return false.
-        
+        // If the entity interacting with the key is not the player, return false.
         if (!(entity instanceof Player)) {
             return false;
         }
