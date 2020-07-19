@@ -25,8 +25,8 @@ public class Boulder extends Entity implements Moveable, Interactable {
     }
 
     public Boolean move(Direction direction) {
-        int newPositionX = getX() + direction.getX();
-        int newPositionY = getY() + direction.getY();
+        int newPositionX = this.getX() + direction.getX();
+        int newPositionY = this.getY() + direction.getY();
 
         Entity checkEntity = entityAtPosition(newPositionX, newPositionY);
         if (checkEntity != null) {
