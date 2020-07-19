@@ -37,14 +37,21 @@ public class Player extends Entity implements Moveable {
         int newX = getX() + direction.getX();
         int newY = getY() + direction.getY();
 
-        Entity checkEntity = entityAtPosition(newX, newY);
-        Boolean canInteract = true;
+        // Get the entity at the new X & Y coordinates.
+        Entity checkEntity = this.getDungeon().getEntity(newX, newY);
+
+        // Assume that the player cannot interact with the new entity.
+        Boolean canInteract = false;
         if (checkEntity instanceof Interactable) {
             System.out.println(checkEntity);
+            // The interact method will return true if the player can interact with it.
             canInteract = ((Interactable)checkEntity).interact(this);
         }
 
-        if (canInteract && this.dungeon.checkBoundaries(newX, newY)) {
+        // If the player can interact with an entity, it can move onto the entities coordinates, so allow the player to change its coordinates to the new X & Y.
+        // If the player cannot interact with an entity, maybe its because there is no entity to interact with, and the player is moving to an empty space. If the space is empty, allow the player to move there.
+        // Always check that the new spot is within the dungeon boudaries.
+        if ( (canInteract || checkEntity == null) && this.dungeon.checkBoundaries(newX, newY)) {
             x().set(newX);
             y().set(newY);
             return true;
