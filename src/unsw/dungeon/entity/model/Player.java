@@ -51,15 +51,23 @@ public class Player extends Entity implements Moveable {
             canInteract = ((Interactable)checkEntity).interact(this);
         }
 
+        if (checkEntity instanceof Portal) {
+            return true;
+        }
         // If the player can interact with an entity, it can move onto the entities coordinates, so allow the player to change its coordinates to the new X & Y.
         // If the player cannot interact with an entity, maybe its because there is no entity to interact with, and the player is moving to an empty space. If the space is empty, allow the player to move there.
         // Always check that the new spot is within the dungeon boundaries.
-        if ( (canInteract || checkEntity == null) && this.dungeon.checkBoundaries(newX, newY)) {
+        else if ((canInteract || checkEntity == null) && this.dungeon.checkBoundaries(newX, newY)) {
             x().set(newX);
             y().set(newY);
             return true;
         }
         return false;
+    }
+
+    public void teleport(int x, int y) {
+        x().set(x);
+        y().set(y); 
     }
 
     public boolean hasSword() {
