@@ -8,6 +8,7 @@ import java.util.List;
 
 import unsw.dungeon.entity.Entity;
 import unsw.dungeon.entity.model.Player;
+import unsw.dungeon.DungeonController;
 
 /**
  * A dungeon in the interactive dungeon player.
@@ -49,6 +50,10 @@ public class Dungeon {
 
     public void addEntity(Entity entity) {
         entities.add(entity);
+    }
+
+    public void removeEntity(Entity entity) {
+        this.entities.remove(entity);
     }
 
     public Entity getEntity(int x, int y) {

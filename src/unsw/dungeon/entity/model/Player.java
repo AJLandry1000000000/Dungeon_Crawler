@@ -8,12 +8,13 @@ import unsw.dungeon.Dungeon;
 
 /**
  * The player entity
- * @author Robert Clifton-Everest
+ * @author Sean Smith & Austin Landry
  *
  */
 public class Player extends Entity implements Moveable {
 
     private Dungeon dungeon;
+    private Sword sword = null;
 
     /**
      * Create a player positioned in square (x,y)
@@ -53,5 +54,13 @@ public class Player extends Entity implements Moveable {
             return true;
         }
         return false;
+    }
+
+    public boolean hasSword() {
+        return this.sword != null;
+    }
+
+    public void giveSword(Sword newSword) {
+        this.sword = newSword;
     }
 }
