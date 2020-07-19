@@ -52,6 +52,24 @@ public class Enemy extends Entity implements Moveable, Interactable {
     // This method is used by player to interact with this enemy (Player attacks the Enemy).
     @Override
     public Boolean interact(Entity entity) {
-        return false;
+        Player player = (Player) entity;
+
+        // If the Player has an Invincibility potion, destroy the Enemy, and return false.
+        if (player.hasPotion()) {
+            this.dungeon.removeEntity(this);
+            return false;
+        }
+
+        // If the Player has a Sword, destroy the Enemy, change the Sword hits, and return false.
+        if (player.hasSword()) {
+            this.dungeon.removeEntity(this);
+            player.getSword().decrementHits();
+            player.checkSword();
+            return false;
+        }
+
+        // Otherwise, destroy the Player, and return true.
+        this.dungeon.removeEntity(player);
+        return true;
     }
 }

@@ -4,7 +4,6 @@ import unsw.dungeon.entity.Direction;
 import unsw.dungeon.entity.Entity;
 import unsw.dungeon.entity.Interactable;
 import unsw.dungeon.entity.Moveable;
-import unsw.dungeon.entity.model.*;
 import unsw.dungeon.Dungeon;
 
 /**
@@ -17,7 +16,7 @@ public class Player extends Entity implements Moveable, Interactable {
     private Dungeon dungeon;
     private Sword sword;
     private int amountTreasures;
-    private Potion potion;
+    private int potion;
     private Key key;
 
     /**
@@ -30,7 +29,7 @@ public class Player extends Entity implements Moveable, Interactable {
         this.dungeon = dungeon;
         this.sword = null;
         this.amountTreasures = 0;
-        this.potion = null;
+        this.potion = 0;
         this.key = null;
     }
 
@@ -52,6 +51,17 @@ public class Player extends Entity implements Moveable, Interactable {
         this.dungeon.removeEntity(newSword);
     }
     
+    public void checkSword() {
+        // If we have a Sword and it has zero or less hits left, remove this Sword from the Player.
+        if (hasSword() && this.sword.getHits() <= 0) {
+            this.sword = null;
+        }
+    }
+
+    public Sword getSword() {
+        return this.sword;
+    }
+
     public boolean hasKey() {
         return this.key != null;
     }
@@ -79,11 +89,19 @@ public class Player extends Entity implements Moveable, Interactable {
     }
     
     public boolean hasPotion() {
-        return this.potion != null;
+        return this.potion > 0 ? true : false;
     }
-    
-    public void givePotion(Potion newPotion) {
-        this.potion = newPotion;
+
+    public void givePotion() {
+        this.dungeon.removeEntity(this);
+        this.potion = 10;
+    }
+
+    public void decrementPotionSteps() {
+        if (this.hasPotion()) {
+            System.out.println("Player has " + this.potion + " steps of potion left");
+            this.potion--;
+        }
     }
 
     public Boolean move(Direction direction) {
@@ -122,11 +140,21 @@ public class Player extends Entity implements Moveable, Interactable {
         Enemy attackingEnemy = (Enemy) entity;
 
         // If the Player has an Invincibility potion, destroy the Enemy, and return false.
+        if (hasPotion()) {
+            this.dungeon.removeEntity(attackingEnemy);
+            return false;
+        }
 
         // If the Player has a Sword, destroy the Enemy, change the Sword hits, and return false.
+        if (hasSword()) {
+            this.dungeon.removeEntity(attackingEnemy);
+            this.sword.decrementHits();
+            checkSword();
+            return false;
+        }
 
         // Otherwise, destroy the Player, and return true.
-
-        return false;
+        this.dungeon.removeEntity(this);
+        return true;
     }
 }
