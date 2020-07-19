@@ -24,12 +24,14 @@ public class Dungeon {
     private int width, height;
     private List<Entity> entities;
     private Player player;
+    private boolean levelCompleted;
 
     public Dungeon(int width, int height) {
         this.width = width;
         this.height = height;
         this.entities = new ArrayList<>();
         this.player = null;
+        this.levelCompleted = false;
     }
 
     public int getWidth() {
@@ -90,5 +92,13 @@ public class Dungeon {
 
     public boolean checkBoundaries(int x, int y) {
         return ((x >= 0 && x < getWidth()) && (y >= 0 && y < getHeight()));
+    }
+
+    public boolean checkLevelCompleted() {
+        return this.levelCompleted;
+    }
+
+    public void setLevelCompleted() {
+        this.levelCompleted = true;
     }
 }

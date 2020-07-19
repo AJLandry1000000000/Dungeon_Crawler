@@ -67,9 +67,15 @@ public class DungeonController {
         // Move each enemy closer to the Player.
     }
 
+    public Dungeon getDungeon() {
+        return this.dungeon;
+    }
 
     @FXML
     public void handleKeyPress(KeyEvent event) {
+        if (getDungeon().checkLevelCompleted()) {
+            return;
+        }
         switch (event.getCode()) {
         case UP:
             player.move(Direction.UP);
