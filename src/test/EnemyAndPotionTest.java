@@ -15,6 +15,7 @@ import javafx.scene.image.ImageView;
 
 import unsw.dungeon.*;
 import unsw.dungeon.entity.Direction;
+import unsw.dungeon.entity.goals.GoalEnemies;
 import unsw.dungeon.entity.goals.GoalTreasure;
 import unsw.dungeon.entity.model.*;
 
@@ -27,8 +28,8 @@ public class EnemyAndPotionTest {
         // Create dungeon.
         this.dungeon = new Dungeon(10, 10);
         // Give the dungeion a random goal (to avoid null pointer error).
-        GoalTreasure goalTreasure = new GoalTreasure(this.dungeon);
-        this.dungeon.setGoal(goalTreasure);
+        GoalEnemies ge = new GoalEnemies(this.dungeon);
+        this.dungeon.setGoal(ge);
         // Create Player.
         this.player = new Player(dungeon, 4, 4);
         dungeon.setPlayer(player);
@@ -64,9 +65,10 @@ public class EnemyAndPotionTest {
         Potion p1 = new Potion(5, 4);
         dungeon.addEntity(p1);
         player.move(Direction.RIGHT);
-
+        
         // Make 11 updates to observer. These updates are done in DungeonController after every move. Check each time that the player still has a potion. On the 11th move check that the Player no longer has a potion.
         DungeonController dc = new DungeonController(dungeon, new ArrayList<ImageView>());
+        dc.notifyObservers();// Because normally notifyObservers() is run on the move to collecting the potion
     
         // Move 1.
         assertTrue(player.hasPotion());
@@ -131,7 +133,7 @@ public class EnemyAndPotionTest {
         dc.notifyObservers();
         assertEquals(8, en.getX());
         assertEquals(4, en.getY());
-
+        
         dc.notifyObservers();
         assertEquals(7, en.getX());
         assertEquals(4, en.getY());

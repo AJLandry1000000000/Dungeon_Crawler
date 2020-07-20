@@ -15,6 +15,7 @@ import javafx.scene.image.ImageView;
 
 import unsw.dungeon.*;
 import unsw.dungeon.entity.Direction;
+import unsw.dungeon.entity.goals.GoalEnemies;
 import unsw.dungeon.entity.goals.GoalTreasure;
 import unsw.dungeon.entity.model.*;
 
@@ -27,8 +28,8 @@ public class KeyAndDoorTest {
         // Create dungeon.
         this.dungeon = new Dungeon(10, 10);
         // Give the dungeion a random goal (to avoid null pointer error).
-        GoalTreasure goalTreasure = new GoalTreasure(this.dungeon);
-        this.dungeon.setGoal(goalTreasure);
+        GoalEnemies ge = new GoalEnemies(this.dungeon);
+        this.dungeon.setGoal(ge);
         // Create Player.
         this.player = new Player(dungeon, 4, 4);
         dungeon.setPlayer(player);
