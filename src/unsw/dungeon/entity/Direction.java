@@ -20,7 +20,7 @@ public enum Direction {
         return this.y;
     }
 
-    // Currently this only used by Boulder.java to find the direction to move in.
+    // Determine the Direction that the given x and y coordinates make
     public static Direction getDirection(int x, int y) {
         for (Direction d : Direction.values()) {
             if (d.getX() == x && d.getY() == y) {

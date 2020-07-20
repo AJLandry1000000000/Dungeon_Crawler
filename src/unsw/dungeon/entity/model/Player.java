@@ -31,94 +31,136 @@ public class Player extends Entity implements Moveable, Interactable {
         this.key = null;
     }
 
+    // Getters
     public Dungeon getDungeon() {
         return this.dungeon;
-    }
-    
-    public void teleport(int x, int y) {
-        x().set(x);
-        y().set(y); 
-    }
-    
-    public boolean hasSword() {
-        return this.sword != null;
-    }
-    
-    public void giveSword(Sword newSword) {
-        this.sword = newSword;
-        this.dungeon.removeEntity(newSword);
-    }
-    
-    public void checkSword() {
-        // If we have a Sword and it has zero or less hits left, remove this Sword from the Player.
-        if (hasSword() && this.sword.getHits() <= 0) {
-            this.sword = null;
-        }
     }
 
     public Sword getSword() {
         return this.sword;
     }
 
-    public boolean hasKey() {
-        return this.key != null;
-    }
-    
-    public void giveKey(Key newKey) {
-        this.key = newKey;
-        this.dungeon.removeEntity(newKey);
-    }
-    
     public Key getKey() {
         return this.key;
     }
-    
+
+    // Setters
+    /**
+     * 
+     * @param newSword
+     */
+    public void giveSword(Sword newSword) {
+        this.sword = newSword;
+        getDungeon().removeEntity(newSword);
+    }
+
+    /**
+     * 
+     * @param newKey
+     */
+    public void giveKey(Key newKey) {
+        this.key = newKey;
+        getDungeon().removeEntity(newKey);
+    }
+
+    /**
+     * 
+     */
     public void takeKey() {
         this.key = null;
     }
-    
-    public boolean hasPotion() {
-        return this.potion > 0 ? true : false;
-    }
 
+    /**
+     * 
+     * @param potion
+     */
     public void givePotion(Potion potion) {
-        this.dungeon.removeEntity(potion);
+        getDungeon().removeEntity(potion);
         this.potion = 10;
     }
 
+    /**
+     * 
+     */
     public void decrementPotionSteps() {
-        if (this.hasPotion()) {
+        if (hasPotion()) {
             System.out.println("Player has " + this.potion + " steps of potion left");
             this.potion--;
         }
     }
 
+    /**
+     * 
+     */
+    public void teleport(int x, int y) {
+        x().set(x);
+        y().set(y); 
+    }
+
+    // Checkers
+    /**
+     * 
+     * @return
+     */
+    public boolean hasSword() {
+        return this.sword != null;
+    }
+
+    /**
+     * 
+     */
+    public void checkSword() {
+        // If we have a Sword and it has zero or less hits left, remove this Sword from the Player.
+        if (hasSword() && getSword().getHits() <= 0) {
+            this.sword = null;
+        }
+    }
+
+    /**
+     * 
+     * @return
+     */
+    public boolean hasKey() {
+        return this.key != null;
+    }
+
+    /**
+     * 
+     * @return
+     */
+    public boolean hasPotion() {
+        return this.potion > 0 ? true : false;
+    }
+
+    /**
+     * 
+     */
+    @Override
     public Boolean move(Direction direction) {
+        Dungeon dungeon = getDungeon();
+        // Calculate the new position coordinates
         int newX = getX() + direction.getX();
         int newY = getY() + direction.getY();
 
-        // Get the entity at the new X & Y coordinates.
-        Entity checkEntity = this.getDungeon().getEntity(newX, newY);
-                
+        // Determine if there is a current entity at the new position
+        Entity checkEntity = dungeon.getEntity(newX, newY);
+
         // Assume that the player cannot interact with the new entity.
         Boolean canInteract = false;
         if (checkEntity instanceof Interactable) {
-            System.out.println(checkEntity);
-            // The interact method will return true if the player can interact with it.
+            // Check if the Player is allowed to interact with the entity at the new position
             canInteract = ((Interactable)checkEntity).interact(this);
         }
 
+        // If the entity at the new position is a Portal, allow the Player to access it
         if (checkEntity instanceof Portal) {
             return true;
         }
 
-        if (!(checkEntity instanceof Exit)) {
-            getDungeon().leaveExit();
-        }
-        // If the player can interact with an entity, it can move onto the entities coordinates, so allow the player to change its coordinates to the new X & Y.
-        // If the player cannot interact with an entity, maybe its because there is no entity to interact with, and the player is moving to an empty space. If the space is empty, allow the player to move their.
-        // Always check that the new spot is within the dungeon boundaries.
-        if ((canInteract || checkEntity == null) && this.dungeon.checkBoundaries(newX, newY)) {
+        // If the Player can attack the Enemy, is allowed to interact with a different Entity or if the Player is moving onto an empty space
+        // And check that the new position must be within the dungeon boundaries
+        if ((canInteract || checkEntity == null) && dungeon.checkBoundaries(newX, newY)) {
+            // Allow the Player to change its coordinates to the new position coordinates
             x().set(newX);
             y().set(newY);
             return true;
@@ -130,30 +172,33 @@ public class Player extends Entity implements Moveable, Interactable {
     // Note that we only have to return false if the Enemy cannot attack the Player because the Player has an Invincibility potion or if they have a Sword. 
     @Override
     public Boolean interact(Entity entity) {
+        Dungeon dungeon = getDungeon();
         // If the enemy does not exist 
-        if (!this.dungeon.findEntity(entity)) {
+        if (!dungeon.findEntity(entity)) {
             return true;
         }
         Enemy attackingEnemy = (Enemy) entity;
-        // If the Player has an Invincibility potion, destroy the Enemy, and return false.
+        // If the Player has an Invincibility potion
         if (hasPotion()) {
+            // The Enemy is destroyed and goal conditions are checked
             System.out.println("Player has killed an Enemy");
-            this.dungeon.removeEntity(attackingEnemy);
-            this.dungeon.goalsCompleted();
+            dungeon.removeEntity(attackingEnemy);
+            dungeon.goalsCompleted();
         }
-        // If the Player has a Sword, destroy the Enemy, change the Sword hits, and return false.
+        // If the Player has a Sword
         else if (hasSword()) {
+            // The Enemy is destroyed, the Sword hits are decremented and goal conditions are checked
             System.out.println("Player has killed an Enemy");
-            this.dungeon.removeEntity(attackingEnemy);
+            dungeon.removeEntity(attackingEnemy);
             this.sword.decrementHits();
             checkSword();
-            this.dungeon.goalsCompleted();
+            dungeon.goalsCompleted();
         }
-        // Otherwise, destroy the Player, and return true.
+        // Otherwise, the Player is killed and game is set to game over
         else {
             System.out.println("Player has been killed by an Enemy");
-            this.dungeon.removeEntity(this);
-            this.dungeon.setGameOver();
+            dungeon.removeEntity(this);
+            dungeon.setGameOver();
         }
         return true;
     }
