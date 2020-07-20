@@ -1,8 +1,11 @@
 package unsw.dungeon;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.json.JSONObject;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -10,11 +13,18 @@ import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
-
-import java.io.File;
-
 import unsw.dungeon.entity.Entity;
-import unsw.dungeon.entity.model.*;
+import unsw.dungeon.entity.model.Boulder;
+import unsw.dungeon.entity.model.Door;
+import unsw.dungeon.entity.model.Enemy;
+import unsw.dungeon.entity.model.Exit;
+import unsw.dungeon.entity.model.Key;
+import unsw.dungeon.entity.model.Portal;
+import unsw.dungeon.entity.model.Potion;
+import unsw.dungeon.entity.model.Switch;
+import unsw.dungeon.entity.model.Sword;
+import unsw.dungeon.entity.model.Treasure;
+import unsw.dungeon.entity.model.Wall;
 
 
 /**
@@ -43,8 +53,7 @@ public class DungeonControllerLoader extends DungeonLoader {
     private Image swordImage;
     private Image treasureImage;
 
-    public DungeonControllerLoader(String filename)
-            throws FileNotFoundException {
+    public DungeonControllerLoader(String filename) throws FileNotFoundException {        
         super(filename);
         entities = new ArrayList<>();
         playerImage = new Image((new File("images/human_new.png")).toURI().toString());

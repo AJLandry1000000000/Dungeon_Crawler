@@ -35,10 +35,11 @@ public class Sword extends Entity implements Interactable {
         if (!player.hasSword()) {
             // Player acquires the Sword which is then removed from the level
             player.giveSword(this);
+            System.out.println("Player has picked up a sword");
             return true;
-        } 
-        // Otherwise disallow the interaction as the Player has a current Sword
-        else {
+        } else {
+            // Otherwise disallow the interaction as the Player has a current Sword
+            System.out.println("Player already has a Sword equipped");
             return false;
         }  
     }

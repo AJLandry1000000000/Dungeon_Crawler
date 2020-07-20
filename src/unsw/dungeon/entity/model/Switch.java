@@ -80,6 +80,7 @@ public class Switch extends Entity implements Interactable {
         else if (!isActivated() && entity instanceof Boulder) {
             // Activate the Floor Switch with the given Boulder
             activateSwitch(entity);
+            System.out.println("Player has activated a Floor Switch");
             // Check if all goal conditions have been completed
             this.getDungeon().goalsCompleted();
         }

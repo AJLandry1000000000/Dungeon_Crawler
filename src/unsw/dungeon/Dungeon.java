@@ -148,8 +148,12 @@ public class Dungeon {
         this.entities.remove(entity);
     }
 
-    public void setExitReached() {
+    public void reachExit() {
         this.exitReached = true;
+    }
+
+    public void leaveExit() {
+        this.exitReached = false;
     }
 
     public void setGoal(Goal goal) {

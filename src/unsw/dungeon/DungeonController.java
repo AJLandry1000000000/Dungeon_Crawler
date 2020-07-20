@@ -33,8 +33,6 @@ public class DungeonController {
 
     private Dungeon dungeon;
 
-    private int moves;
-
     private ArrayList<Entity> enemies;
 
     public DungeonController(Dungeon dungeon, List<ImageView> initialEntities) {
@@ -59,12 +57,6 @@ public class DungeonController {
             squares.getChildren().add(entity);
 
     }
-
-    private void addMove() {
-        this.moves++;
-    }
-
-
 
     // Returns the Euclidean distance from the Player to the Enemy's new coordinates 
     private double distanceToPlayer(int newX, int newY) {
@@ -117,7 +109,7 @@ public class DungeonController {
 
     }
 
-    private void notifyObservers() {
+    public void notifyObservers() {
         // Notify Player with the current move total.
         player.decrementPotionSteps();
 
@@ -142,6 +134,7 @@ public class DungeonController {
                 // Play does have a potion. So move the enemies further from the player.
                 optimalMove(en, "maximise", left, right, up, down, stay);
             }
+            this.enemies = dungeon.getEnemies();
         }
     }
 
@@ -186,7 +179,6 @@ public class DungeonController {
         default:
             break;
         }
-        addMove();
         // Update all enemies.
         notifyObservers();
     }

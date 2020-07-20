@@ -24,10 +24,12 @@ public class Potion extends Entity implements Interactable {
         if (!player.hasPotion()) {
             // Give the Player the Potion and activate it
             player.givePotion(this);
+            System.out.println("Player has picked up a Potion");
             return true;
         } 
         // Otherwise, disallow the Player from picking up the Potion
         else {
+            System.out.println("Player already has a Potion activated");
            return false;
         }
     }

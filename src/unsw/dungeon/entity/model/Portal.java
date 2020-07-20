@@ -41,6 +41,7 @@ public class Portal extends Entity implements Interactable {
 
         // Process the movement of the Player to the corresponding Portal
         ((Player)entity).teleport(portal.getX(), portal.getY());
+        System.out.println("Player has teleported through portal of ID: " + this.id);
         return true;
     }
 }
