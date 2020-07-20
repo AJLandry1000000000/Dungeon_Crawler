@@ -1,8 +1,10 @@
 package unsw.dungeon;
 
 /**
- * Sword is collected by Player to defeat Enemy. Each Sword only has 5 hits. After the 5th hit it disappears from the Players possession. Players can only hold one Sword at a time.
- * @author Sean Smith @ Austin Landry
+ * Sword is collected by Player to defeat Enemy. Each Sword only has 5 hits. 
+ * After the 5th hit it disappears from the Players possession. Players can only hold one Sword at a time.
+ * @author Sean Smith
+ * @author Austin Landry
  */
 public class Sword extends Entity implements Interactable {
 
@@ -22,7 +24,8 @@ public class Sword extends Entity implements Interactable {
     }
 
     /**
-     * If the entity is a Player, and that Player doesn't have a Sword, give this Sword to them. If the Player does have a Sword already, do not let them interact with this Sword.
+     * If the entity is a Player, and that Player doesn't have a Sword, give this Sword to them. 
+     * If the Player does have a Sword already, do not let them interact with this Sword.
      * @param entity - This is a Player. If it is anything else, don't let it interact with the Sword.
      */
     @Override

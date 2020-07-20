@@ -1,12 +1,16 @@
 package test;
 
 import static org.junit.jupiter.api.Assertions.*;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import unsw.dungeon.*;
 
+/**
+ * Testing functionality of Player interacting with Boulders and Floor Switches
+ * @author Sean Smith
+ * @author Austin Landry
+ */
 public class BoulderAndSwitchTest {
     private Dungeon dungeon;
     private Player player;

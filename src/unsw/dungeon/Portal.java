@@ -2,7 +2,8 @@ package unsw.dungeon;
 
 /**
  * Portal moves the Player (and only the Player) to the partner Portal.
- * @author Sean Smith & Austin Landry
+ * @author Sean Smith
+ * @author Austin Landry
  */
 public class Portal extends Entity implements Interactable {
 

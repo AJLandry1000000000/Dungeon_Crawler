@@ -16,6 +16,12 @@ import org.junit.jupiter.api.TestMethodOrder;
 
 import unsw.dungeon.*;
 
+/**
+ * Testing Leaf Goal complexity using a Dungeon Mock Loader accessing JSONObject parsed strings
+ * Testing in specific ordering whether a Goal is complete once a Player reaches an Exit
+ * @author Sean Smith
+ * @author Austin Landry
+ */
 @TestInstance(Lifecycle.PER_CLASS)
 @TestMethodOrder(OrderAnnotation.class)
 public class GoalLeafExitTest {

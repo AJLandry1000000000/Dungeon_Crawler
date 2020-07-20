@@ -1,8 +1,11 @@
 package unsw.dungeon;
 
 /**
- * The player entity moves around the map interacting with other Entities. The Enemy can interact with the Player to destroy it and end the game. Most of the Players code is to support entity interaction.
- * @author Sean Smith & Austin Landry
+ * The player entity moves around the map interacting with other Entities. 
+ * The Enemy can interact with the Player to destroy it and end the game. 
+ * Most of the Players code is to support entity interaction.
+ * @author Sean Smith
+ * @author Austin Landry
  *
  */
 public class Player extends Entity implements Moveable, Interactable {
@@ -44,8 +47,8 @@ public class Player extends Entity implements Moveable, Interactable {
 
     // Setters
     /**
-     * 
-     * @param newSword
+     * Allow the Player Entity to equip a Sword
+     * @param newSword the Sword to be equipped by the Player
      */
     public void giveSword(Sword newSword) {
         this.sword = newSword;
@@ -53,8 +56,8 @@ public class Player extends Entity implements Moveable, Interactable {
     }
 
     /**
-     * 
-     * @param newKey
+     * Allow the Player Entity to hold a key
+     * @param newKey the key a Player holds until the Player comes in contact with corresponding Door
      */
     public void giveKey(Key newKey) {
         this.key = newKey;
@@ -62,15 +65,15 @@ public class Player extends Entity implements Moveable, Interactable {
     }
 
     /**
-     * 
+     * Remove a Key from the Player's inventory
      */
     public void takeKey() {
         this.key = null;
     }
 
     /**
-     * 
-     * @param potion
+     * Allow the Player to activate a Potion for 10 steps of invincibility
+     * @param potion the Potion to give to the Player
      */
     public void givePotion(Potion potion) {
         getDungeon().removeEntity(potion);
@@ -78,7 +81,7 @@ public class Player extends Entity implements Moveable, Interactable {
     }
 
     /**
-     * 
+     * Each step the Player takes, decrement the number of Invincible steps the Player can make
      */
     public void decrementPotionSteps() {
         if (hasPotion()) {
@@ -88,7 +91,7 @@ public class Player extends Entity implements Moveable, Interactable {
     }
 
     /**
-     * 
+     * Move the Player to another location 
      */
     public void teleport(int x, int y) {
         x().set(x);
@@ -97,15 +100,15 @@ public class Player extends Entity implements Moveable, Interactable {
 
     // Checkers
     /**
-     * 
-     * @return
+     * Check if the Player is currently wielding a Sword
+     * @return true if the player has a Sword already, otherwise false
      */
     public boolean hasSword() {
         return this.sword != null;
     }
 
     /**
-     * 
+     * Check if the Sword has exceeded the number of uses it has
      */
     public void checkSword() {
         // If we have a Sword and it has zero or less hits left, remove this Sword from the Player.
@@ -115,23 +118,21 @@ public class Player extends Entity implements Moveable, Interactable {
     }
 
     /**
-     * 
-     * @return
+     * @return true if player is holding a Key, otherwise false
      */
     public boolean hasKey() {
         return this.key != null;
     }
 
     /**
-     * 
-     * @return
+     * @return true if the Player has leftover invincible steps
      */
     public boolean hasPotion() {
         return this.potion > 0 ? true : false;
     }
 
     /**
-     * 
+     * Process the Player's movement given a Direction and check if the new location can be accessed
      */
     @Override
     public Boolean move(Direction direction) {
@@ -166,8 +167,6 @@ public class Player extends Entity implements Moveable, Interactable {
         return false;
     }
 
-    // This method is used by enemy to interact with the player (Enemy attacks the Player).
-    // Note that we only have to return false if the Enemy cannot attack the Player because the Player has an Invincibility potion or if they have a Sword. 
     /**
      * Note that we only have to return false if the Enemy cannot attack the Player because the Player has an Invincibility potion or if they have a Sword. 
      * This method is used by enemy to interact with the player (Enemy attacks the Player).

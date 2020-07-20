@@ -10,6 +10,8 @@ import unsw.dungeon.*;
 /**
  * NOTE: Player interacts with other entities, gets interacted with by Enemy, and moves around the dungeon. 
  * Player interactions and getting interacted with by Enemy are covered in other test files, so here only movement is tested.
+ * @author Austin Landry
+ * @author Sean Smith
  */
 public class PlayerTest {
     private Dungeon dungeon;

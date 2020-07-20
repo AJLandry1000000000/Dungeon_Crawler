@@ -5,8 +5,8 @@ import javafx.beans.property.SimpleIntegerProperty;
 
 /**
  * An entity in the dungeon.
- * @author Robert Clifton-Everest
- *
+ * @author Sean Smith
+ * @author Austin Landry
  */
 public class Entity {
 

@@ -10,6 +10,11 @@ import org.junit.jupiter.api.Test;
 
 import unsw.dungeon.*;
 
+/**
+ * Testing functionality of Player interacting and utilising a Sword
+ * @author Sean Smith
+ * @author Austin Landry
+ */
 public class GoalLeafTreasureTest {
     
     private Dungeon dungeon;

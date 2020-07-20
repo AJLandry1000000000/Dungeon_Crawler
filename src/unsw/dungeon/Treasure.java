@@ -1,7 +1,10 @@
 package unsw.dungeon;
 
 /**
- * Treasure is a collectable item that the Player interacts with. An interaction from the Player updates the dungeon and the goals.
+ * Treasure is a collectable item that the Player interacts with. 
+ * An interaction from the Player updates the dungeon and the goals.
+ * @author Sean Smith
+ * @author Austin Landry
  */
 public class Treasure extends Entity implements Interactable {
 

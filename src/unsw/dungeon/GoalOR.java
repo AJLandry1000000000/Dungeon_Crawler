@@ -2,6 +2,12 @@ package unsw.dungeon;
 
 import java.util.ArrayList;
 
+/**
+ * Composite Goal that allows for OR checking of sub goals
+ * 
+ * @author Sean Smith
+ * @author Austin Landry
+ */
 public class GoalOR implements GoalComposite {
     
     private ArrayList<Goal> goals;
@@ -19,7 +25,10 @@ public class GoalOR implements GoalComposite {
     public Dungeon getDungeon() {
         return this.dungeon;
     }
-    
+
+    /**
+     * @return true if any sub-goals are completed, otherwise false if all sub goals are incomplete
+     */
     @Override
     public Boolean isCompleted() {
         for (Goal g : goals) {

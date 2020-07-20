@@ -5,15 +5,21 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
-import java.util.ArrayList;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
 
 import javafx.scene.image.ImageView;
 
 import unsw.dungeon.*;
 
+/**
+ * Testing Leaf Goal complexity using a Dungeon Mock Loader accessing JSONObject parsed strings
+ * Testing Goal completeness based on the Enemy interaction
+ * @author Sean Smith
+ * @author Austin Landry
+ */
 public class GoalEnemiesLeafTest {
     
     private Dungeon dungeon;

@@ -2,6 +2,11 @@ package test;
 
 import org.json.JSONObject;
 
+/**
+ * Allow for tests to access dungeon JSON data as escaped strings
+ * @author Sean Smith
+ * @author Austin Landry
+ */
 public class JSONDungeons {
 
     public static JSONObject advanced() {

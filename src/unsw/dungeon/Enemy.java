@@ -1,8 +1,10 @@
 package unsw.dungeon;
 
 /**
- * Tracks down, and attacks the Player. Behaviour changes to fleeing if the Player has a Potion.
- * @author Sean Smith & Austin Landry
+ * An Enemy Entity that tracks down, and attacks the Player. 
+ * Behaviour changes to fleeing if the Player has a Potion.
+ * @author Sean Smith
+ * @author Austin Landry
  */
 public class Enemy extends Entity implements Moveable, Interactable {
 
@@ -18,17 +20,18 @@ public class Enemy extends Entity implements Moveable, Interactable {
     }
 
     /**
-     * 
-     * @param x
-     * @param y
-     * @return
+     * Determine if there is an Entity at a given location
+     * @param x coordinate location
+     * @param y coordinate location
+     * @return either return an Entity if found, otherwise null
      */
     public Entity entityAtPosition(int x, int y) {
         return getDungeon().getEntity(x, y);
     }
 
     /**
-     * Moves towards Player. Attacks Player if its new position has the Player on it.
+     * Process Enemy's movement towards the Player
+     * Enemy attacks Player if its new position has the Player on it
      */
     @Override
     public Boolean move(Direction direction) {
@@ -60,7 +63,9 @@ public class Enemy extends Entity implements Moveable, Interactable {
         return false;
      }
 
-    // This method is used by player to interact with this enemy (Player attacks the Enemy).
+    /**
+     * This method is used by player to interact with this enemy (Player attacks the Enemy)
+     */
     @Override
     public Boolean interact(Entity entity) {
         Dungeon dungeon = getDungeon();

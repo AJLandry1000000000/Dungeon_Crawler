@@ -3,13 +3,18 @@ package test;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import javafx.scene.image.ImageView;
 
 import unsw.dungeon.*;
 
+/**
+ * Testing functionality of Player interacting with Portals
+ * @author Sean Smith
+ * @author Austin Landry
+ */
 public class PortalTest {
     private Dungeon dungeon;
     private Player player;

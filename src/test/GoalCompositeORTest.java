@@ -9,7 +9,12 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import unsw.dungeon.*;
 
-
+/**
+ * Testing Composite Goal complexity using a Dungeon Mock Loader accessing JSONObject parsed strings
+ * Testing Goal completeness where a singular sub goal must be ascertained 
+ * @author Sean Smith
+ * @author Austin Landry
+ */
 public class GoalCompositeORTest {
     
     private Dungeon dungeon;

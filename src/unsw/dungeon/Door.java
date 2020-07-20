@@ -1,7 +1,9 @@
 package unsw.dungeon;
 
 /**
- * Door can be opened by a Player with a Key that has matching ID
+ * Door entity, which corresponds to a Key entity, that locks part of the level
+ * @author Sean Smith
+ * @author Austin Landry
  */
 public class Door extends Entity implements Interactable {
 
@@ -20,21 +22,25 @@ public class Door extends Entity implements Interactable {
         return this.dungeon;
     }
 
+    public int getID() {
+        return this.id;
+    }
+
     public boolean isOpen() {
         return open;
     }
 
+    /**
+     * Change the Door's state to open
+     */
     public void openDoor() {
         this.open = true;
-    }
-
-    public int getID() {
-        return this.id;
     }
     
     /**
      * If the Door is open, let the Player move through the Door.
-     * If the Door is closed, it tests whether the Player has the corresponding key. If the Player does, then open the Door and take the Key from the Player. Otherwise don't open.
+     * If the Door is closed, it tests whether the Player has the corresponding key. 
+     * If the Player does, then open the Door and take the Key from the Player, otherwise don't open.
      * @param entity - This is a Player. If it is anything else, don't let it interact with the Door.
      */
     @Override

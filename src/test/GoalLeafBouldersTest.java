@@ -16,7 +16,12 @@ import org.junit.jupiter.api.TestMethodOrder;
 
 import unsw.dungeon.*;
 
-
+/**
+ * Testing Leaf Goal complexity using a Dungeon Mock Loader accessing JSONObject parsed strings
+ * Testing Goal completeness and floor switch interaction based on the solution to the dungeon boulders.json example
+ * @author Sean Smith
+ * @author Austin Landry
+ */
 @TestInstance(Lifecycle.PER_CLASS)
 @TestMethodOrder(OrderAnnotation.class)
 public class GoalLeafBouldersTest {

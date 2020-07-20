@@ -1,8 +1,9 @@
 package unsw.dungeon;
 
 /**
- * Grants the Player 10 steps of invincibility and fleeing Enemies.
- * @author Sean Smith & Austin Landry
+ * Grants the Player 10 steps of invincibility and creates fleeing Enemy behaviour.
+ * @author Sean Smith
+ * @author Austin Landry
  */
 public class Potion extends Entity implements Interactable {
 

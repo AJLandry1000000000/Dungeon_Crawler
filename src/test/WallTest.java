@@ -3,14 +3,17 @@ package test;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import javafx.scene.image.ImageView;
 
 import unsw.dungeon.*;
-
+/**
+ * Testing functionality of Player movement and Wall Behaviour
+ * @author Sean Smith
+ * @author Austin Landry
+ */
 public class WallTest {
     private Dungeon dungeon;
     private Player player;

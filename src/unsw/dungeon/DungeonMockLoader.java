@@ -2,7 +2,12 @@ package unsw.dungeon;
 
 import org.json.JSONObject;
 
-
+/**
+ * A Mock Dungeon Loader that allows for a JSONObject to read in instead of a file
+ * @author Sean Smith
+ * @author Austin Landry
+ *
+ */
 public class DungeonMockLoader extends DungeonLoader {
 
     public DungeonMockLoader(JSONObject json) {

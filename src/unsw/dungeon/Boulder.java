@@ -1,8 +1,10 @@
 package unsw.dungeon;
 
 /**
- * Boulders are used to activate Switches and manipulate the map.
- * @author Sean Smith & Austin Landry
+ * Boulder entity is used to activate Switches and manipulate the level.
+ * Boulders are able to Move and be Interacted with
+ * @author Sean Smith
+ * @author Austin Landry
  */
 public class Boulder extends Entity implements Moveable, Interactable {
 
@@ -12,6 +14,7 @@ public class Boulder extends Entity implements Moveable, Interactable {
     public Boulder(Dungeon dungeon, int x, int y) {
         super(x, y);
         this.dungeon = dungeon;
+        this.floor = null;
     }
 
     public Dungeon getDungeon() {
@@ -22,14 +25,23 @@ public class Boulder extends Entity implements Moveable, Interactable {
         return this.floor;
     }
 
+    /**
+     * Add a Floor Switch to the Boulder Entity
+     */
     public void addSwitch(Switch floor) {
         this.floor = floor;
     }
 
+    /**
+     * Remove Floor Switch from the Boulder Entity
+     */
     public void resetSwitch() {
         this.floor = null;
     }
 
+    /**
+     * Check if the Boulder is allowed to move in a desired Direction
+     */
     public Boolean canMove(Direction direction) {
         Dungeon dungeon = getDungeon();
         // Calculate new position of boulder based on player's direction
@@ -57,7 +69,7 @@ public class Boulder extends Entity implements Moveable, Interactable {
     }
 
     /**
-     * 
+     * Move the boulder to a new position based on a given Direction
      */
     @Override
     public Boolean move(Direction direction) {
@@ -100,7 +112,8 @@ public class Boulder extends Entity implements Moveable, Interactable {
     }
 
     /**
-     * @param entity - This is a Player. If it is anything else, don't let it interact with the Boulder.
+     * Process Entity interaction when an Entity interacts with a Boulder
+     * @param entity Entity that will interact with a Boulder where only a Player is allowed to
      */
     @Override
     public Boolean interact(Entity entity) {

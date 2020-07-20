@@ -1,8 +1,10 @@
 package unsw.dungeon;
 
 /**
- * Key is held by the Player to open a Door. Key is essentially just an ID to be compared to Door IDs.
- * @author Sean Smith & Austin Landry
+ * Key Entity is held by the Player to open a Door. 
+ * Key is essentially just an ID to be compared to Door IDs.
+ * @author Sean Smith 
+ * @author Austin Landry
  */
 public class Key extends Entity implements Interactable {
 

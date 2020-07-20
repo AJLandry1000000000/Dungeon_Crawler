@@ -1,7 +1,9 @@
 package unsw.dungeon;
 
 /**
- * Walls just exist. They just block other entities.
+ * Wall Entities act as a blocking mechanism for paths in the Dungeons
+ * @author Sean Smith
+ * @author Austin Landry
  */
 public class Wall extends Entity {
 

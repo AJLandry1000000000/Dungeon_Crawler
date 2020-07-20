@@ -1,5 +1,11 @@
 package unsw.dungeon;
 
+/**
+ * An Exit Entity that allows a Player to reach an end of level state
+ * 
+ * @author Sean Smith
+ * @author Austin Landry
+ */
 public class Exit extends Entity implements Interactable {
 
     private Dungeon dungeon;
@@ -14,7 +20,8 @@ public class Exit extends Entity implements Interactable {
     }
 
     /**
-     * 
+     * Allow for Player interaction to check if Goals are completed, and if so
+     * then level game state is completed
      */
     @Override
     public Boolean interact(Entity entity) {

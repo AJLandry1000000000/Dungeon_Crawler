@@ -1,5 +1,10 @@
 package unsw.dungeon;
 
+/**
+ * Direction Enumeration based on x and y coordinates
+ * @author Sean Smith
+ * @author Austin Landry
+ */
 public enum Direction {
     
     UP(0, -1), DOWN(0, 1), LEFT(-1, 0), RIGHT(1, 0);
@@ -20,7 +25,12 @@ public enum Direction {
         return this.y;
     }
 
-    // Determine the Direction that the given x and y coordinates make
+    /**
+     * Determine the Direction that the given x and y coordinates make
+     * @param x coordinate offset
+     * @param y coordinate offset
+     * @return If the Direction exists return it, otherwise the direction is invalid
+     */
     public static Direction getDirection(int x, int y) {
         for (Direction d : Direction.values()) {
             if (d.getX() == x && d.getY() == y) {

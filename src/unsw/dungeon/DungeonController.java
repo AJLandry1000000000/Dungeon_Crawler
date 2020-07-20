@@ -3,7 +3,6 @@ package unsw.dungeon;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-
 import java.util.Collections;
 
 import javafx.fxml.FXML;
@@ -14,8 +13,8 @@ import javafx.scene.layout.GridPane;
 
 /**
  * A JavaFX controller for the dungeon.
- * @author Robert Clifton-Everest
- *
+ * @author Sean Smith
+ * @author Austin Landry
  */
 public class DungeonController {
 
@@ -44,14 +43,12 @@ public class DungeonController {
     @FXML
     public void initialize() {
         Image ground = new Image((new File("images/dirt_0_new.png")).toURI().toString());
-
         // Add the ground first so it is below all other entities
         for (int x = 0; x < dungeon.getWidth(); x++) {
             for (int y = 0; y < dungeon.getHeight(); y++) {
                 squares.add(new ImageView(ground), x, y);
             }
         }
-
         for (ImageView entity : initialEntities)
             squares.getChildren().add(entity);
 
@@ -119,11 +116,11 @@ public class DungeonController {
                 moves.remove(max);
             }
         }
-
     }
 
     /**
-     * Notifies Player and Enemies that the Player has made another step. This will decrease Potion steps left (if a potion is active), and all Enemy will move. The Enemy movement is dependent on Player having a Potion.
+     * Notifies Player and Enemies that the Player has made another step. This will decrease Potion steps left (if a potion is active), 
+     * and all Enemy will move. The Enemy movement is dependent on Player having a Potion.
      */
     public void notifyObservers() {
         // Notify Player with the current move total.
@@ -133,7 +130,8 @@ public class DungeonController {
         if (this.dungeon.goalsCompleted()) {
             return;
         }   
-        // Consider all the possible moves for each enemy, and make the move which minimises or maximises the distance between Player and Enemy depending on if the Player has a potion.
+        // Consider all the possible moves for each enemy, and make the move which 
+        // minimises or maximises the distance between Player and Enemy depending on if the Player has a potion.
         for (Entity e : this.enemies) {
             Enemy en = (Enemy) e;
             // Move left.

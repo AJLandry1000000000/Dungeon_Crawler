@@ -10,9 +10,16 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import javafx.scene.image.ImageView;
+
 import unsw.dungeon.*;
 
-
+/**
+ * Testing Composite Goal complexity using a Dungeon Mock Loader accessing JSONObject parsed strings
+ * Testing Goal completeness where a all sub goals must be ascertained 
+ * Order testing is done to satisfy that regardless of the order taken, all sub goals complete the Goal condition
+ * @author Sean Smith
+ * @author Austin Landry
+ */
 public class GoalCompositeANDTest {
     
     private Dungeon dungeon;

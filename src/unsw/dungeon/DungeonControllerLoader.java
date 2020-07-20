@@ -12,11 +12,11 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 
-
 /**
  * A DungeonLoader that also creates the necessary ImageViews for the UI,
  * connects them via listeners to the model, and creates a controller.
- * @author Robert Clifton-Everest
+ * @author Sean Smith
+ * @author Austin Landry
  *
  */
 public class DungeonControllerLoader extends DungeonLoader {
@@ -26,7 +26,6 @@ public class DungeonControllerLoader extends DungeonLoader {
     //Images
     private Image playerImage;
     private Image wallImage;
-
     private Image boulderImage;
     //private Image doorOpenImage;
     private Image doorClosedImage;
@@ -44,7 +43,7 @@ public class DungeonControllerLoader extends DungeonLoader {
         entities = new ArrayList<>();
         playerImage = new Image((new File("images/human_new.png")).toURI().toString());
         wallImage = new Image((new File("images/brick_brown_0.png")).toURI().toString());
-
+        // Added new images
         boulderImage = new Image((new File("images/boulder.png")).toURI().toString());
         //doorOpenImage = new Image((new File("images/open_door.png")).toURI().toString());
         doorClosedImage = new Image((new File("images/closed_door.png")).toURI().toString());
@@ -63,49 +62,57 @@ public class DungeonControllerLoader extends DungeonLoader {
         ImageView view = new ImageView(playerImage);
         addEntity(player, view);
     }
-
     @Override
     public void onLoad(Wall wall) {
         ImageView view = new ImageView(wallImage);
         addEntity(wall, view);
     }
-
+    @Override
     public void onLoad(Boulder boulder) {
         ImageView view = new ImageView(boulderImage);
         addEntity(boulder, view);
     }
+    @Override
     public void onLoad(Door door) {
         ImageView view = new ImageView(doorClosedImage);
         addEntity(door, view);
     }
+    @Override
     public void onLoad(Enemy enemy) {
         ImageView view = new ImageView(enemyImage);
         addEntity(enemy, view);
     }
+    @Override
     public void onLoad(Exit exit) {
         ImageView view = new ImageView(exitImage);
         addEntity(exit, view);
     }
+    @Override
     public void onLoad(Key key) {
         ImageView view = new ImageView(keyImage);
         addEntity(key, view);
     }
+    @Override
     public void onLoad(Portal portal) {
         ImageView view = new ImageView(portalImage);
         addEntity(portal, view);
     }
+    @Override
     public void onLoad(Potion potion) {
         ImageView view = new ImageView(potionImage);
         addEntity(potion, view);
     }
+    @Override
     public void onLoad(Switch floor) {
         ImageView view = new ImageView(switchImage);
         addEntity(floor, view);
     }
+    @Override
     public void onLoad(Sword sword) {
         ImageView view = new ImageView(swordImage);
         addEntity(sword, view);
     }
+    @Override
     public void onLoad(Treasure treasure) {
         ImageView view = new ImageView(treasureImage);
         addEntity(treasure, view);

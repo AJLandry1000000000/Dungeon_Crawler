@@ -8,16 +8,22 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+/**
+ * Dungeon Application that reads from a JSON file to create and populate a Dungeon
+ *
+ * @author Sean Smith
+ * @author Austin Landry
+ *
+ */
 public class DungeonApplication extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
         primaryStage.setTitle("Dungeon");
-
-        DungeonControllerLoader dungeonLoader = new DungeonControllerLoader("simpleEnemies.json");
-
+        // Read from a JSON file
+        DungeonControllerLoader dungeonLoader = new DungeonControllerLoader("boulders.json");
         DungeonController controller = dungeonLoader.loadController();
-
+        // JavaFX processing
         FXMLLoader loader = new FXMLLoader(getClass().getResource("DungeonView.fxml"));
         loader.setController(controller);
         Parent root = loader.load();

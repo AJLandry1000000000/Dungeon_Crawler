@@ -13,7 +13,8 @@ import org.json.JSONTokener;
  * By extending this class, a subclass can hook into entity creation. This is
  * useful for creating UI elements with corresponding entities.
  *
- * @author Robert Clifton-Everest
+ * @author Sean Smith
+ * @author Austin Landry
  *
  */
 public abstract class DungeonLoader {
@@ -44,14 +45,22 @@ public abstract class DungeonLoader {
             loadEntity(dungeon, jsonEntities.getJSONObject(i));
         }
 
+        // Extract the goal and process it
         JSONObject jsonGoals = (JSONObject)json.get("goal-condition");
         dungeon.setGoal(processGoals(dungeon, jsonGoals));
         return dungeon;
     }
 
+    /**
+     * Process Goals turning them into potential Leaf and Composite Goals
+     * @param dungeon the given dungeon level
+     * @param jsonGoals the JSONObject that is holding 1 or more Goals
+     * @return the overall Goal that will hold potential further Goals
+     */
     public Goal processGoals(Dungeon dungeon, JSONObject jsonGoals) {
         String goalCondition = jsonGoals.getString("goal");
         GoalComposite goal = null;
+        // Determine the type of Goal Condition
         switch (goalCondition) {
         case "exit":
             return new GoalExit(dungeon);
@@ -68,7 +77,7 @@ public abstract class DungeonLoader {
             goal = new GoalOR(dungeon);
             break;
         }
-
+        // If the Goal is composite, add subgoals to it
         JSONArray subGoals = jsonGoals.getJSONArray("subgoals");
         for (Object sub : subGoals) {
             goal.add(processGoals(dungeon, (JSONObject)sub));
@@ -76,6 +85,11 @@ public abstract class DungeonLoader {
         return ((Goal)goal);
     }
 
+    /**
+     * Load, process and add each Entity to the Dungeon whilst checking for potential multi layering
+     * @param dungeon the given Dungeon level to house all entities
+     * @param json data carrying all Entity information and their positions
+     */
     private void loadEntity(Dungeon dungeon, JSONObject json) {
         String type = json.getString("type");
         int x = json.getInt("x");
@@ -152,12 +166,21 @@ public abstract class DungeonLoader {
         default:
             break;
         }
+        // Check and process if Entities are on the same location
         if (!checkEntityLocation(dungeon, entity, x, y)) {
             System.out.println("Too many entities on same position");
         }
         dungeon.addEntity(entity);
     }
 
+    /**
+     * 
+     * @param dungeon
+     * @param entity
+     * @param x
+     * @param y
+     * @return
+     */
     private Boolean checkEntityLocation(Dungeon dungeon, Entity entity, int x, int y) {
         if (dungeon.getEntities(x, y).size() > 0) {
             Entity check = dungeon.getEntity(x, y);

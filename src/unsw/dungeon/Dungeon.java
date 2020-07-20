@@ -1,6 +1,3 @@
-/**
- *
- */
 package unsw.dungeon;
 
 import java.util.ArrayList;
@@ -8,10 +5,12 @@ import java.util.ArrayList;
 /**
  * A dungeon in the interactive dungeon player.
  *
- * A dungeon can contain many entities, each occupy a square. More than one
- * entity can occupy the same square.
+ * A dungeon houses many entities, each occupy a square. More than one
+ * entity can occupy the same square. The Dungeon houses the Entities, the 
+ * Player and the Goal condition.
  *
- * @author Sean Smith & Austin Landry
+ * @author Sean Smith
+ * @author Austin Landry
  *
  */
 public class Dungeon {
@@ -32,7 +31,7 @@ public class Dungeon {
         this.gameOver = false;
     }
 
-    // Getters
+    // Getters 
     public int getWidth() {
         return width;
     }
@@ -50,9 +49,9 @@ public class Dungeon {
     }
 
     /**
-     * 
-     * @param entity
-     * @return
+     * Given an Entity as an argument, find whether the Entity still exists on the level
+     * @param entity the Entity to check if it still exists 
+     * @return either True if it exists, or false if it no longer exists
      */
     public Boolean findEntity(Entity entity) {
         for (Entity e : entities) {
@@ -64,10 +63,10 @@ public class Dungeon {
     }
 
     /**
-     * 
-     * @param x
-     * @param y
-     * @return
+     * Given the x and y coordinates of the level, check if an Entity exists at that location
+     * @param x coordinate location
+     * @param y coordinate location
+     * @return either the Entity if one exists, otherwise null if no Entity is present
      */
     public Entity getEntity(int x, int y) {
         for (Entity e : entities) {
@@ -80,7 +79,7 @@ public class Dungeon {
 
     /**
      * Returns a list of all enemies in the dungeon.
-     * @return
+     * @return an ArrayList of Enemies
      */
     public ArrayList<Entity> getEnemies() {
         ArrayList<Entity> enemies = new ArrayList<Entity>();
@@ -93,10 +92,10 @@ public class Dungeon {
     }
     
     /**
-     * 
-     * @param x
-     * @param y
-     * @return
+     * Gather all Entities at a given location
+     * @param x coordinate location
+     * @param y coordinate location
+     * @return an ArrayList of 0 or more Entities
      */
     public ArrayList<Entity> getEntities(int x, int y) {
         ArrayList<Entity> check = new ArrayList<Entity>();
@@ -113,9 +112,9 @@ public class Dungeon {
     }
 
     /**
-     * 
-     * @param portal
-     * @return
+     * Find the corresponding Portal linked to the given Portal
+     * @param portal Portal given to find corresponding
+     * @return the corresponding Portal with the same ID
      */
     public Portal getPortal(Portal portal) {
         for (Entity e : entities) {
@@ -165,25 +164,26 @@ public class Dungeon {
 
     // Checkers
     /**
-     * 
-     * @param x
-     * @param y
-     * @return
+     * Check if the x and y coordinates are in the boundaries of the level
+     * @param x coordinate location
+     * @param y coordinate location
+     * @return either true if location is valid, otherwise false
      */
     public boolean checkBoundaries(int x, int y) {
         return ((x >= 0 && x < getWidth()) && (y >= 0 && y < getHeight()));
     }
 
     /**
-     * 
-     * @return
+     * Check if the Player is currently interacting with an exit
+     * @return either true if the player is at the exit, otherwise false
      */
     public boolean checkExitReached() {
         return this.exitReached;
     }
 
     /**
-     * 
+     * Determine if the Goal(s) has been completed
+     * @return either true if goal is complete, otherwise false
      */
     public Boolean goalsCompleted() {
         if (this.goal.isCompleted()) {
@@ -194,8 +194,8 @@ public class Dungeon {
     }
 
     /**
-     * 
-     * @return
+     * Check if the game is at a game over state (e.g. when the player dies)
+     * @return either true if the game is over, otherwise false
      */
     public Boolean isGameOver() {
         return this.gameOver;

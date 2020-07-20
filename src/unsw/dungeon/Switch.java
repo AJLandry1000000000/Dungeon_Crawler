@@ -1,8 +1,9 @@
 package unsw.dungeon;
 
 /**
- * Switches are used to satisfy Goals.
- * @author Sean Smith & Austin Landry
+ * Floor Switch entities that allow Boulders to be pushed on top of them in order to complete Goals
+ * @author Sean Smith
+ * @author Austin Landry
  */
 public class Switch extends Entity implements Interactable {
 
@@ -21,8 +22,7 @@ public class Switch extends Entity implements Interactable {
     }
 
     /**
-     * 
-     * @param entity
+     * @param entity Boulder entity to be saved
      */
     public void activateSwitch(Entity entity) {
         this.boulder = (Boulder)entity;
@@ -30,7 +30,7 @@ public class Switch extends Entity implements Interactable {
     }
 
     /**
-     * 
+     * Remove saved Boulder and change Floor Switch activation state
      */
     public void deactivateSwitch() {
         this.boulder = null;
@@ -38,16 +38,14 @@ public class Switch extends Entity implements Interactable {
     }
 
     /**
-     * 
-     * @return
+     * @return true if Switch is activated, otherwise false
      */
     public Boolean isActivated() {
         return this.activated;
     }
 
     /**
-     * 
-     * @return
+     * @return the saved Boulder that is on top of the Floor Switch Entity
      */
     public Boulder getBoulder() {
         return this.boulder;
@@ -55,6 +53,7 @@ public class Switch extends Entity implements Interactable {
 
 
     /**
+     * Interaction method that allows a Player or Boulder to either walk over or push existing Boulder
      * @param entity - This is a Player. If it is anything else, don't let it interact with the Switch.
      */
     @Override
