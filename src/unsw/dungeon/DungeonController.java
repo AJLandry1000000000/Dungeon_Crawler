@@ -142,6 +142,7 @@ public class DungeonController {
                 // Play does have a potion. So move the enemies further from the player.
                 optimalMove(en, "maximise", left, right, up, down, stay);
             }
+            this.enemies = dungeon.getEnemies();
         }
     }
 
