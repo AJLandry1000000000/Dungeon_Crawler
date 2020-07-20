@@ -74,6 +74,8 @@ public class Switch extends Entity implements Interactable {
                     deactivateSwitch();
                     // Move the Boulder off the switch
                     boulder.move(Direction.getDirection(newX, newY));
+                } else {
+                    return false;
                 }
             } 
             return true;
