@@ -17,7 +17,7 @@ import unsw.dungeon.entity.model.Portal;
  * A dungeon can contain many entities, each occupy a square. More than one
  * entity can occupy the same square.
  *
- * @author Robert Clifton-Everest
+ * @author Sean Smith & Austin Landry
  *
  */
 public class Dungeon {
@@ -163,6 +163,11 @@ public class Dungeon {
     public void setGameOver() {
         this.gameOver = true;
     }
+
+    public boolean getGameOver() {
+        return this.gameOver;
+    }
+
 
     // Checkers
     /**

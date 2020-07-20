@@ -62,11 +62,25 @@ public class DungeonController {
 
     }
 
-    // Returns the Euclidean distance from the Player to the Enemy's new coordinates 
+    /**
+     * Returns the Euclidean distance from the Player to the Enemy's new coordinates.
+     * @param newX - The Enemy's new X coordinate
+     * @param newY - The Enemy's new Y coordinate
+     */ 
     private double distanceToPlayer(int newX, int newY) {
         return Math.sqrt( Math.pow((player.getX() - newX), 2) + Math.pow((player.getY() - newY), 2) );
     }
 
+    /**
+     * Makes the best possible move depending on if we minimise or maxise the distance between Player and Enemy.
+     * @param en - The enemy to be moved
+     * @param minOrMax - Either "minimise" or "maximise". This will change which of the moves we choose.
+     * @param left - the Euclidean distance between Enemy and Player if the Enemy moves left.
+     * @param right - the Euclidean distance between Enemy and Player if the Enemy moves right.
+     * @param up - the Euclidean distance between Enemy and Player if the Enemy moves up.
+     * @param down - the Euclidean distance between Enemy and Player if the Enemy moves down.
+     * @param stay - the Euclidean distance between Enemy and Player if the Enemy stays in its current position.
+     */
     private void optimalMove(Enemy en, String minOrMax, double left, double right, double up, double down, double stay) {
         ArrayList<Double> moves = new ArrayList<Double>();
         moves.add(left);
@@ -113,6 +127,9 @@ public class DungeonController {
 
     }
 
+    /**
+     * Notifies Player and Enemies that the Player has made another step. This will decrease Potion steps left (if a potion is active), and all Enemy will move. The Enemy movement is dependent on Player having a Potion.
+     */
     public void notifyObservers() {
         // Notify Player with the current move total.
         player.decrementPotionSteps();

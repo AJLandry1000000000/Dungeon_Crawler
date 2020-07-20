@@ -7,7 +7,7 @@ import unsw.dungeon.entity.Moveable;
 import unsw.dungeon.Dungeon;
 
 /**
- * The player entity
+ * The player entity moves around the map interacting with other Entities. The Enemy can interact with the Player to destroy it and end the game. Most of the Players code is to support entity interaction.
  * @author Sean Smith & Austin Landry
  *
  */
@@ -174,6 +174,10 @@ public class Player extends Entity implements Moveable, Interactable {
 
     // This method is used by enemy to interact with the player (Enemy attacks the Player).
     // Note that we only have to return false if the Enemy cannot attack the Player because the Player has an Invincibility potion or if they have a Sword. 
+    /**
+     * Note that we only have to return false if the Enemy cannot attack the Player because the Player has an Invincibility potion or if they have a Sword. 
+     * This method is used by enemy to interact with the player (Enemy attacks the Player).
+     */
     @Override
     public Boolean interact(Entity entity) {
         Dungeon dungeon = getDungeon();
