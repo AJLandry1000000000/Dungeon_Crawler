@@ -137,12 +137,13 @@ public class Player extends Entity implements Moveable, Interactable {
      */
     @Override
     public Boolean move(Direction direction) {
+        Dungeon dungeon = getDungeon();
         // Calculate the new position coordinates
         int newX = getX() + direction.getX();
         int newY = getY() + direction.getY();
 
         // Determine if there is a current entity at the new position
-        Entity checkEntity = getDungeon().getEntity(newX, newY);
+        Entity checkEntity = dungeon.getEntity(newX, newY);
 
         // Assume that the player cannot interact with the new entity.
         Boolean canInteract = false;
@@ -158,7 +159,7 @@ public class Player extends Entity implements Moveable, Interactable {
 
         // If the Player can attack the Enemy, is allowed to interact with a different Entity or if the Player is moving onto an empty space
         // And check that the new position must be within the dungeon boundaries
-        if ((canInteract || checkEntity == null) && getDungeon().checkBoundaries(newX, newY)) {
+        if ((canInteract || checkEntity == null) && dungeon.checkBoundaries(newX, newY)) {
             // Allow the Player to change its coordinates to the new position coordinates
             x().set(newX);
             y().set(newY);

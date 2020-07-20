@@ -34,12 +34,13 @@ public class Enemy extends Entity implements Moveable, Interactable {
      */
     @Override
     public Boolean move(Direction direction) {
+        Dungeon dungeon = getDungeon();
         // Determine the new position based on the provided Direction
         int newX = getX() + direction.getX();
         int newY = getY() + direction.getY();
 
         // Determine if there is an entity at the new position
-        Entity checkEntity = getDungeon().getEntity(newX, newY);
+        Entity checkEntity = dungeon.getEntity(newX, newY);
 
         // Assume that the enemy cannot interact with the new entity
         Boolean canAttack = false;
@@ -52,7 +53,7 @@ public class Enemy extends Entity implements Moveable, Interactable {
 
         // If the Enemy can attack the Player or If the Enemy is moving onto an empty space
         // And the new position must be within the dungeon boundaries
-        if ((canAttack || checkEntity == null) && getDungeon().checkBoundaries(newX, newY)) {
+        if ((canAttack || checkEntity == null) && dungeon.checkBoundaries(newX, newY)) {
             // Allow the Enemy to change its coordinates to the new X & Y
             x().set(newX);
             y().set(newY);
@@ -64,8 +65,9 @@ public class Enemy extends Entity implements Moveable, Interactable {
     // This method is used by player to interact with this enemy (Player attacks the Enemy).
     @Override
     public Boolean interact(Entity entity) {
+        Dungeon dungeon = getDungeon();
         // If the player does not exist 
-        if (!getDungeon().findEntity(entity)) {
+        if (!dungeon.findEntity(entity)) {
             return true;
         }
         Player player = (Player) entity;
@@ -73,23 +75,23 @@ public class Enemy extends Entity implements Moveable, Interactable {
         if (player.hasPotion()) {
             // Remove the Enemy from the level and check if goal conditions are complete
             System.out.println("Player has killed an Enemy");
-            getDungeon().removeEntity(this);
-            getDungeon().goalsCompleted();
+            dungeon.removeEntity(this);
+            dungeon.goalsCompleted();
         }
         // If the Player has a Sword
         else if (player.hasSword()) {
             // Remove the Enemy from the Level, decrement the Sword hits, check the goal conditions
             System.out.println("Player has killed an Enemy");
-            getDungeon().removeEntity(this);
+            dungeon.removeEntity(this);
             player.getSword().decrementHits();
             player.checkSword();
-            getDungeon().goalsCompleted();
+            dungeon.goalsCompleted();
         }
         // Otherwise, the Player is destroyed and game is set to Game Over
         else {
             System.out.println("Player has been killed by an Enemy");
-            getDungeon().removeEntity(player);
-            getDungeon().setGameOver();
+            dungeon.removeEntity(player);
+            dungeon.setGameOver();
         }
         return true;
     }

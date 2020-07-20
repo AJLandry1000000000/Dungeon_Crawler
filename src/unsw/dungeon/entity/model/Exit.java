@@ -22,7 +22,7 @@ public class Exit extends Entity implements Interactable {
      */
     @Override
     public Boolean interact(Entity entity) {
-        Dungeon dungeon = this.getDungeon();
+        Dungeon dungeon = getDungeon();
         // Set the Exit as temporarily reached
         dungeon.reachExit();
         // If all goals conditions are completed, the level is deemed as complete

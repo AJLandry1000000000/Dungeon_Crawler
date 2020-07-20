@@ -24,12 +24,13 @@ public class Boulder extends Entity implements Moveable, Interactable {
      */
     @Override
     public Boolean move(Direction direction) {
+        Dungeon dungeon = getDungeon();
         // Calculate new position of boulder based on player's direction
         int newPositionX = getX() + direction.getX();
         int newPositionY = getY() + direction.getY();
 
         // Determine if there is an entity at the new position
-        Entity checkEntity = getDungeon().getEntity(newPositionX, newPositionY);
+        Entity checkEntity = dungeon.getEntity(newPositionX, newPositionY);
         // If the entity is a floor switch, but already has a Boulder on it
         if (checkEntity instanceof Switch) {
             if (!((Interactable)checkEntity).interact(this)) {
@@ -42,7 +43,7 @@ public class Boulder extends Entity implements Moveable, Interactable {
         } 
 
         // If the new position is not out of bounds of the level
-        if (getDungeon().checkBoundaries(newPositionX, newPositionY)) {
+        if (dungeon.checkBoundaries(newPositionX, newPositionY)) {
             // Move the Boulder onto the new position
             x().set(newPositionX);
             y().set(newPositionY);
