@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Test;
 
 import javafx.scene.image.ImageView;
 
-
 import unsw.dungeon.*;
 
 public class WallTest {

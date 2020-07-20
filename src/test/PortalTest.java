@@ -8,8 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import javafx.scene.image.ImageView;
 
-
-import unsw.dungeon.*;;
+import unsw.dungeon.*;
 
 public class PortalTest {
     private Dungeon dungeon;

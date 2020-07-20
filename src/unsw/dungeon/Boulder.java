@@ -1,6 +1,5 @@
 package unsw.dungeon;
 
-
 /**
  * Boulders are used to activate Switches and manipulate the map.
  * @author Sean Smith & Austin Landry

@@ -14,8 +14,6 @@ import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.junit.jupiter.api.TestMethodOrder;
 
-import unsw.dungeon.Dungeon;
-import unsw.dungeon.DungeonMockLoader;
 import unsw.dungeon.*;
 
 
