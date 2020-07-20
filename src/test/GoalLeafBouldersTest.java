@@ -14,9 +14,7 @@ import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.junit.jupiter.api.TestMethodOrder;
 
-import javafx.scene.image.ImageView;
 import unsw.dungeon.Dungeon;
-import unsw.dungeon.DungeonController;
 import unsw.dungeon.DungeonMockLoader;
 import unsw.dungeon.entity.Direction;
 import unsw.dungeon.entity.Entity;
@@ -31,13 +29,11 @@ public class GoalLeafBouldersTest {
     
     private Dungeon dungeon;
     private Player player;
-    private DungeonController controller;
 
     @BeforeAll
     public void initialise() {
         DungeonMockLoader dungeonLoader = new DungeonMockLoader(JSONDungeons.boulders());
         this.dungeon = dungeonLoader.load();
-        this.controller = new DungeonController(dungeon, new ArrayList<ImageView>());
         this.player = dungeon.getPlayer();
     }
 
