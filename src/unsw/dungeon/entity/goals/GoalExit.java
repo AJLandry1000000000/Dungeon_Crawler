@@ -15,8 +15,8 @@ public class GoalExit implements Goal {
     }
 
     @Override
-    public Boolean completed() {
+    public Boolean isCompleted() {
         Dungeon dungeon = getDungeon();
-        return (dungeon.checkLevelCompleted()) ? true : false;
+        return (dungeon.checkExitReached()) ? true : false;
     }
 }

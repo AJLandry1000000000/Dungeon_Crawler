@@ -15,10 +15,8 @@ public class Player extends Entity implements Moveable, Interactable {
 
     private Dungeon dungeon;
     private Sword sword;
-    private int amountTreasures;
     private int potion;
     private Key key;
-    private int defeatedEnemies;
 
     /**
      * Create a player positioned in square (x,y)
@@ -29,10 +27,8 @@ public class Player extends Entity implements Moveable, Interactable {
         super(x, y);
         this.dungeon = dungeon;
         this.sword = null;
-        this.amountTreasures = 0;
         this.potion = 0;
         this.key = null;
-        this.defeatedEnemies = 0;
     }
 
     public Dungeon getDungeon() {
@@ -81,15 +77,6 @@ public class Player extends Entity implements Moveable, Interactable {
         this.key = null;
     }
     
-    public void giveTreasure(Treasure newTreasure) {
-        this.amountTreasures++;
-        this.dungeon.removeEntity(newTreasure);
-    }
-    
-    public int getAmountTreasures() {
-        return amountTreasures;
-    }
-    
     public boolean hasPotion() {
         return this.potion > 0 ? true : false;
     }
@@ -127,7 +114,7 @@ public class Player extends Entity implements Moveable, Interactable {
         // If the player can interact with an entity, it can move onto the entities coordinates, so allow the player to change its coordinates to the new X & Y.
         // If the player cannot interact with an entity, maybe its because there is no entity to interact with, and the player is moving to an empty space. If the space is empty, allow the player to move their.
         // Always check that the new spot is within the dungeon boundaries.
-        else if ((canInteract || checkEntity == null) && this.dungeon.checkBoundaries(newX, newY)) {
+        if ((canInteract || checkEntity == null) && this.dungeon.checkBoundaries(newX, newY)) {
             x().set(newX);
             y().set(newY);
             return true;
@@ -139,24 +126,31 @@ public class Player extends Entity implements Moveable, Interactable {
     // Note that we only have to return false if the Enemy cannot attack the Player because the Player has an Invincibility potion or if they have a Sword. 
     @Override
     public Boolean interact(Entity entity) {
+        // If the enemy does not exist 
+        if (!this.dungeon.findEntity(entity)) {
+            return true;
+        }
         Enemy attackingEnemy = (Enemy) entity;
-
         // If the Player has an Invincibility potion, destroy the Enemy, and return false.
         if (hasPotion()) {
+            System.out.println("Enemy Killed");
             this.dungeon.removeEntity(attackingEnemy);
-            return false;
+            this.dungeon.goalsCompleted();
         }
-
         // If the Player has a Sword, destroy the Enemy, change the Sword hits, and return false.
-        if (hasSword()) {
+        else if (hasSword()) {
+            System.out.println("Enemy Killed");
             this.dungeon.removeEntity(attackingEnemy);
             this.sword.decrementHits();
             checkSword();
-            return false;
+            this.dungeon.goalsCompleted();
         }
-
         // Otherwise, destroy the Player, and return true.
-        this.dungeon.removeEntity(this);
+        else {
+            System.out.println("Player Killed");
+            this.dungeon.removeEntity(this);
+            this.dungeon.setGameOver();
+        }
         return true;
     }
 }

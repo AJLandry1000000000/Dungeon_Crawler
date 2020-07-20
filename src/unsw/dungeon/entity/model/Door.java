@@ -17,6 +17,10 @@ public class Door extends Entity implements Interactable {
         this.id = id;
     }
 
+    public Dungeon getDungeon() {
+        return this.dungeon;
+    }
+    
     @Override
     public Boolean interact(Entity entity) {
         // If the entity interacting with the key is not the player, return false.

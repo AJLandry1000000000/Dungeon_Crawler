@@ -153,7 +153,7 @@ public abstract class DungeonLoader {
             entity = potion;
             break;
         case "switch":
-            Switch floor = new Switch(x, y);
+            Switch floor = new Switch(dungeon, x, y);
             onLoad(floor);
             entity = floor;
             break;
@@ -163,7 +163,7 @@ public abstract class DungeonLoader {
             entity = sword;
             break;
         case "treasure":
-            Treasure treasure = new Treasure(x, y);
+            Treasure treasure = new Treasure(dungeon, x, y);
             onLoad(treasure);
             entity = treasure;
             break;

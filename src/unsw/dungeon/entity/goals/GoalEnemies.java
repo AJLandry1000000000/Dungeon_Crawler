@@ -2,7 +2,6 @@ package unsw.dungeon.entity.goals;
 
 import unsw.dungeon.Dungeon;
 import unsw.dungeon.entity.model.Enemy;
-import unsw.dungeon.entity.model.Player;
 
 public class GoalEnemies implements Goal {
         
@@ -17,14 +16,13 @@ public class GoalEnemies implements Goal {
     }
 
     @Override
-    public Boolean completed() {
+    public Boolean isCompleted() {
         Dungeon dungeon = getDungeon();
         long totalEnemies = dungeon.getEntities()
             .stream()
             .filter(x -> x instanceof Enemy)
             .count();
-        Player player = dungeon.getPlayer();
-        long enemiesDefeated = player.getAmountTreasures();
-        return (totalEnemies == enemiesDefeated) ? true : false;
+
+        return (totalEnemies == 0) ? true : false;
     }
 }

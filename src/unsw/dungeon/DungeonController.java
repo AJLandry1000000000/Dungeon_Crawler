@@ -147,7 +147,11 @@ public class DungeonController {
 
     @FXML
     public void handleKeyPress(KeyEvent event) {
-        if (this.dungeon.checkLevelCompleted()) {
+        if (this.dungeon.goalsCompleted()) {
+            System.out.println("All Goals Completed, Level is Complete");
+            return;
+        } else if (this.dungeon.isGameOver()) {
+            System.out.println("Player has been Defeated");
             return;
         }
         switch (event.getCode()) {

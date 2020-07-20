@@ -1,18 +1,34 @@
 package unsw.dungeon.entity.goals;
 
+import java.util.ArrayList;
+
 import unsw.dungeon.Dungeon;
 
-public class GoalOR extends GoalComposite {
+public class GoalOR implements GoalComposite {
     
+    private ArrayList<Goal> goals;
     private Dungeon dungeon;
 
     public GoalOR(Dungeon dungeon) {
-        super();
+        this.goals = new ArrayList<Goal>();
         this.dungeon = dungeon;
     }
 
+    public void add(Goal goal) {
+        this.goals.add(goal);
+    }
+
+    public Dungeon getDungeon() {
+        return this.dungeon;
+    }
+    
     @Override
-    public Boolean completed() {
+    public Boolean isCompleted() {
+        for (Goal g : goals) {
+            if (g.isCompleted()) {
+                return true;
+            }
+        }
         return false;
     }
 }

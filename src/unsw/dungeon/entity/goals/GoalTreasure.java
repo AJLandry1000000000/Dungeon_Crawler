@@ -1,7 +1,6 @@
 package unsw.dungeon.entity.goals;
 
 import unsw.dungeon.Dungeon;
-import unsw.dungeon.entity.model.Player;
 import unsw.dungeon.entity.model.Treasure;
 
 public class GoalTreasure implements Goal {
@@ -17,14 +16,12 @@ public class GoalTreasure implements Goal {
     }
 
     @Override
-    public Boolean completed() {
+    public Boolean isCompleted() {
         Dungeon dungeon = getDungeon();
         long totalTreasures = dungeon.getEntities()
             .stream()
             .filter(x -> x instanceof Treasure)
             .count();
-        Player player = dungeon.getPlayer();
-        long playerTreasures = player.getAmountTreasures();
-        return (totalTreasures == playerTreasures) ? true : false;
+        return (totalTreasures == 0) ? true : false;
     }
 }

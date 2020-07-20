@@ -19,8 +19,11 @@ public class GoalBoulders implements Goal {
         return this.dungeon;
     }
 
+    /**
+     * 
+     */
     @Override
-    public Boolean completed() {
+    public Boolean isCompleted() {
         Dungeon dungeon = getDungeon();
         List<Entity> switches = dungeon.getEntities()
             .stream()
