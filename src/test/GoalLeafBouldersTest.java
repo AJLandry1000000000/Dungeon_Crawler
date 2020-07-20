@@ -27,7 +27,7 @@ import unsw.dungeon.entity.model.Switch;
 
 @TestInstance(Lifecycle.PER_CLASS)
 @TestMethodOrder(OrderAnnotation.class)
-public class BoulderSwitchGoalTest {
+public class GoalLeafBouldersTest {
     
     private Dungeon dungeon;
     private Player player;
