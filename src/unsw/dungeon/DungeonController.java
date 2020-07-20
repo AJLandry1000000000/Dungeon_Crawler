@@ -42,6 +42,10 @@ public class DungeonController {
         this.initialEntities = new ArrayList<>(initialEntities);
     }
 
+    public Player getPlayer() {
+        return this.player;
+    }
+
     @FXML
     public void initialize() {
         Image ground = new Image((new File("images/dirt_0_new.png")).toURI().toString());
