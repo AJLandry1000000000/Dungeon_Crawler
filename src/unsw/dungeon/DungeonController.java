@@ -67,7 +67,7 @@ public class DungeonController {
     }
 
     /**
-     * Makes the best possible move depending on if we minimise or maxise the distance between Player and Enemy.
+     * Makes the best possible move depending on if we minimise or maximise the distance between Player and Enemy.
      * @param en - The enemy to be moved
      * @param minOrMax - Either "minimise" or "maximise". This will change which of the moves we choose.
      * @param left - the Euclidean distance between Enemy and Player if the Enemy moves left.

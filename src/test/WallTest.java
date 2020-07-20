@@ -19,7 +19,7 @@ public class WallTest {
     public void initialize() {
         // Create dungeon.
         this.dungeon = new Dungeon(10, 10);
-        // Give the dungeion a random goal (to avoid null pointer error).
+        // Give the dungeon a random goal (to avoid null pointer error).
         GoalTreasure goalTreasure = new GoalTreasure(this.dungeon);
         this.dungeon.setGoal(goalTreasure);
         // Create Player.
@@ -90,7 +90,7 @@ public class WallTest {
         assertEquals(5, b.getX());
         assertEquals(4, b.getY());
 
-        // Check that the Player ramains in the same spot.
+        // Check that the Player remains in the same spot.
         assertEquals(4, player.getX());
         assertEquals(4, player.getY());
 

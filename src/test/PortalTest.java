@@ -36,7 +36,7 @@ public class PortalTest {
         Portal p2 = new Portal(dungeon, 1, 1, 1);
         dungeon.addEntity(p2);
         
-        //Create Another Portal pair to test that the original pair sents to each other and only to each other.
+        //Create Another Portal pair to test that the original pair sends to each other and only to each other.
         Portal p3 = new Portal(dungeon, 5, 5, 2);
         dungeon.addEntity(p3);
         Portal p4 = new Portal(dungeon, 9, 9, 2);

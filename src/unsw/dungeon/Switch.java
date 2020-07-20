@@ -1,7 +1,7 @@
 package unsw.dungeon;
 
 /**
- * Swithes are used to satisfy Goals.
+ * Switches are used to satisfy Goals.
  * @author Sean Smith & Austin Landry
  */
 public class Switch extends Entity implements Interactable {
