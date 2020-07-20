@@ -13,6 +13,9 @@ import javafx.scene.layout.GridPane;
 
 import java.io.File;
 
+import org.json.JSONObject;
+
+
 import unsw.dungeon.entity.Entity;
 import unsw.dungeon.entity.model.*;
 
@@ -43,8 +46,7 @@ public class DungeonControllerLoader extends DungeonLoader {
     private Image swordImage;
     private Image treasureImage;
 
-    public DungeonControllerLoader(String filename)
-            throws FileNotFoundException {
+    public DungeonControllerLoader(String filename) throws FileNotFoundException {        
         super(filename);
         entities = new ArrayList<>();
         playerImage = new Image((new File("images/human_new.png")).toURI().toString());
@@ -62,6 +64,11 @@ public class DungeonControllerLoader extends DungeonLoader {
         swordImage = new Image((new File("images/greatsword_1_new.png")).toURI().toString());
         treasureImage = new Image((new File("images/gold_pile.png")).toURI().toString());
     }
+
+    // For testing.
+    public DungeonControllerLoader(JSONObject json) {
+        super(json);
+   }
 
     @Override
     public void onLoad(Entity player) {
