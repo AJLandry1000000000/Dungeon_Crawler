@@ -6,6 +6,10 @@ import unsw.dungeon.entity.Entity;
 import unsw.dungeon.entity.Interactable;
 import unsw.dungeon.entity.Moveable;
 
+/**
+ * Boulders are used to activate Switches and manipulate the map.
+ * @author Sean Smith & Austin Landry
+ */
 public class Boulder extends Entity implements Moveable, Interactable {
 
     private Dungeon dungeon;
@@ -102,7 +106,7 @@ public class Boulder extends Entity implements Moveable, Interactable {
     }
 
     /**
-     * 
+     * @param entity - This is a Player. If it is anything else, don't let it interact with the Boulder.
      */
     @Override
     public Boolean interact(Entity entity) {

@@ -5,7 +5,10 @@ import unsw.dungeon.entity.Direction;
 import unsw.dungeon.entity.Entity;
 import unsw.dungeon.entity.Interactable;
 
-
+/**
+ * Swithes are used to satisfy Goals.
+ * @author Sean Smith & Austin Landry
+ */
 public class Switch extends Entity implements Interactable {
 
     private Dungeon dungeon;
@@ -57,7 +60,7 @@ public class Switch extends Entity implements Interactable {
 
 
     /**
-     * 
+     * @param entity - This is a Player. If it is anything else, don't let it interact with the Switch.
      */
     @Override
     public Boolean interact(Entity entity) {

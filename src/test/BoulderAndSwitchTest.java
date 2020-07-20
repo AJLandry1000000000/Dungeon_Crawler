@@ -45,6 +45,7 @@ public class BoulderAndSwitchTest {
         dungeon.addEntity(b2);
 
         // Make the Player push these Boulders. Check that the Players position does not change.
+        player.move(Direction.RIGHT);
         assertEquals(4, player.getX());
         assertEquals(4, player.getY());
     }
@@ -65,6 +66,23 @@ public class BoulderAndSwitchTest {
         // Push the Boulder off the Switch and check that the Switch is not activated.
         player.move(Direction.RIGHT);
         assertTrue(!s.isActivated());
+    }
+
+    // Test that Boulder can not be pushed into a wall.
+    // Note: In other tests we already try and push a boulder onto interactable items, and prove that it is not allowed. Wall is the only other non-interactable entity, so we test that here.
+    @Test
+    public void BoulderAndSwitchTest3() {
+        // Place a Boulder and a Wall next to the Player.
+        Boulder b = new Boulder(dungeon, 5, 4);
+        dungeon.addEntity(b);
+        Wall w = new Wall(6, 4);
+        dungeon.addEntity(w);
+
+        // Try and push the Boulder into the Wall.
+        player.move(Direction.RIGHT);
+        assertEquals(4, player.getX());
+        assertEquals(4, player.getY());
+        
     }
 }
 
