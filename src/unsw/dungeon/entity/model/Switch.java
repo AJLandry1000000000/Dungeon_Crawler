@@ -55,35 +55,40 @@ public class Switch extends Entity implements Interactable {
         return this.boulder;
     }
 
+
     /**
      * 
      */
     @Override
     public Boolean interact(Entity entity) {
-        // If a player interacts with a switch with a current boulder on it
-        if (entity instanceof Player && isActivated()) {
-            // Determine the direction that the Boulder may potentially move
-            int newX = getX() - entity.getX();
-            int newY = getY() - entity.getY();
-            // Determine if the Boulder can be moved in the given Direction
-            if (getBoulder().move(Direction.getDirection(newX, newY))) {
-                // Deactivate the Floor Switch
-                deactivateSwitch();
+        // If a Player is interacting with the Switch
+        if (entity instanceof Player) {
+            // If the Switch is not activated
+            if (isActivated()) {
+                int newX = getX() - entity.getX();
+                int newY = getY() - entity.getY();
+                Boulder boulder = getBoulder();
+                // Determine if the Boulder can be moved in the given Direction
+                if (boulder.canMove(Direction.getDirection(newX, newY))) {
+                    // Deactivate the Floor Switch
+                    deactivateSwitch();
+                    // Move the Boulder off the switch
+                    boulder.move(Direction.getDirection(newX, newY));
+                }
+            } 
+            return true;
+        } 
+        // If a Boulder is interacting with the Switch
+        else if (entity instanceof Boulder) {
+            // If the Switch does not have a current Boulder on it
+            if (!isActivated()) {
+                // Activate the Floor Switch with the given Boulder
+                activateSwitch(entity);
+                // Check if all goal conditions have been completed
+                getDungeon().goalsCompleted();
                 return true;
             } 
-            // Otherwise the Boulder cannot be moved in the given Direction
-            else {
-                return false;
-            }
-        } 
-        // If the switch is not activated and a Boulder is being pushed onto it
-        else if (!isActivated() && entity instanceof Boulder) {
-            // Activate the Floor Switch with the given Boulder
-            activateSwitch(entity);
-            System.out.println("Player has activated a Floor Switch");
-            // Check if all goal conditions have been completed
-            this.getDungeon().goalsCompleted();
         }
-        return true;
+        return false;
     }
 }
