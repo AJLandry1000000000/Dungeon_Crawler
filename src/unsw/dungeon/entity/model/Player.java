@@ -44,6 +44,10 @@ public class Player extends Entity implements Moveable, Interactable {
         return this.key;
     }
 
+    public int potionStepsLeft() {
+        return this.potion;
+    }
+
     // Setters
     /**
      * 
@@ -76,7 +80,7 @@ public class Player extends Entity implements Moveable, Interactable {
      */
     public void givePotion(Potion potion) {
         getDungeon().removeEntity(potion);
-        this.potion = 10;
+        this.potion = 11;
     }
 
     /**
@@ -84,7 +88,7 @@ public class Player extends Entity implements Moveable, Interactable {
      */
     public void decrementPotionSteps() {
         if (hasPotion()) {
-            System.out.println("Player has " + this.potion + " steps of potion left");
+            System.out.println("Player has " + (this.potion - 1) + " steps of potion left");
             this.potion--;
         }
     }
