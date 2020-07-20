@@ -20,13 +20,13 @@ public class Exit extends Entity implements Interactable {
     @Override
     public Boolean interact(Entity entity) {
         Dungeon dungeon = this.getDungeon();
-        this.getDungeon().setExitReached();
-
+        dungeon.reachExit();
         // If goals are completed
         if (dungeon.goalsCompleted()) {
             System.out.println("Level is complete!");
             return true;
         }
+        System.out.println("Goals must be completed before entering exit");
         return false;
     }
 }

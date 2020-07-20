@@ -81,8 +81,8 @@ public class Player extends Entity implements Moveable, Interactable {
         return this.potion > 0 ? true : false;
     }
 
-    public void givePotion() {
-        this.dungeon.removeEntity(this);
+    public void givePotion(Potion potion) {
+        this.dungeon.removeEntity(potion);
         this.potion = 10;
     }
 
@@ -111,6 +111,10 @@ public class Player extends Entity implements Moveable, Interactable {
         if (checkEntity instanceof Portal) {
             return true;
         }
+
+        if (!(checkEntity instanceof Exit)) {
+            getDungeon().leaveExit();
+        }
         // If the player can interact with an entity, it can move onto the entities coordinates, so allow the player to change its coordinates to the new X & Y.
         // If the player cannot interact with an entity, maybe its because there is no entity to interact with, and the player is moving to an empty space. If the space is empty, allow the player to move their.
         // Always check that the new spot is within the dungeon boundaries.
@@ -133,13 +137,13 @@ public class Player extends Entity implements Moveable, Interactable {
         Enemy attackingEnemy = (Enemy) entity;
         // If the Player has an Invincibility potion, destroy the Enemy, and return false.
         if (hasPotion()) {
-            System.out.println("Enemy Killed");
+            System.out.println("Player has killed an Enemy");
             this.dungeon.removeEntity(attackingEnemy);
             this.dungeon.goalsCompleted();
         }
         // If the Player has a Sword, destroy the Enemy, change the Sword hits, and return false.
         else if (hasSword()) {
-            System.out.println("Enemy Killed");
+            System.out.println("Player has killed an Enemy");
             this.dungeon.removeEntity(attackingEnemy);
             this.sword.decrementHits();
             checkSword();
@@ -147,7 +151,7 @@ public class Player extends Entity implements Moveable, Interactable {
         }
         // Otherwise, destroy the Player, and return true.
         else {
-            System.out.println("Player Killed");
+            System.out.println("Player has been killed by an Enemy");
             this.dungeon.removeEntity(this);
             this.dungeon.setGameOver();
         }

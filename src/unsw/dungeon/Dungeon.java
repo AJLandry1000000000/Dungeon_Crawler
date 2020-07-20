@@ -125,8 +125,12 @@ public class Dungeon {
         return this.exitReached;
     }
 
-    public void setExitReached() {
+    public void reachExit() {
         this.exitReached = true;
+    }
+
+    public void leaveExit() {
+        this.exitReached = false;
     }
 
     public void setGoal(Goal goal) {

@@ -29,6 +29,7 @@ public class Key extends Entity implements Interactable, Collectable {
         // If a player does not have a key, give this key to the player and remove it from the dungeon list entities. Then return true.
         if (!player.hasKey()) {
             player.giveKey(this);
+            System.out.println("Player has picked up a key of ID: " + this.id);
             return true;
         } else {
             // If a player already has a key. Do nothing with this key. Return false.

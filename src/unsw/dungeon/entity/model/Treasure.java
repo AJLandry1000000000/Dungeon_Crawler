@@ -26,6 +26,7 @@ public class Treasure extends Entity implements Interactable, Collectable {
         }
         // Give the player the treasure, remove it from the dungeon list of entities, then return true.
         this.getDungeon().removeEntity(this);
+        System.out.println("Player has picked up a treasure");
         this.getDungeon().goalsCompleted();
         return true;
     }
