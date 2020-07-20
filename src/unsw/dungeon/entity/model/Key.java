@@ -30,7 +30,7 @@ public class Key extends Entity implements Interactable {
     
     /**
      * If the Player doesn't have a Key, give the Player the Key. Otherwise don't let the Player interact with the Key.
-     * @param entity - This is a Player. If it is anything else, don't let it interact with the Door.
+     * @param entity - This is a Player. If it is anything else, don't let it interact with the Key.
      */
     @Override
     public Boolean interact(Entity entity) {

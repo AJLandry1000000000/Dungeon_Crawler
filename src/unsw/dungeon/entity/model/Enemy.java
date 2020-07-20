@@ -6,6 +6,10 @@ import unsw.dungeon.entity.Entity;
 import unsw.dungeon.entity.Interactable;
 import unsw.dungeon.entity.Moveable;
 
+/**
+ * Tracks down, and attacks the Player. Behaviour changes to fleeing if the Player has a Potion.
+ * @author Sean Smith & Austin Landry
+ */
 public class Enemy extends Entity implements Moveable, Interactable {
 
     private Dungeon dungeon;
@@ -30,7 +34,7 @@ public class Enemy extends Entity implements Moveable, Interactable {
     }
 
     /**
-     * 
+     * Moves towards Player. Attacks Player if its new position has the Player on it.
      */
     @Override
     public Boolean move(Direction direction) {
