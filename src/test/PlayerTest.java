@@ -14,9 +14,6 @@ import javafx.scene.image.ImageView;
 
 
 import unsw.dungeon.*;
-import unsw.dungeon.entity.Direction;
-import unsw.dungeon.entity.goals.GoalTreasure;
-import unsw.dungeon.entity.model.*;
 
 /**
  * NOTE: Player interacts with other entities, gets interacted with by Enemy, and moves around the dungeon. 

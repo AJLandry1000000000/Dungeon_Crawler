@@ -12,10 +12,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 
-import unsw.dungeon.entity.Direction;
-import unsw.dungeon.entity.model.Enemy;
-import unsw.dungeon.entity.Entity;
-import unsw.dungeon.entity.model.Player;
+import unsw.dungeon.Direction;
+import unsw.dungeon.Enemy;
+import unsw.dungeon.Entity;
+import unsw.dungeon.Player;
 
 /**
  * A JavaFX controller for the dungeon.

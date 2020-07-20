@@ -12,16 +12,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import javafx.scene.image.ImageView;
-import unsw.dungeon.Dungeon;
-import unsw.dungeon.DungeonController;
-import unsw.dungeon.DungeonMockLoader;
-import unsw.dungeon.entity.Direction;
-import unsw.dungeon.entity.Entity;
-import unsw.dungeon.entity.model.Door;
-import unsw.dungeon.entity.model.Enemy;
-import unsw.dungeon.entity.model.Key;
-import unsw.dungeon.entity.model.Player;
-import unsw.dungeon.entity.model.Potion;
+import unsw.dungeon.*;
 
 
 public class GoalEnemiesLeafTest {

@@ -10,15 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import javafx.scene.image.ImageView;
-import unsw.dungeon.Dungeon;
-import unsw.dungeon.DungeonController;
-import unsw.dungeon.DungeonMockLoader;
-import unsw.dungeon.entity.Direction;
-import unsw.dungeon.entity.Entity;
-import unsw.dungeon.entity.model.Enemy;
-import unsw.dungeon.entity.model.Player;
-import unsw.dungeon.entity.model.Sword;
-import unsw.dungeon.entity.model.Treasure;
+import unsw.dungeon.*;
 
 
 public class GoalCompositeANDTest {

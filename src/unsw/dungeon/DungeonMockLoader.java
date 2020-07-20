@@ -4,19 +4,7 @@ package unsw.dungeon;
 
 import org.json.JSONObject;
 
-import unsw.dungeon.entity.Entity;
-import unsw.dungeon.entity.model.Boulder;
-import unsw.dungeon.entity.model.Door;
-import unsw.dungeon.entity.model.Enemy;
-import unsw.dungeon.entity.model.Exit;
-import unsw.dungeon.entity.model.Key;
-import unsw.dungeon.entity.model.Portal;
-import unsw.dungeon.entity.model.Potion;
-import unsw.dungeon.entity.model.Switch;
-import unsw.dungeon.entity.model.Sword;
-import unsw.dungeon.entity.model.Treasure;
-import unsw.dungeon.entity.model.Wall;
-
+import unsw.dungeon.*;
 
 public class DungeonMockLoader extends DungeonLoader {
 

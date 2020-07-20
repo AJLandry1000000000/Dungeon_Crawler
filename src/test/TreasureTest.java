@@ -10,9 +10,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import unsw.dungeon.*;
-import unsw.dungeon.entity.Direction;
-import unsw.dungeon.entity.goals.GoalTreasure;
-import unsw.dungeon.entity.model.*;
 
 public class TreasureTest {
     private Dungeon dungeon;

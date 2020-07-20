@@ -15,13 +15,7 @@ import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.junit.jupiter.api.TestMethodOrder;
 
-import unsw.dungeon.Dungeon;
-import unsw.dungeon.DungeonMockLoader;
-import unsw.dungeon.entity.Direction;
-import unsw.dungeon.entity.Entity;
-import unsw.dungeon.entity.model.Exit;
-import unsw.dungeon.entity.model.Player;
-import unsw.dungeon.entity.model.Wall;
+import unsw.dungeon.*;
 
 
 @TestInstance(Lifecycle.PER_CLASS)
