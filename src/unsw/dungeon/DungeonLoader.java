@@ -45,8 +45,6 @@ public abstract class DungeonLoader {
 
         JSONObject goalConditions = json.getJSONObject("goal-condition");
         JSONObject jsonGoals = (JSONObject) json.get("goal-condition");
-        System.out.println(goalConditions.toString()); 
-        System.out.println(jsonGoals.toString());
         
         return dungeon;
     }
