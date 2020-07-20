@@ -134,6 +134,10 @@ public class DungeonController {
         // Notify Player with the current move total.
         player.decrementPotionSteps();
 
+        // If the Goal condition has been completed, do not allow the Enemy to move
+        if (this.dungeon.goalsCompleted()) {
+            return;
+        }   
         // Consider all the possible moves for each enemy, and make the move which minimises or maximises the distance between Player and Enemy depending on if the Player has a potion.
         for (Entity e : this.enemies) {
             Enemy en = (Enemy) e;

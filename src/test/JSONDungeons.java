@@ -2563,6 +2563,136 @@ public class JSONDungeons {
         "}";
 
         return new JSONObject(advancedOR);
+    }
 
+    public static JSONObject simpleEnemies() {
+
+        String simpleEnemies = "{" +
+        "    \"width\": 4," +
+        "    \"height\": 3," +
+        "    \"entities\": [" +
+        "      {" +
+        "        \"x\": 0," +
+        "        \"y\": 0," +
+        "        \"type\": \"player\"" +
+        "      }," +
+        "      {" +
+        "        \"x\": 0," +
+        "        \"y\": 1," +
+        "        \"type\": \"wall\"" +
+        "      }," +
+        "      {" +
+        "        \"x\": 1," +
+        "        \"y\": 1," +
+        "        \"type\": \"wall\"" +
+        "      }," +
+        "      {" +
+        "        \"x\": 2," +
+        "        \"y\": 1," +
+        "        \"type\": \"wall\"" +
+        "      }," +
+        "      {" +
+        "        \"x\": 2," +
+        "        \"y\": 0," +
+        "        \"type\": \"invincibility\"" +
+        "      }," +
+        "      {" +
+        "        \"x\": 3," +
+        "        \"y\": 0," +
+        "        \"id\": 1," +
+        "        \"type\": \"key\"" +
+        "      }," +
+        "      {" +
+        "        \"x\": 3," +
+        "        \"y\": 1," +
+        "        \"id\": 1," +
+        "        \"type\": \"door\"" +
+        "      }," +
+        "      {" +
+        "        \"x\": 0," +
+        "        \"y\": 2," +
+        "        \"type\": \"treasure\"" +
+        "      }," +
+        "      {" +
+        "        \"x\": 2," +
+        "        \"y\": 2," +
+        "        \"type\": \"enemy\"" +
+        "      }," +
+        "      {" +
+        "        \"x\": 3," +
+        "        \"y\": 2," +
+        "        \"type\": \"enemy\"" +
+        "      }" +
+        "    ]," +
+        "    \"goal-condition\": {" +
+        "      \"goal\": \"enemies\"" +
+        "    }" +
+        "  }" +
+        "  ";
+        
+        return new JSONObject(simpleEnemies);
+    }
+
+    public static JSONObject simpleTreasure() {
+
+        String simpleTreasure = "{" +
+        "    \"width\": 4," +
+        "    \"height\": 3," +
+        "    \"entities\": [" +
+        "      {" +
+        "        \"x\": 0," +
+        "        \"y\": 0," +
+        "        \"type\": \"player\"" +
+        "      }," +
+        "      {" +
+        "        \"x\": 0," +
+        "        \"y\": 1," +
+        "        \"type\": \"wall\"" +
+        "      }," +
+        "      {" +
+        "        \"x\": 1," +
+        "        \"y\": 1," +
+        "        \"type\": \"wall\"" +
+        "      }," +
+        "      {" +
+        "        \"x\": 2," +
+        "        \"y\": 1," +
+        "        \"type\": \"wall\"" +
+        "      }," +
+        "      {" +
+        "        \"x\": 3," +
+        "        \"y\": 0," +
+        "        \"id\": 1," +
+        "        \"type\": \"key\"" +
+        "      }," +
+        "      {" +
+        "        \"x\": 3," +
+        "        \"y\": 1," +
+        "        \"id\": 1," +
+        "        \"type\": \"door\"" +
+        "      }," +
+        "      {" +
+        "        \"x\": 0," +
+        "        \"y\": 2," +
+        "        \"type\": \"enemy\"" +
+        "      }," +
+        "      {" +
+        "        \"x\": 2," +
+        "        \"y\": 2," +
+        "        \"type\": \"treasure\"" +
+        "      }," +
+        "      {" +
+        "        \"x\": 3," +
+        "        \"y\": 2," +
+        "        \"type\": \"treasure\"" +
+        "      }" +
+        "    ]," +
+        "    \"goal-condition\": {" +
+        "      \"goal\": \"treasure\"" +
+        "    }" +
+        "  }" +
+        "  ";
+ 
+        return new JSONObject(simpleTreasure);
     }
 }
