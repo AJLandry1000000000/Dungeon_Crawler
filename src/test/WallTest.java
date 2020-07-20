@@ -74,8 +74,7 @@ public class WallTest {
         Wall w4 = new Wall(7, 4);
         dungeon.addEntity(w4);
 
-        // Move the Player backwards one space (because the Enemy moves after Player), and check that the Enemy hasn't moved (because it's surrounded by walls).
-        player.move(Direction.LEFT);
+        // Check that the Enemy hasn't moved (because it's surrounded by walls).
         DungeonController dc = new DungeonController(dungeon, new ArrayList<ImageView>());
         dc.notifyObservers();
         assertEquals(6, enemy.getX());
@@ -87,7 +86,9 @@ public class WallTest {
     public void WallTest3() {
         // Create a Boulder and a Wall to the right of the player.
         Boulder b = new Boulder(dungeon, 5, 4);
+        dungeon.addEntity(b);
         Wall w = new Wall(6, 4);
+        dungeon.addEntity(w);
 
         // Try and make the Player push the Boulder into the Wall.
         player.move(Direction.RIGHT);
@@ -95,6 +96,10 @@ public class WallTest {
         // Check that the Boulder remains in the same spot.
         assertEquals(5, b.getX());
         assertEquals(4, b.getY());
+
+        // Check that the Player ramains in the same spot.
+        assertEquals(4, player.getX());
+        assertEquals(4, player.getY());
 
     }
 }

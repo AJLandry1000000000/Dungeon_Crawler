@@ -99,7 +99,7 @@ public class Player extends Entity implements Moveable, Interactable {
 
         // Get the entity at the new X & Y coordinates.
         Entity checkEntity = this.getDungeon().getEntity(newX, newY);
-
+                
         // Assume that the player cannot interact with the new entity.
         Boolean canInteract = false;
         if (checkEntity instanceof Interactable) {
