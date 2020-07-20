@@ -33,8 +33,6 @@ public class DungeonController {
 
     private Dungeon dungeon;
 
-    private int moves;
-
     private ArrayList<Entity> enemies;
 
     public DungeonController(Dungeon dungeon, List<ImageView> initialEntities) {
@@ -59,12 +57,6 @@ public class DungeonController {
             squares.getChildren().add(entity);
 
     }
-
-    private void addMove() {
-        this.moves++;
-    }
-
-
 
     // Returns the Euclidean distance from the Player to the Enemy's new coordinates 
     private double distanceToPlayer(int newX, int newY) {
@@ -117,7 +109,7 @@ public class DungeonController {
 
     }
 
-    private void notifyObservers() {
+    public void notifyObservers() {
         // Notify Player with the current move total.
         player.decrementPotionSteps();
 
@@ -148,10 +140,13 @@ public class DungeonController {
 
     @FXML
     public void handleKeyPress(KeyEvent event) {
+        // If the Player has already completed all Goals, disallow movement
         if (this.dungeon.goalsCompleted()) {
             System.out.println("All Goals Completed, Level is Complete");
             return;
-        } else if (this.dungeon.isGameOver()) {
+        }         
+        // If the Player has lost the game, disallow movement
+        else if (this.dungeon.isGameOver()) {
             System.out.println("Player has been Defeated");
             return;
         }
@@ -184,7 +179,6 @@ public class DungeonController {
         default:
             break;
         }
-        addMove();
         // Update all enemies.
         notifyObservers();
     }

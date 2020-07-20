@@ -1,10 +1,9 @@
 package unsw.dungeon.entity.model;
 
 import unsw.dungeon.entity.Entity;
-import unsw.dungeon.entity.Collectable;
 import unsw.dungeon.entity.Interactable;
 
-public class Sword extends Entity implements Interactable, Collectable {
+public class Sword extends Entity implements Interactable {
 
     private int hits;
 
@@ -13,33 +12,35 @@ public class Sword extends Entity implements Interactable, Collectable {
         this.hits = 5;
     }
 
+    public int getHits() {
+        return this.hits;
+    }
+
+    public void decrementHits() {
+        this.hits--;
+    }
+
+    /**
+     * 
+     */
     @Override
     public Boolean interact(Entity entity) {
-        // If the entity interacting with the key is not the player, return false.
+        // Only a Player is allowed to interact with a Sword
         if (!(entity instanceof Player)) {
             return false;
         }
+
         Player player = (Player) entity;
-        
-        // If the player has no sword, give it to the player and remove this sword from the dungeons list of entities. Then return true.
+        // Determine if the Player does not have a current Sword
         if (!player.hasSword()) {
+            // Player acquires the Sword which is then removed from the level
             player.giveSword(this);
             System.out.println("Player has picked up a sword");
             return true;
         } else {
-            // If the player has a sword, do not let them interact with the sword. Just return false.
+            // Otherwise disallow the interaction as the Player has a current Sword
             System.out.println("Player already has a Sword equipped");
             return false;
         }  
     }
-
-    public void decrementHits() {
-        hits--;
-    }
-
-    public int getHits() {
-        return hits;
-    }
-    
-
 }
