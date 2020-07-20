@@ -1,8 +1,4 @@
-package unsw.dungeon.entity.model;
-
-import unsw.dungeon.Dungeon;
-import unsw.dungeon.entity.Entity;
-import unsw.dungeon.entity.Interactable;
+package unsw.dungeon;
 
 /**
  * Door can be opened by a Player with a Key that has matching ID

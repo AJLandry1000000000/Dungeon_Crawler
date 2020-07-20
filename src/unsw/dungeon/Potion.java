@@ -1,7 +1,4 @@
-package unsw.dungeon.entity.model;
-
-import unsw.dungeon.entity.Entity;
-import unsw.dungeon.entity.Interactable;
+package unsw.dungeon;
 
 /**
  * Grants the Player 10 steps of invincibility and fleeing Enemies.

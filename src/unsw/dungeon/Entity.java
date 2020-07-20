@@ -1,4 +1,4 @@
-package unsw.dungeon.entity;
+package unsw.dungeon;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;

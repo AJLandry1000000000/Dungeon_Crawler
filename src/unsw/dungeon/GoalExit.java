@@ -1,6 +1,4 @@
-package unsw.dungeon.entity.goals;
-
-import unsw.dungeon.Dungeon;
+package unsw.dungeon;
 
 public class GoalExit implements Goal {
 

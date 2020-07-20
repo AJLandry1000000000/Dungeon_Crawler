@@ -5,12 +5,6 @@ package unsw.dungeon;
 
 import java.util.ArrayList;
 
-import unsw.dungeon.entity.Entity;
-import unsw.dungeon.entity.goals.Goal;
-import unsw.dungeon.entity.model.Enemy;
-import unsw.dungeon.entity.model.Player;
-import unsw.dungeon.entity.model.Portal;
-
 /**
  * A dungeon in the interactive dungeon player.
  *

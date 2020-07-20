@@ -1,23 +1,15 @@
 package test;
 
 import java.util.ArrayList;
-import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
 
 import javafx.scene.image.ImageView;
 
 
 import unsw.dungeon.*;
-import unsw.dungeon.entity.Direction;
-import unsw.dungeon.entity.goals.GoalEnemies;
-import unsw.dungeon.entity.goals.GoalTreasure;
-import unsw.dungeon.entity.model.*;
 
 public class EnemyAndPotionTest {
     private Dungeon dungeon;
@@ -27,7 +19,7 @@ public class EnemyAndPotionTest {
     public void initialize() {
         // Create dungeon.
         this.dungeon = new Dungeon(10, 10);
-        // Give the dungeion a random goal (to avoid null pointer error).
+        // Give the dungeon a random goal (to avoid null pointer error).
         GoalEnemies ge = new GoalEnemies(this.dungeon);
         this.dungeon.setGoal(ge);
         // Create Player.
@@ -127,7 +119,7 @@ public class EnemyAndPotionTest {
         Enemy en = new Enemy(dungeon, 9, 4);
         dungeon.addEntity(en);
 
-        // Check that the Enemy is moving towards the Player after every call to notifyObeservers().
+        // Check that the Enemy is moving towards the Player after every call to notifyObservers().
         // Note: notifyObservers() is called after every Player move in DungeonController to indicate that the Player moved. It allows Enemies to make a move. (It also changes how long the potion remains active for.)
         DungeonController dc = new DungeonController(dungeon, new ArrayList<ImageView>());
         dc.notifyObservers();

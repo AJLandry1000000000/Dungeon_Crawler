@@ -1,22 +1,16 @@
 package test;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
 
 import javafx.scene.image.ImageView;
 
 
 import unsw.dungeon.*;
-import unsw.dungeon.entity.Direction;
-import unsw.dungeon.entity.goals.GoalTreasure;
-import unsw.dungeon.entity.model.*;
 
 public class WallTest {
     private Dungeon dungeon;

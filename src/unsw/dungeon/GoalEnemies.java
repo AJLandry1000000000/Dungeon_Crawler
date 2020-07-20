@@ -1,7 +1,4 @@
-package unsw.dungeon.entity.goals;
-
-import unsw.dungeon.Dungeon;
-import unsw.dungeon.entity.model.Enemy;
+package unsw.dungeon;
 
 public class GoalEnemies implements Goal {
         

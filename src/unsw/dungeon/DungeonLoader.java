@@ -7,28 +7,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
-import unsw.dungeon.entity.Entity;
-import unsw.dungeon.entity.goals.Goal;
-import unsw.dungeon.entity.goals.GoalAND;
-import unsw.dungeon.entity.goals.GoalBoulders;
-import unsw.dungeon.entity.goals.GoalComposite;
-import unsw.dungeon.entity.goals.GoalEnemies;
-import unsw.dungeon.entity.goals.GoalExit;
-import unsw.dungeon.entity.goals.GoalOR;
-import unsw.dungeon.entity.goals.GoalTreasure;
-import unsw.dungeon.entity.model.Boulder;
-import unsw.dungeon.entity.model.Door;
-import unsw.dungeon.entity.model.Enemy;
-import unsw.dungeon.entity.model.Exit;
-import unsw.dungeon.entity.model.Key;
-import unsw.dungeon.entity.model.Player;
-import unsw.dungeon.entity.model.Portal;
-import unsw.dungeon.entity.model.Potion;
-import unsw.dungeon.entity.model.Switch;
-import unsw.dungeon.entity.model.Sword;
-import unsw.dungeon.entity.model.Treasure;
-import unsw.dungeon.entity.model.Wall;
-
 /**
  * Loads a dungeon from a .json file.
  *
@@ -117,7 +95,7 @@ public abstract class DungeonLoader {
             onLoad(wall);
             entity = wall;
             break;
-        // TODO Handle other possible entities
+        // Addition Entity cases are added here
         case "boulder":
             Boulder boulder = new Boulder(dungeon, x, y);
             onLoad(boulder);
@@ -196,7 +174,7 @@ public abstract class DungeonLoader {
 
     public abstract void onLoad(Entity player);
     public abstract void onLoad(Wall wall);
-    // TODO Create additional abstract methods for the other entities
+    // Additional abstract methods are added here
     public abstract void onLoad(Boulder boulder);
     public abstract void onLoad(Door door);
     public abstract void onLoad(Enemy enemy);

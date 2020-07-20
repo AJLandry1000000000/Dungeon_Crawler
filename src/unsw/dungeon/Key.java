@@ -1,9 +1,4 @@
-package unsw.dungeon.entity.model;
-
-import unsw.dungeon.Dungeon;
-import unsw.dungeon.entity.Entity;
-import unsw.dungeon.entity.Interactable;
-
+package unsw.dungeon;
 
 /**
  * Key is held by the Player to open a Door. Key is essentially just an ID to be compared to Door IDs.

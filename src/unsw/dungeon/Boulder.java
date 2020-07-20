@@ -1,10 +1,5 @@
-package unsw.dungeon.entity.model;
+package unsw.dungeon;
 
-import unsw.dungeon.Dungeon;
-import unsw.dungeon.entity.Direction;
-import unsw.dungeon.entity.Entity;
-import unsw.dungeon.entity.Interactable;
-import unsw.dungeon.entity.Moveable;
 
 /**
  * Boulders are used to activate Switches and manipulate the map.

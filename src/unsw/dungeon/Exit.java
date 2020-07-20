@@ -1,8 +1,4 @@
-package unsw.dungeon.entity.model;
-
-import unsw.dungeon.Dungeon;
-import unsw.dungeon.entity.Entity;
-import unsw.dungeon.entity.Interactable;
+package unsw.dungeon;
 
 public class Exit extends Entity implements Interactable {
 

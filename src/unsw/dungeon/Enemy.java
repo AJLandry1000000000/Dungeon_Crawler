@@ -1,10 +1,4 @@
-package unsw.dungeon.entity.model;
-
-import unsw.dungeon.Dungeon;
-import unsw.dungeon.entity.Direction;
-import unsw.dungeon.entity.Entity;
-import unsw.dungeon.entity.Interactable;
-import unsw.dungeon.entity.Moveable;
+package unsw.dungeon;
 
 /**
  * Tracks down, and attacks the Player. Behaviour changes to fleeing if the Player has a Potion.

@@ -1,7 +1,4 @@
-package unsw.dungeon.entity.model;
-
-import unsw.dungeon.entity.Entity;
-import unsw.dungeon.entity.Interactable;
+package unsw.dungeon;
 
 /**
  * Sword is collected by Player to defeat Enemy. Each Sword only has 5 hits. After the 5th hit it disappears from the Players possession. Players can only hold one Sword at a time.

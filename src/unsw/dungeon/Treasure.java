@@ -1,8 +1,4 @@
-package unsw.dungeon.entity.model;
-
-import unsw.dungeon.Dungeon;
-import unsw.dungeon.entity.Entity;
-import unsw.dungeon.entity.Interactable;
+package unsw.dungeon;
 
 /**
  * Treasure is a collectable item that the Player interacts with. An interaction from the Player updates the dungeon and the goals.

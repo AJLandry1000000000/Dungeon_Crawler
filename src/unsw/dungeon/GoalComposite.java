@@ -1,4 +1,4 @@
-package unsw.dungeon.entity.goals;
+package unsw.dungeon;
 
 public interface GoalComposite extends Goal {
 

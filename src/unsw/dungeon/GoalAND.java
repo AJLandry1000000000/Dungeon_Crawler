@@ -1,15 +1,13 @@
-package unsw.dungeon.entity.goals;
+package unsw.dungeon;
 
 import java.util.ArrayList;
 
-import unsw.dungeon.Dungeon;
-
-public class GoalOR implements GoalComposite {
+public class GoalAND implements GoalComposite {
     
     private ArrayList<Goal> goals;
     private Dungeon dungeon;
 
-    public GoalOR(Dungeon dungeon) {
+    public GoalAND(Dungeon dungeon) {
         this.goals = new ArrayList<Goal>();
         this.dungeon = dungeon;
     }
@@ -25,10 +23,10 @@ public class GoalOR implements GoalComposite {
     @Override
     public Boolean isCompleted() {
         for (Goal g : goals) {
-            if (g.isCompleted()) {
-                return true;
+            if (!g.isCompleted()) {
+                return false;
             }
         }
-        return false;
+        return true;
     }
 }

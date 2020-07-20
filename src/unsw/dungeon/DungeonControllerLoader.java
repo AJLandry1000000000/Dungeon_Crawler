@@ -5,26 +5,12 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.json.JSONObject;
-
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
-import unsw.dungeon.entity.Entity;
-import unsw.dungeon.entity.model.Boulder;
-import unsw.dungeon.entity.model.Door;
-import unsw.dungeon.entity.model.Enemy;
-import unsw.dungeon.entity.model.Exit;
-import unsw.dungeon.entity.model.Key;
-import unsw.dungeon.entity.model.Portal;
-import unsw.dungeon.entity.model.Potion;
-import unsw.dungeon.entity.model.Switch;
-import unsw.dungeon.entity.model.Sword;
-import unsw.dungeon.entity.model.Treasure;
-import unsw.dungeon.entity.model.Wall;
 
 
 /**
@@ -42,7 +28,7 @@ public class DungeonControllerLoader extends DungeonLoader {
     private Image wallImage;
 
     private Image boulderImage;
-    private Image doorOpenImage;
+    //private Image doorOpenImage;
     private Image doorClosedImage;
     private Image enemyImage;
     private Image exitImage;
@@ -60,7 +46,7 @@ public class DungeonControllerLoader extends DungeonLoader {
         wallImage = new Image((new File("images/brick_brown_0.png")).toURI().toString());
 
         boulderImage = new Image((new File("images/boulder.png")).toURI().toString());
-        doorOpenImage = new Image((new File("images/open_door.png")).toURI().toString());
+        //doorOpenImage = new Image((new File("images/open_door.png")).toURI().toString());
         doorClosedImage = new Image((new File("images/closed_door.png")).toURI().toString());
         enemyImage = new Image((new File("images/deep_elf_master_archer.png")).toURI().toString());
         exitImage = new Image((new File("images/exit.png")).toURI().toString());

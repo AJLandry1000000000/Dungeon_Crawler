@@ -1,6 +1,5 @@
-package unsw.dungeon.entity.model;
+package unsw.dungeon;
 
-import unsw.dungeon.entity.Entity;
 /**
  * Walls just exist. They just block other entities.
  */

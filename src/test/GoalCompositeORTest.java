@@ -7,14 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import unsw.dungeon.Dungeon;
-import unsw.dungeon.DungeonMockLoader;
-import unsw.dungeon.entity.Direction;
-import unsw.dungeon.entity.Entity;
-import unsw.dungeon.entity.model.Boulder;
-import unsw.dungeon.entity.model.Exit;
-import unsw.dungeon.entity.model.Player;
-import unsw.dungeon.entity.model.Switch;
+import unsw.dungeon.*;
 
 
 public class GoalCompositeORTest {

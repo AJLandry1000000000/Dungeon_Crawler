@@ -10,12 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import unsw.dungeon.Dungeon;
 import unsw.dungeon.DungeonMockLoader;
-import unsw.dungeon.entity.Direction;
-import unsw.dungeon.entity.Entity;
-import unsw.dungeon.entity.model.Door;
-import unsw.dungeon.entity.model.Key;
-import unsw.dungeon.entity.model.Player;
-import unsw.dungeon.entity.model.Treasure;
+import unsw.dungeon.*;
 
 
 public class GoalLeafTreasureTest {

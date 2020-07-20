@@ -1,10 +1,4 @@
-package unsw.dungeon.entity.model;
-
-import unsw.dungeon.entity.Direction;
-import unsw.dungeon.entity.Entity;
-import unsw.dungeon.entity.Interactable;
-import unsw.dungeon.entity.Moveable;
-import unsw.dungeon.Dungeon;
+package unsw.dungeon;
 
 /**
  * The player entity moves around the map interacting with other Entities. The Enemy can interact with the Player to destroy it and end the game. Most of the Players code is to support entity interaction.

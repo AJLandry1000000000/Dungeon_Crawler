@@ -1,11 +1,7 @@
-package unsw.dungeon.entity.goals;
+package unsw.dungeon;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
-import unsw.dungeon.Dungeon;
-import unsw.dungeon.entity.Entity;
-import unsw.dungeon.entity.model.Switch;
 
 public class GoalBoulders implements Goal {
 

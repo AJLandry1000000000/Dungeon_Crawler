@@ -1,4 +1,4 @@
-package unsw.dungeon.entity;
+package unsw.dungeon;
 
 public enum Direction {
     

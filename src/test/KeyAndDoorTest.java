@@ -1,23 +1,16 @@
 package test;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
 
 import javafx.scene.image.ImageView;
 
 
 import unsw.dungeon.*;
-import unsw.dungeon.entity.Direction;
-import unsw.dungeon.entity.goals.GoalEnemies;
-import unsw.dungeon.entity.goals.GoalTreasure;
-import unsw.dungeon.entity.model.*;
 
 public class KeyAndDoorTest {
     private Dungeon dungeon;
@@ -27,7 +20,7 @@ public class KeyAndDoorTest {
     public void initialize() {
         // Create dungeon.
         this.dungeon = new Dungeon(10, 10);
-        // Give the dungeion a random goal (to avoid null pointer error).
+        // Give the dungeon a random goal (to avoid null pointer error).
         GoalEnemies ge = new GoalEnemies(this.dungeon);
         this.dungeon.setGoal(ge);
         // Create Player.
@@ -177,7 +170,7 @@ public class KeyAndDoorTest {
         dungeon.addEntity(en);
 
         
-        // Check that the enemy has not moved throught the open door.
+        // Check that the enemy has not moved thought the open door.
         DungeonController dc = new DungeonController(dungeon, new ArrayList<ImageView>());
         dc.notifyObservers();
         assertEquals(6, en.getX());
