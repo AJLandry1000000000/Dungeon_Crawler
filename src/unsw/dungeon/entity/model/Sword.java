@@ -24,9 +24,11 @@ public class Sword extends Entity implements Interactable, Collectable {
         // If the player has no sword, give it to the player and remove this sword from the dungeons list of entities. Then return true.
         if (!player.hasSword()) {
             player.giveSword(this);
+            System.out.println("Player has picked up a sword");
             return true;
         } else {
             // If the player has a sword, do not let them interact with the sword. Just return false.
+            System.out.println("Player already has a Sword equipped");
             return false;
         }  
     }
