@@ -147,10 +147,13 @@ public class DungeonController {
 
     @FXML
     public void handleKeyPress(KeyEvent event) {
+        // If the Player has already completed all Goals, disallow movement
         if (this.dungeon.goalsCompleted()) {
             System.out.println("All Goals Completed, Level is Complete");
             return;
-        } else if (this.dungeon.isGameOver()) {
+        }         
+        // If the Player has lost the game, disallow movement
+        else if (this.dungeon.isGameOver()) {
             System.out.println("Player has been Defeated");
             return;
         }

@@ -63,23 +63,24 @@ public class Switch extends Entity implements Interactable {
         // If a player interacts with a switch with a current boulder on it
         if (entity instanceof Player && isActivated()) {
             // Determine the direction that the Boulder may potentially move
-            int newX = this.getX() - entity.getX();
-            int newY = this.getY() - entity.getY();
-
-            // If the Boulder is can be moved in the given Direction
+            int newX = getX() - entity.getX();
+            int newY = getY() - entity.getY();
+            // Determine if the Boulder can be moved in the given Direction
             if (getBoulder().move(Direction.getDirection(newX, newY))) {
                 // Deactivate the Floor Switch
-                this.deactivateSwitch();
+                deactivateSwitch();
                 return true;
             } 
-            // Otherwise the Boulder is cannot be moved in the given Direction
+            // Otherwise the Boulder cannot be moved in the given Direction
             else {
                 return false;
             }
         } 
         // If the switch is not activated and a Boulder is being pushed onto it
-        else if (!this.isActivated() && entity instanceof Boulder) {
-            this.activateSwitch(entity);
+        else if (!isActivated() && entity instanceof Boulder) {
+            // Activate the Floor Switch with the given Boulder
+            activateSwitch(entity);
+            // Check if all goal conditions have been completed
             this.getDungeon().goalsCompleted();
         }
         return true;

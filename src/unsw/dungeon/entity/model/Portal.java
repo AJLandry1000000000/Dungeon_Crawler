@@ -34,7 +34,7 @@ public class Portal extends Entity implements Interactable {
         }
 
         // Find the corresponding Portal based on its ID
-        Portal portal = this.getDungeon().getPortal(this);
+        Portal portal = getDungeon().getPortal(this);
         if (portal == null) {
             return false;
         }

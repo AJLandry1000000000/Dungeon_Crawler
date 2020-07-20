@@ -38,6 +38,7 @@ public class Dungeon {
         this.gameOver = false;
     }
 
+    // Getters
     public int getWidth() {
         return width;
     }
@@ -50,18 +51,15 @@ public class Dungeon {
         return player;
     }
 
-    public void setPlayer(Player player) {
-        this.player = player;
+    public Goal getGoal() {
+        return this.goal;
     }
 
-    public void addEntity(Entity entity) {
-        entities.add(entity);
-    }
-
-    public void removeEntity(Entity entity) {
-        this.entities.remove(entity);
-    }
-
+    /**
+     * 
+     * @param entity
+     * @return
+     */
     public Boolean findEntity(Entity entity) {
         for (Entity e : entities) {
             if (e == entity) {
@@ -71,6 +69,12 @@ public class Dungeon {
         return false;
     }
 
+    /**
+     * 
+     * @param x
+     * @param y
+     * @return
+     */
     public Entity getEntity(int x, int y) {
         for (Entity e : entities) {
             if (e.getX() == x && e.getY() == y) {
@@ -80,7 +84,10 @@ public class Dungeon {
         return null;
     }
 
-    // Returns a list of all enemies in the dungeon.
+    /**
+     * Returns a list of all enemies in the dungeon.
+     * @return
+     */
     public ArrayList<Entity> getEnemies() {
         ArrayList<Entity> enemies = new ArrayList<Entity>();
         for (Entity e : entities) {
@@ -91,6 +98,12 @@ public class Dungeon {
         return enemies;
     }
     
+    /**
+     * 
+     * @param x
+     * @param y
+     * @return
+     */
     public ArrayList<Entity> getEntities(int x, int y) {
         ArrayList<Entity> check = new ArrayList<Entity>();
         for (Entity e : entities) {
@@ -105,6 +118,11 @@ public class Dungeon {
         return this.entities;
     }
 
+    /**
+     * 
+     * @param portal
+     * @return
+     */
     public Portal getPortal(Portal portal) {
         for (Entity e : entities) {
             if (e instanceof Portal) {
@@ -117,12 +135,17 @@ public class Dungeon {
         return null;
     }
 
-    public boolean checkBoundaries(int x, int y) {
-        return ((x >= 0 && x < getWidth()) && (y >= 0 && y < getHeight()));
+    // Setters
+    public void setPlayer(Player player) {
+        this.player = player;
     }
 
-    public boolean checkExitReached() {
-        return this.exitReached;
+    public void addEntity(Entity entity) {
+        entities.add(entity);
+    }
+
+    public void removeEntity(Entity entity) {
+        this.entities.remove(entity);
     }
 
     public void setExitReached() {
@@ -133,10 +156,32 @@ public class Dungeon {
         this.goal = goal;
     }
 
-    public Goal getGoal() {
-        return this.goal;
+    public void setGameOver() {
+        this.gameOver = true;
     }
 
+    // Checkers
+    /**
+     * 
+     * @param x
+     * @param y
+     * @return
+     */
+    public boolean checkBoundaries(int x, int y) {
+        return ((x >= 0 && x < getWidth()) && (y >= 0 && y < getHeight()));
+    }
+
+    /**
+     * 
+     * @return
+     */
+    public boolean checkExitReached() {
+        return this.exitReached;
+    }
+
+    /**
+     * 
+     */
     public Boolean goalsCompleted() {
         if (this.goal.isCompleted()) {
             System.out.println("All Goals completed, Level is Complete");
@@ -145,10 +190,10 @@ public class Dungeon {
         return false;
     }
 
-    public void setGameOver() {
-        this.gameOver = true;
-    }
-
+    /**
+     * 
+     * @return
+     */
     public Boolean isGameOver() {
         return this.gameOver;
     }

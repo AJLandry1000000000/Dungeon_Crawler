@@ -17,16 +17,20 @@ public class Exit extends Entity implements Interactable {
         return this.dungeon;
     }
 
+    /**
+     * 
+     */
     @Override
     public Boolean interact(Entity entity) {
         Dungeon dungeon = this.getDungeon();
-        this.getDungeon().setExitReached();
-
-        // If goals are completed
+        // Set the Exit as temporarily reached
+        getDungeon().setExitReached();
+        // If all goals conditions are completed, the level is deemed as complete
         if (dungeon.goalsCompleted()) {
             System.out.println("Level is complete!");
             return true;
         }
+        // Otherwise, goals must be reached before the player can access the exit
         return false;
     }
 }

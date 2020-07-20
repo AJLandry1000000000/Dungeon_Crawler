@@ -21,36 +21,49 @@ public class Door extends Entity implements Interactable {
         return this.dungeon;
     }
     
+    public Boolean isOpen() {
+        return this.open;
+    }
+
+    public void openDoor() {
+        this.open = true;
+    }
+
+    public int getID() {
+        return this.id;
+    }
+
+    /**
+     * 
+     */
     @Override
     public Boolean interact(Entity entity) {
-        // If the entity interacting with the key is not the player, return false.
+        // Only a Player is allowed to Interact with a Door
         if (!(entity instanceof Player)) {
             return false;
         }
         Player player = (Player) entity;
-        
-        // If the door is closed...
-        if (!this.open) {
-            // Get the players key.
+        // If the door is closed
+        if (!isOpen()) {
+            // Check if the Player is holding a Key
             Key playersKey = player.getKey();
-            
-            // If the player holds no key, return null
             if (playersKey == null) {
                 return false;
             }
-            
-            // Check if we have its key.
-            if(this.id == playersKey.getId()) {
-                // If we do have this doors key, open the door, remove the key from the player, and return true.
-                this.open = true;
+            // Determine if the Key ID that the Player is holding, matches the Door's ID
+            if(getID() == playersKey.getId()) {
+                // The Door is opened and the key is then removed from the Player's possession
+                openDoor();
                 player.takeKey();
                 return true;
-            } else {
-                // If we don't have this doors key, return false.
+            } 
+            // Otherwise the Key does not match the Door
+            else {
                 return false;
             }
-        } else {
-            // If the door is already open, return true.
+        } 
+        // Otherwise the Door is already open
+        else {
             return true;
         }
     }

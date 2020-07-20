@@ -1,11 +1,10 @@
 package unsw.dungeon.entity.model;
 
 import unsw.dungeon.Dungeon;
-import unsw.dungeon.entity.Collectable;
 import unsw.dungeon.entity.Entity;
 import unsw.dungeon.entity.Interactable;
 
-public class Key extends Entity implements Interactable, Collectable {
+public class Key extends Entity implements Interactable {
 
     private Dungeon dungeon;
     private int id;
@@ -20,25 +19,33 @@ public class Key extends Entity implements Interactable, Collectable {
         return this.dungeon;
     }
     
-    @Override
-    public Boolean interact(Entity entity) {
-        if (!(entity instanceof Player)) {
-            return false;
-        }
-        Player player = (Player) entity;
-        // If a player does not have a key, give this key to the player and remove it from the dungeon list entities. Then return true.
-        if (!player.hasKey()) {
-            player.giveKey(this);
-            return true;
-        } else {
-            // If a player already has a key. Do nothing with this key. Return false.
-            return false;
-        }  
-    }
-
+    /**
+     * 
+     * @return
+     */
     public int getId() {
         return id;
     }
 
-    
+    /**
+     * 
+     */
+    @Override
+    public Boolean interact(Entity entity) {
+        // Only a Player is allowed to interact with a Key
+        if (!(entity instanceof Player)) {
+            return false;
+        }
+        Player player = (Player) entity;
+        // If a player is not currently holding a Key
+        if (!player.hasKey()) {
+            // Player is given the Key which is also removed from the level
+            player.giveKey(this);
+            return true;
+        }
+        // Otherwise disallow the Player from acquiring the key as the player already is holding a current key
+        else {
+            return false;
+        }  
+    }
 }

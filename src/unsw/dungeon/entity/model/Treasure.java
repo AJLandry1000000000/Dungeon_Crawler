@@ -1,11 +1,10 @@
 package unsw.dungeon.entity.model;
 
 import unsw.dungeon.Dungeon;
-import unsw.dungeon.entity.Collectable;
 import unsw.dungeon.entity.Entity;
 import unsw.dungeon.entity.Interactable;
 
-public class Treasure extends Entity implements Interactable, Collectable {
+public class Treasure extends Entity implements Interactable {
 
     private Dungeon dungeon;
 
@@ -18,15 +17,19 @@ public class Treasure extends Entity implements Interactable, Collectable {
         return this.dungeon;
     }
 
+    /**
+     * 
+     */
     @Override
     public Boolean interact(Entity entity) {
-        // If the entity interacting with the treasure is not the player, return false.
+        // Only a Player is allowed to interact with a Treasure
         if (!(entity instanceof Player)) {
             return false;
         }
-        // Give the player the treasure, remove it from the dungeon list of entities, then return true.
-        this.getDungeon().removeEntity(this);
-        this.getDungeon().goalsCompleted();
+        // Player acquires the treasure which is removed from the level
+        getDungeon().removeEntity(this);
+        // Check is all goal conditions have been met
+        getDungeon().goalsCompleted();
         return true;
     }
 
