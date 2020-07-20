@@ -4,9 +4,9 @@
 package unsw.dungeon;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import unsw.dungeon.entity.Entity;
+import unsw.dungeon.entity.goals.Goal;
 import unsw.dungeon.entity.model.Enemy;
 import unsw.dungeon.entity.model.Player;
 import unsw.dungeon.entity.model.Portal;
@@ -23,16 +23,19 @@ import unsw.dungeon.entity.model.Portal;
 public class Dungeon {
 
     private int width, height;
-    private List<Entity> entities;
+    private ArrayList<Entity> entities;
     private Player player;
-    private boolean levelCompleted;
+    private boolean exitReached;
+    private Goal goal;
+    private Boolean gameOver;
 
     public Dungeon(int width, int height) {
         this.width = width;
         this.height = height;
-        this.entities = new ArrayList<>();
+        this.entities = new ArrayList<Entity>();
         this.player = null;
-        this.levelCompleted = false;
+        this.exitReached = false;
+        this.gameOver = false;
     }
 
     public int getWidth() {
@@ -57,6 +60,15 @@ public class Dungeon {
 
     public void removeEntity(Entity entity) {
         this.entities.remove(entity);
+    }
+
+    public Boolean findEntity(Entity entity) {
+        for (Entity e : entities) {
+            if (e == entity) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public Entity getEntity(int x, int y) {
@@ -89,6 +101,10 @@ public class Dungeon {
         return check;
     }
 
+    public ArrayList<Entity> getEntities() {
+        return this.entities;
+    }
+
     public Portal getPortal(Portal portal) {
         for (Entity e : entities) {
             if (e instanceof Portal) {
@@ -105,11 +121,35 @@ public class Dungeon {
         return ((x >= 0 && x < getWidth()) && (y >= 0 && y < getHeight()));
     }
 
-    public boolean checkLevelCompleted() {
-        return this.levelCompleted;
+    public boolean checkExitReached() {
+        return this.exitReached;
     }
 
-    public void setLevelCompleted() {
-        this.levelCompleted = true;
+    public void setExitReached() {
+        this.exitReached = true;
+    }
+
+    public void setGoal(Goal goal) {
+        this.goal = goal;
+    }
+
+    public Goal getGoal() {
+        return this.goal;
+    }
+
+    public Boolean goalsCompleted() {
+        if (this.goal.isCompleted()) {
+            System.out.println("All Goals completed, Level is Complete");
+            return true;
+        }
+        return false;
+    }
+
+    public void setGameOver() {
+        this.gameOver = true;
+    }
+
+    public Boolean isGameOver() {
+        return this.gameOver;
     }
 }

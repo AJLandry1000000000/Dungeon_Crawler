@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import java.util.Collections;
-import java.util.Arrays; 
-import java.lang.*;
 
 import javafx.fxml.FXML;
 import javafx.scene.image.Image;
@@ -149,7 +147,11 @@ public class DungeonController {
 
     @FXML
     public void handleKeyPress(KeyEvent event) {
-        if (this.dungeon.checkLevelCompleted()) {
+        if (this.dungeon.goalsCompleted()) {
+            System.out.println("All Goals Completed, Level is Complete");
+            return;
+        } else if (this.dungeon.isGameOver()) {
+            System.out.println("Player has been Defeated");
             return;
         }
         switch (event.getCode()) {

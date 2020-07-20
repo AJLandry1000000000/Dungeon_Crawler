@@ -16,6 +16,10 @@ public class Key extends Entity implements Interactable, Collectable {
         this.id = id;
     }
 
+    public Dungeon getDungeon() {
+        return this.dungeon;
+    }
+    
     @Override
     public Boolean interact(Entity entity) {
         if (!(entity instanceof Player)) {
