@@ -52,7 +52,7 @@ public class Switch extends Entity implements Interactable {
     @Override
     public Boolean interact(Entity entity) {
         // If a Player is interacting with the Switch
-        if (entity instanceof Player) {
+        if (entity.getClass().equals(Player.class)) {
             // If the Switch is not activated
             if (isActivated()) {
                 int newX = getX() - entity.getX();
@@ -71,7 +71,7 @@ public class Switch extends Entity implements Interactable {
             return true;
         } 
         // If a Boulder is interacting with the Switch
-        else if (entity instanceof Boulder) {
+        else if (entity.getClass().equals(Boulder.class)) {
             // If the Switch does not have a current Boulder on it
             if (!isActivated()) {
                 // Activate the Floor Switch with the given Boulder

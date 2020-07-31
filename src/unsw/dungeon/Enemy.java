@@ -39,7 +39,7 @@ public class Enemy extends Entity implements Moveable, Interactable {
         // Assume that the enemy cannot interact with the new entity
         Boolean canAttack = false;
         // If this entity is a Player
-        if (checkEntity instanceof Player) {
+        if (checkEntity.getClass().equals(Player.class)) {
             // If this Enemy can destroy the player, return true
             // Otherwise return false (e.g. if the player has an Invincibility potion).
             canAttack = ((Interactable)checkEntity).interact(this);

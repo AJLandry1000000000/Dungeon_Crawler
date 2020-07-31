@@ -17,7 +17,7 @@ public class GoalEnemies implements Goal {
         // Gather the count of all current Enemy entities
         long totalEnemies = dungeon.getEntities()
             .stream()
-            .filter(x -> x instanceof Enemy)
+            .filter(x -> x.getClass().equals(Enemy.class))
             .count();
         // Check if there no Enemies remaining
         return (totalEnemies == 0) ? true : false;

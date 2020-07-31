@@ -19,7 +19,7 @@ public class Treasure extends Entity implements Interactable {
     @Override
     public Boolean interact(Entity entity) {
         // Only a Player is allowed to interact with a Treasure
-        if (!(entity instanceof Player)) {
+        if (!(entity.getClass().equals(Player.class))) {
             return false;
         }
         // Player acquires the treasure which is removed from the level

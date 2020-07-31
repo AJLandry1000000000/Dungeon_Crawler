@@ -184,9 +184,9 @@ public abstract class DungeonLoader {
     private Boolean checkEntityLocation(Dungeon dungeon, Entity entity, int x, int y) {
         if (dungeon.getEntities(x, y).size() > 0) {
             Entity check = dungeon.getEntity(x, y);
-            if (check instanceof Boulder) {
+            if (check.getClass().equals(Boulder.class)) {
                 ((Switch)entity).activateSwitch(check);
-            } else if (check instanceof Switch) {
+            } else if (check.getClass().equals(Switch.class)) {
                 ((Switch)check).activateSwitch(entity);
             } else {
                 return false;

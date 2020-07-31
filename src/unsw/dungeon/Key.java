@@ -26,7 +26,7 @@ public class Key extends Entity implements Interactable {
     @Override
     public Boolean interact(Entity entity) {
         // Only a Player is allowed to interact with a Key
-        if (!(entity instanceof Player)) {
+        if (!(entity.getClass().equals(Player.class))) {
             return false;
         }
         Player player = (Player) entity;

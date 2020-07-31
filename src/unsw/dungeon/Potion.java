@@ -18,7 +18,7 @@ public class Potion extends Entity implements Interactable {
     @Override
     public Boolean interact(Entity entity) {
         // Only a Player is allowed to interact with a Potion
-        if (!(entity instanceof Player)) {
+        if (!(entity.getClass().equals(Player.class))) {
             return false;
         }
 

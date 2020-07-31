@@ -17,7 +17,7 @@ public class GoalTreasure implements Goal {
         // Gather the count of all Treasure entities
         long totalTreasures = dungeon.getEntities()
             .stream()
-            .filter(x -> x instanceof Treasure)
+            .filter(x -> x.getClass().equals(Treasure.class))
             .count();
         // Check if there are no Treasure entities remaining
         return (totalTreasures == 0) ? true : false;

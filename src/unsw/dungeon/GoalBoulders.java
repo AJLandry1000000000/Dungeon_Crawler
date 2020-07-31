@@ -20,7 +20,7 @@ public class GoalBoulders implements Goal {
         // Gather all switches
         List<Entity> switches = dungeon.getEntities()
             .stream()
-            .filter(x -> x instanceof Switch)
+            .filter(x -> x.getClass().equals(Switch.class))
             .collect(Collectors.toList());   
         // Check if all switches are activated
         for (Entity e : switches) {

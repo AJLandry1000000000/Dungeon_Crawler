@@ -84,7 +84,7 @@ public class Dungeon {
     public ArrayList<Entity> getEnemies() {
         ArrayList<Entity> enemies = new ArrayList<Entity>();
         for (Entity e : entities) {
-            if (e instanceof Enemy) {
+            if (e.getClass().equals(Enemy.class)) {
                 enemies.add(e);
             }
         }
@@ -118,7 +118,7 @@ public class Dungeon {
      */
     public Portal getPortal(Portal portal) {
         for (Entity e : entities) {
-            if (e instanceof Portal) {
+            if (e.getClass().equals(Portal.class)) {
                 Portal p = ((Portal)e);
                 if (p.getID() == portal.getID() && p != portal) {
                     return p;

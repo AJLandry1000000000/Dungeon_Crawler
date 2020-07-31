@@ -40,7 +40,7 @@ public class Door extends Entity implements Interactable {
     @Override
     public Boolean interact(Entity entity) {
         // Only a Player is allowed to Interact with a Door
-        if (!(entity instanceof Player)) {
+        if (!(entity.getClass().equals(Player.class))) {
             return false;
         }
         Player player = (Player) entity;
