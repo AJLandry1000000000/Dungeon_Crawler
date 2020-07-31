@@ -20,10 +20,10 @@ public class TreasureTest {
         // Create dungeon.
         this.dungeon = new Dungeon(10, 10);
         // Give the dungeon a random goal (to avoid null pointer error).
-        GoalTreasure goalTreasure = new GoalTreasure(this.dungeon);
+        GoalTreasure goalTreasure = new GoalTreasure();
         this.dungeon.setGoal(goalTreasure);
         // Create Player.
-        this.player = new Player(dungeon, 4, 4);
+        this.player = new Player(4, 4, dungeon);
         dungeon.setPlayer(player);
         dungeon.addEntity(player);
     }
@@ -33,8 +33,8 @@ public class TreasureTest {
     public void TreasureTest1(){
 
         // Create Treasure.
-        Treasure t1 = new Treasure(dungeon, 6, 4);
-        Treasure t2 = new Treasure(dungeon, 6, 3);
+        Treasure t1 = new Treasure(6, 4, dungeon);
+        Treasure t2 = new Treasure(6, 3, dungeon);
         dungeon.addEntity(t1);
         dungeon.addEntity(t2);
         

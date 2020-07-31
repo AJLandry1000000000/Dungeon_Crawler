@@ -10,8 +10,8 @@ public class Sword extends Entity implements Interactable {
 
     private int hits;
 
-    public Sword(int x, int y) {
-        super(x, y);
+    public Sword(int x, int y, Dungeon dungeon) {
+        super(x, y, dungeon);
         this.hits = 5;
     }
 

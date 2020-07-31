@@ -11,28 +11,22 @@ import java.util.ArrayList;
 public class GoalOR implements GoalComposite {
     
     private ArrayList<Goal> goals;
-    private Dungeon dungeon;
 
-    public GoalOR(Dungeon dungeon) {
+    public GoalOR() {
         this.goals = new ArrayList<Goal>();
-        this.dungeon = dungeon;
     }
 
     public void add(Goal goal) {
         this.goals.add(goal);
     }
 
-    public Dungeon getDungeon() {
-        return this.dungeon;
-    }
-
     /**
      * @return true if any sub-goals are completed, otherwise false if all sub goals are incomplete
      */
     @Override
-    public Boolean isCompleted() {
+    public Boolean isCompleted(Dungeon dungeon) {
         for (Goal g : goals) {
-            if (g.isCompleted()) {
+            if (g.isCompleted(dungeon)) {
                 return true;
             }
         }

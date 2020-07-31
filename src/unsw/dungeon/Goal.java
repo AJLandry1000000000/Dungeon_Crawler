@@ -7,6 +7,5 @@ package unsw.dungeon;
  * @author Austin Landry
  */
 public interface Goal {
-
-    public Boolean isCompleted();
+    public Boolean isCompleted(Dungeon dungeon);
 }

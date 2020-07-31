@@ -186,7 +186,7 @@ public class Dungeon {
      * @return either true if goal is complete, otherwise false
      */
     public Boolean goalsCompleted() {
-        if (this.goal.isCompleted()) {
+        if (this.goal.isCompleted(this)) {
             System.out.println("All Goals completed, Level is Complete");
             return true;
         }

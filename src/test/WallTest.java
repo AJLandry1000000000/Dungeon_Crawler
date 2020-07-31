@@ -23,10 +23,10 @@ public class WallTest {
         // Create dungeon.
         this.dungeon = new Dungeon(10, 10);
         // Give the dungeon a random goal (to avoid null pointer error).
-        GoalTreasure goalTreasure = new GoalTreasure(this.dungeon);
+        GoalTreasure goalTreasure = new GoalTreasure();
         this.dungeon.setGoal(goalTreasure);
         // Create Player.
-        this.player = new Player(dungeon, 4, 4);
+        this.player = new Player(4, 4, dungeon);
         dungeon.setPlayer(player);
         dungeon.addEntity(player);
     }
@@ -35,7 +35,7 @@ public class WallTest {
     @Test
     public void WallTest1() {
         // Create a Wall in front of the Player.
-        Wall w1 = new Wall(5, 4);
+        Wall w1 = new Wall(5, 4, dungeon);
         dungeon.addEntity(w1);
         
         // Repeatedly move the Player into the Wall and make sure that their coordinates have not changed.
@@ -54,20 +54,20 @@ public class WallTest {
     @Test
     public void WallTest2() {
         // Create an Enemy.
-        Enemy enemy = new Enemy(dungeon, 6, 4);
+        Enemy enemy = new Enemy(6, 4, dungeon);
 
         // Surround the Enemy with walls.
         // Wall above.
-        Wall w1 = new Wall(6, 3);
+        Wall w1 = new Wall(6, 3, dungeon);
         dungeon.addEntity(w1);
         // Wall below.
-        Wall w2 = new Wall(6, 5);
+        Wall w2 = new Wall(6, 5, dungeon);
         dungeon.addEntity(w2);
         // Wall in front.
-        Wall w3 = new Wall(5, 4);
+        Wall w3 = new Wall(5, 4, dungeon);
         dungeon.addEntity(w3);
         // wall behind.
-        Wall w4 = new Wall(7, 4);
+        Wall w4 = new Wall(7, 4, dungeon);
         dungeon.addEntity(w4);
 
         // Check that the Enemy hasn't moved (because it's surrounded by walls).
@@ -81,9 +81,9 @@ public class WallTest {
     @Test
     public void WallTest3() {
         // Create a Boulder and a Wall to the right of the player.
-        Boulder b = new Boulder(dungeon, 5, 4);
+        Boulder b = new Boulder(5, 4, dungeon);
         dungeon.addEntity(b);
-        Wall w = new Wall(6, 4);
+        Wall w = new Wall(6, 4, dungeon);
         dungeon.addEntity(w);
 
         // Try and make the Player push the Boulder into the Wall.

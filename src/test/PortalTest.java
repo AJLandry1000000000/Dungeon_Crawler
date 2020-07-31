@@ -24,10 +24,10 @@ public class PortalTest {
         // Create dungeon.
         this.dungeon = new Dungeon(10, 10);
         // Give the dungeon a random goal (to avoid null pointer error).
-        GoalTreasure goalTreasure = new GoalTreasure(this.dungeon);
+        GoalTreasure goalTreasure = new GoalTreasure();
         this.dungeon.setGoal(goalTreasure);
         // Create Player.
-        this.player = new Player(dungeon, 4, 4);
+        this.player = new Player(4, 4, dungeon);
         dungeon.setPlayer(player);
         dungeon.addEntity(player);
     }
@@ -36,15 +36,15 @@ public class PortalTest {
     @Test
     public void PortalTest1() {
         // Create a Portal in front of the Player and another one elsewhere.
-        Portal p1 = new Portal(dungeon, 5, 4, 1);
+        Portal p1 = new Portal(5, 4, dungeon, 1);
         dungeon.addEntity(p1);
-        Portal p2 = new Portal(dungeon, 1, 1, 1);
+        Portal p2 = new Portal(1, 1, dungeon, 1);
         dungeon.addEntity(p2);
         
         //Create Another Portal pair to test that the original pair sends to each other and only to each other.
-        Portal p3 = new Portal(dungeon, 5, 5, 2);
+        Portal p3 = new Portal(5, 5, dungeon, 2);
         dungeon.addEntity(p3);
-        Portal p4 = new Portal(dungeon, 9, 9, 2);
+        Portal p4 = new Portal(9, 9, dungeon, 2);
         dungeon.addEntity(p4);
 
         // Move the Player into the first Portal and check their new coordinates.
@@ -63,11 +63,11 @@ public class PortalTest {
     @Test
     public void PortalTest2() {
         // Create a Boulder and Portal in front of the Player and another Portal elsewhere.
-        Boulder b = new Boulder(dungeon, 5, 4);
+        Boulder b = new Boulder(5, 4, dungeon);
         dungeon.addEntity(b);
-        Portal p1 = new Portal(dungeon, 6, 4, 1);
+        Portal p1 = new Portal(6, 4, dungeon, 1);
         dungeon.addEntity(p1);
-        Portal p2 = new Portal(dungeon, 1, 1, 1);
+        Portal p2 = new Portal(1, 1, dungeon, 1);
         dungeon.addEntity(p2);
 
         // Get the Player to push the Boulder into the Portal. Check that the Boulder and the Player have not moved.
@@ -82,11 +82,11 @@ public class PortalTest {
     @Test
     public void PortalTest3() {
         // Create Portal and an Enemy in front of the Player and another Portal elsewhere.
-        Enemy en = new Enemy(dungeon, 6, 4);
+        Enemy en = new Enemy(6, 4, dungeon);
         dungeon.addEntity(en);
-        Portal p1 = new Portal(dungeon, 5, 4, 1);
+        Portal p1 = new Portal(5, 4, dungeon, 1);
         dungeon.addEntity(p1);
-        Portal p2 = new Portal(dungeon, 1, 1, 1);
+        Portal p2 = new Portal(1, 1, dungeon, 1);
         dungeon.addEntity(p2);
 
         // To attack the Player, the Enemy has to move forward. But the Portal is blocking the Enemy, so it should stay in its spot. Check that the Enemy cannot move into the Portal.

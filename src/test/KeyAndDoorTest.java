@@ -24,10 +24,10 @@ public class KeyAndDoorTest {
         // Create dungeon.
         this.dungeon = new Dungeon(10, 10);
         // Give the dungeon a random goal (to avoid null pointer error).
-        GoalEnemies ge = new GoalEnemies(this.dungeon);
+        GoalEnemies ge = new GoalEnemies();
         this.dungeon.setGoal(ge);
         // Create Player.
-        this.player = new Player(dungeon, 4, 4);
+        this.player = new Player(4, 4, dungeon);
         dungeon.setPlayer(player);
         dungeon.addEntity(player);
     }
@@ -36,9 +36,9 @@ public class KeyAndDoorTest {
     @Test
     public void KeyAndDoorTest1() {
         // Place two keys to the right of the Player.
-        Key k1 = new Key(dungeon, 5, 4, 1);
+        Key k1 = new Key(5, 4, dungeon, 1);
         dungeon.addEntity(k1);
-        Key k2 = new Key(dungeon, 6, 4, 2);
+        Key k2 = new Key(6, 4, dungeon, 2);
         dungeon.addEntity(k2);
 
         // Check that the Player has no keys initially.
@@ -60,9 +60,9 @@ public class KeyAndDoorTest {
     @Test
     public void KeyAndDoorTest2() {
         // Place two keys to the right of the Player.
-        Key k = new Key(dungeon, 5, 4, 1);
+        Key k = new Key(5, 4, dungeon, 1);
         dungeon.addEntity(k);
-        Door d = new Door(dungeon, 6, 4, 1);
+        Door d = new Door(6, 4, dungeon, 1);
         dungeon.addEntity(d);
 
         // Make Player pick up the Key. Check that the Player now has a key.
@@ -86,9 +86,9 @@ public class KeyAndDoorTest {
     @Test
     public void KeyAndDoorTest3() {
         // Place a key and a door to the right of the Player.
-        Key k = new Key(dungeon, 5, 4, 1);
+        Key k = new Key(5, 4, dungeon, 1);
         dungeon.addEntity(k);
-        Door d = new Door(dungeon, 6, 4, 2);
+        Door d = new Door(6, 4, dungeon, 2);
         dungeon.addEntity(d);
 
         // Make Player pick up the Key. Check that the Player now has a key.
@@ -113,7 +113,7 @@ public class KeyAndDoorTest {
     @Test
     public void KeyAndDoorTest4() {
         // Place an closed Door to the right of the Player.
-        Door d = new Door(dungeon, 5, 4, 2);
+        Door d = new Door(5, 4, dungeon, 2);
         dungeon.addEntity(d);
 
         // Try to move the Player through the door. Confirm that the Player didn't make it through.
@@ -127,7 +127,7 @@ public class KeyAndDoorTest {
     @Test
     public void KeyAndDoorTest5() {
         // Place an open Door to the right of the Player.
-        Door d = new Door(dungeon, 5, 4, 2);
+        Door d = new Door(5, 4, dungeon, 2);
         dungeon.addEntity(d);
         d.openDoor();
 
@@ -148,9 +148,9 @@ public class KeyAndDoorTest {
     @Test
     public void KeyAndDoorTest6() {
         // Place a Boulder and an open Door to the right of the Player.
-        Boulder b = new Boulder(dungeon, 5, 4);
+        Boulder b = new Boulder(5, 4, dungeon);
         dungeon.addEntity(b);
-        Door d = new Door(dungeon, 6, 4, 2);
+        Door d = new Door(6, 4, dungeon, 2);
         dungeon.addEntity(d);
         d.openDoor();
 
@@ -166,10 +166,10 @@ public class KeyAndDoorTest {
     @Test
     public void KeyAndDoorTest7() {
         // Place an open Door and an enemy to the right of the Player.
-        Door d = new Door(dungeon, 5, 4, 2);
+        Door d = new Door(5, 4, dungeon, 2);
         dungeon.addEntity(d);
         d.openDoor();
-        Enemy en = new Enemy(dungeon, 7, 4);
+        Enemy en = new Enemy(7, 4, dungeon);
         dungeon.addEntity(en);
 
         

@@ -47,7 +47,7 @@ public abstract class DungeonLoader {
 
         // Extract the goal and process it
         JSONObject jsonGoals = (JSONObject)json.get("goal-condition");
-        dungeon.setGoal(processGoals(dungeon, jsonGoals));
+        dungeon.setGoal(processGoals(jsonGoals));
         return dungeon;
     }
 
@@ -57,30 +57,30 @@ public abstract class DungeonLoader {
      * @param jsonGoals the JSONObject that is holding 1 or more Goals
      * @return the overall Goal that will hold potential further Goals
      */
-    public Goal processGoals(Dungeon dungeon, JSONObject jsonGoals) {
+    public Goal processGoals(JSONObject jsonGoals) {
         String goalCondition = jsonGoals.getString("goal");
         GoalComposite goal = null;
         // Determine the type of Goal Condition
         switch (goalCondition) {
         case "exit":
-            return new GoalExit(dungeon);
+            return new GoalExit();
         case "enemies":
-            return new GoalEnemies(dungeon);
+            return new GoalEnemies();
         case "boulders":
-            return new GoalBoulders(dungeon);
+            return new GoalBoulders();
         case "treasure":
-            return new GoalTreasure(dungeon);
+            return new GoalTreasure();
         case "AND":
-            goal = new GoalAND(dungeon);
+            goal = new GoalAND();
             break;
         case "OR":
-            goal = new GoalOR(dungeon);
+            goal = new GoalOR();
             break;
         }
         // If the Goal is composite, add subgoals to it
         JSONArray subGoals = jsonGoals.getJSONArray("subgoals");
         for (Object sub : subGoals) {
-            goal.add(processGoals(dungeon, (JSONObject)sub));
+            goal.add(processGoals((JSONObject)sub));
         }
         return ((Goal)goal);
     }
@@ -99,67 +99,67 @@ public abstract class DungeonLoader {
         Entity entity = null;
         switch (type) {
         case "player":
-            Player player = new Player(dungeon, x, y);
+            Player player = new Player(x, y, dungeon);
             dungeon.setPlayer(player);
             onLoad(player);
             entity = player;
             break;
         case "wall":
-            Wall wall = new Wall(x, y);
+            Wall wall = new Wall(x, y, dungeon);
             onLoad(wall);
             entity = wall;
             break;
         // Addition Entity cases are added here
         case "boulder":
-            Boulder boulder = new Boulder(dungeon, x, y);
+            Boulder boulder = new Boulder(x, y, dungeon);
             onLoad(boulder);
             entity = boulder;
             break;
         case "door":
             id = json.getInt("id");
-            Door door = new Door(dungeon, x, y, id);
+            Door door = new Door(x, y, dungeon, id);
             onLoad(door);
             entity = door;
             break;
         case "enemy":
-            Enemy enemy = new Enemy(dungeon, x, y);
+            Enemy enemy = new Enemy(x, y, dungeon);
             onLoad(enemy);
             entity = enemy;
             break;
         case "exit":
-            Exit exit = new Exit(dungeon, x, y);
+            Exit exit = new Exit(x, y, dungeon);
             onLoad(exit);
             entity = exit;
             break;
         case "key":
             id = json.getInt("id");
-            Key key = new Key(dungeon, x, y, id);
+            Key key = new Key(x, y, dungeon, id);
             onLoad(key);
             entity = key;
             break;
         case "portal":
             id = json.getInt("id");
-            Portal portal = new Portal(dungeon, x, y, id);
+            Portal portal = new Portal(x, y, dungeon, id);
             onLoad(portal);
             entity = portal;
             break;
         case "invincibility":
-            Potion potion = new Potion(x, y);
+            Potion potion = new Potion(x, y, dungeon);
             onLoad(potion);
             entity = potion;
             break;
         case "switch":
-            Switch floor = new Switch(dungeon, x, y);
+            Switch floor = new Switch(x, y, dungeon);
             onLoad(floor);
             entity = floor;
             break;
         case "sword":
-            Sword sword = new Sword(x, y);
+            Sword sword = new Sword(x, y, dungeon);
             onLoad(sword);
             entity = sword;
             break;
         case "treasure":
-            Treasure treasure = new Treasure(dungeon, x, y);
+            Treasure treasure = new Treasure(x, y, dungeon);
             onLoad(treasure);
             entity = treasure;
             break;

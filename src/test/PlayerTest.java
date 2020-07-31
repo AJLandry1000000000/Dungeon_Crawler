@@ -22,10 +22,10 @@ public class PlayerTest {
         // Create dungeon.
         this.dungeon = new Dungeon(10, 10);
         // Give the dungeon a random goal (to avoid null pointer error).
-        GoalTreasure goalTreasure = new GoalTreasure(this.dungeon);
+        GoalTreasure goalTreasure = new GoalTreasure();
         this.dungeon.setGoal(goalTreasure);
         // Create Player.
-        this.player = new Player(dungeon, 4, 4);
+        this.player = new Player(4, 4, dungeon);
         dungeon.setPlayer(player);
         dungeon.addEntity(player);
     }
@@ -51,7 +51,7 @@ public class PlayerTest {
     public void PlayerTest2() {
         // Reposition the Player to be on the edge of the dungeon.
         dungeon.removeEntity(player);
-        this.player = new Player(dungeon, 0, 0);
+        this.player = new Player(0, 0, dungeon);
         dungeon.setPlayer(player);
         dungeon.addEntity(player);
 
@@ -68,7 +68,7 @@ public class PlayerTest {
     @Test
     public void PlayerTest3() {
         // Place a Wall next to the Player.
-        Wall w = new Wall(5, 4);
+        Wall w = new Wall(5, 4, dungeon);
         dungeon.addEntity(w);
 
         // Try to make the Player move through the Wall. Check that the Player does not move.

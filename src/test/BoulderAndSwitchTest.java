@@ -20,10 +20,10 @@ public class BoulderAndSwitchTest {
         // Create dungeon.
         this.dungeon = new Dungeon(10, 10);
         // Give the dungeon a random goal (to avoid null pointer error).
-        GoalTreasure goalTreasure = new GoalTreasure(this.dungeon);
+        GoalTreasure goalTreasure = new GoalTreasure();
         this.dungeon.setGoal(goalTreasure);
         // Create Player.
-        this.player = new Player(dungeon, 4, 4);
+        this.player = new Player(4, 4, dungeon);
         dungeon.setPlayer(player);
         dungeon.addEntity(player);
     }
@@ -32,9 +32,9 @@ public class BoulderAndSwitchTest {
     @Test
     public void BoulderAndSwitchTest1() {
         // Place two Boulders to the right of the Player.
-        Boulder b1 = new Boulder(dungeon, 5, 4);
+        Boulder b1 = new Boulder(5, 4, dungeon);
         dungeon.addEntity(b1);
-        Boulder b2 = new Boulder(dungeon, 6, 4);
+        Boulder b2 = new Boulder(6, 4, dungeon);
         dungeon.addEntity(b2);
 
         // Make the Player push these Boulders. Check that the Players position does not change.
@@ -47,9 +47,9 @@ public class BoulderAndSwitchTest {
     @Test
     public void BoulderAndSwitchTest2() {
         // Place a Boulder and a Switch next to the Player.
-        Boulder b = new Boulder(dungeon, 5, 4);
+        Boulder b = new Boulder(5, 4, dungeon);
         dungeon.addEntity(b);
-        Switch s = new Switch(dungeon, 6, 4);
+        Switch s = new Switch(6, 4, dungeon);
         dungeon.addEntity(s);
 
         // Push the Boulder onto the Switch and check that the Switch is activated.
@@ -66,9 +66,9 @@ public class BoulderAndSwitchTest {
     @Test
     public void BoulderAndSwitchTest3() {
         // Place a Boulder and a Wall next to the Player.
-        Boulder b = new Boulder(dungeon, 5, 4);
+        Boulder b = new Boulder(5, 4, dungeon);
         dungeon.addEntity(b);
-        Wall w = new Wall(6, 4);
+        Wall w = new Wall(6, 4, dungeon);
         dungeon.addEntity(w);
 
         // Try and push the Boulder into the Wall.

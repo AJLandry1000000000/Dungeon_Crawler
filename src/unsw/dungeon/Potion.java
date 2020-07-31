@@ -7,8 +7,8 @@ package unsw.dungeon;
  */
 public class Potion extends Entity implements Interactable {
 
-    public Potion(int x, int y) {
-        super(x, y);
+    public Potion(int x, int y, Dungeon dungeon) {
+        super(x, y, dungeon);
     }
 
     /**

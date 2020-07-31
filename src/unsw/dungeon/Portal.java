@@ -7,21 +7,15 @@ package unsw.dungeon;
  */
 public class Portal extends Entity implements Interactable {
 
-    private Dungeon dungeon;
     private int id;
     
-    public Portal(Dungeon dungeon, int x, int y, int id) {
-        super(x, y);
-        this.dungeon = dungeon;
+    public Portal(int x, int y, Dungeon dungeon, int id) {
+        super(x, y, dungeon);
         this.id = id;
     }
 
     public int getID() {
         return this.id;
-    }
-
-    public Dungeon getDungeon() {
-        return this.dungeon;
     }
 
     /**

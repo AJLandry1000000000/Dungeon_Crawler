@@ -24,10 +24,10 @@ public class EnemyAndPotionTest {
         // Create dungeon.
         this.dungeon = new Dungeon(10, 10);
         // Give the dungeon a random goal (to avoid null pointer error).
-        GoalEnemies ge = new GoalEnemies(this.dungeon);
+        GoalEnemies ge = new GoalEnemies();
         this.dungeon.setGoal(ge);
         // Create Player.
-        this.player = new Player(dungeon, 4, 4);
+        this.player = new Player(4, 4, dungeon);
         dungeon.setPlayer(player);
         dungeon.addEntity(player);
     }
@@ -37,9 +37,9 @@ public class EnemyAndPotionTest {
     @Test
     public void EnemyAndPotionTest1() {
         // Place two Potions in front of the Player.
-        Potion p1 = new Potion(5, 4);
+        Potion p1 = new Potion(5, 4, dungeon);
         dungeon.addEntity(p1);
-        Potion p2 = new Potion(6, 4);
+        Potion p2 = new Potion(6, 4, dungeon);
         dungeon.addEntity(p2);
 
         // Make the Player pick up one. Check that the Player has the potion and that the Potion has been removed from the map.
@@ -58,7 +58,7 @@ public class EnemyAndPotionTest {
     @Test
     public void EnemyAndPotionTest2() {
         // Place one Potions in front of the Player and make the Player pick it up.
-        Potion p1 = new Potion(5, 4);
+        Potion p1 = new Potion(5, 4, dungeon);
         dungeon.addEntity(p1);
         player.move(Direction.RIGHT);
         
@@ -117,10 +117,10 @@ public class EnemyAndPotionTest {
     public void EnemyAndPotionTest3() {
         // Reposition the Player at one end of the Dungeon, and an Enemy at the opposite end.
         dungeon.removeEntity(player);
-        this.player = new Player(dungeon, 0, 4);
+        this.player = new Player(0, 4, dungeon);
         dungeon.setPlayer(player);
         dungeon.addEntity(player);
-        Enemy en = new Enemy(dungeon, 9, 4);
+        Enemy en = new Enemy(9, 4, dungeon);
         dungeon.addEntity(en);
 
         // Check that the Enemy is moving towards the Player after every call to notifyObservers().
@@ -151,7 +151,7 @@ public class EnemyAndPotionTest {
         assertEquals(4, en.getY());
 
         // Place a Potion in front of the Player. Make the Player take it.
-        Potion p = new Potion(1, 4);
+        Potion p = new Potion(1, 4, dungeon);
         dungeon.addEntity(p);
         player.move(Direction.RIGHT);
 
@@ -182,7 +182,7 @@ public class EnemyAndPotionTest {
     public void EnemyAndPotionTest4() {
         // Put an Enemy in from of the Player and call to notifyObservers() to indicate that the Enemy can move.
         // It then moves on the Player and interacts with the Player. Player has no Sword or Potion. So Player dies and is removed from the dungeon.
-        Enemy en = new Enemy(dungeon, 5, 4);
+        Enemy en = new Enemy(5, 4, dungeon);
         dungeon.addEntity(en);
         DungeonController dc = new DungeonController(dungeon, new ArrayList<ImageView>());
         dc.notifyObservers();
@@ -196,11 +196,11 @@ public class EnemyAndPotionTest {
     @Test 
     public void EnemyAndPotionTest5() {
         // Place a Potion, Sword and Enemy next to the Player.
-        Potion p = new Potion(5, 4);
+        Potion p = new Potion(5, 4, dungeon);
         dungeon.addEntity(p);
-        Sword s = new Sword(6, 4);
+        Sword s = new Sword(6, 4, dungeon);
         dungeon.addEntity(s);
-        Enemy en = new Enemy(dungeon, 7, 4);
+        Enemy en = new Enemy(7, 4, dungeon);
         dungeon.addEntity(en);
 
         // Make the Player pick up the Potion and Sword. Check that the Player has these items. 

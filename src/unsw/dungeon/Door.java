@@ -7,19 +7,13 @@ package unsw.dungeon;
  */
 public class Door extends Entity implements Interactable {
 
-    private Dungeon dungeon;
     private int id;
     private boolean open;
     
-    public Door(Dungeon dungeon, int x, int y, int id) {
-        super(x, y);
-        this.dungeon = dungeon;
+    public Door(int x, int y, Dungeon dungeon, int id) {
+        super(x, y, dungeon);
         this.open = false;
         this.id = id;
-    }
-
-    public Dungeon getDungeon() {
-        return this.dungeon;
     }
 
     public int getID() {

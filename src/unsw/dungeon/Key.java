@@ -8,17 +8,11 @@ package unsw.dungeon;
  */
 public class Key extends Entity implements Interactable {
 
-    private Dungeon dungeon;
     private int id;
     
-    public Key(Dungeon dungeon, int x, int y, int id) {
-        super(x, y);
-        this.dungeon = dungeon;
+    public Key(int x, int y, Dungeon dungeon, int id) {
+        super(x, y, dungeon);
         this.id = id;
-    }
-
-    public Dungeon getDungeon() {
-        return this.dungeon;
     }
     
     public int getId() {

@@ -8,15 +8,8 @@ package unsw.dungeon;
  */
 public class Treasure extends Entity implements Interactable {
 
-    private Dungeon dungeon;
-
-    public Treasure(Dungeon dungeon, int x, int y) {
-        super(x, y);
-        this.dungeon = dungeon;
-    }
-
-    public Dungeon getDungeon() {
-        return this.dungeon;
+    public Treasure(int x, int y, Dungeon dungeon) {
+        super(x, y, dungeon);
     }
 
     /**

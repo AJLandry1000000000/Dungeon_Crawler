@@ -8,21 +8,11 @@ package unsw.dungeon;
  */
 public class GoalExit implements Goal {
 
-    private Dungeon dungeon;
-
-    public GoalExit(Dungeon dungeon) {
-        this.dungeon = dungeon;
-    }
-
-    public Dungeon getDungeon() {
-        return this.dungeon;
-    }
-
     /**
      * @return true if the exit has been reached, otherwise false
      */
     @Override
-    public Boolean isCompleted() {
-        return getDungeon().checkExitReached();
+    public Boolean isCompleted(Dungeon dungeon) {
+        return dungeon.checkExitReached();
     }
 }

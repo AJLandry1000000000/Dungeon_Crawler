@@ -7,18 +7,12 @@ package unsw.dungeon;
  */
 public class Switch extends Entity implements Interactable {
 
-    private Dungeon dungeon;
     private Boolean activated;
     private Boulder boulder;
 
-    public Switch(Dungeon dungeon, int x, int y) {
-        super(x, y);
-        this.dungeon = dungeon;
+    public Switch(int x, int y, Dungeon dungeon) {
+        super(x, y, dungeon);
         this.activated = false;
-    }
-
-    public Dungeon getDungeon() {
-        return this.dungeon;
     }
 
     /**
@@ -50,7 +44,6 @@ public class Switch extends Entity implements Interactable {
     public Boulder getBoulder() {
         return this.boulder;
     }
-
 
     /**
      * Interaction method that allows a Player or Boulder to either walk over or push existing Boulder

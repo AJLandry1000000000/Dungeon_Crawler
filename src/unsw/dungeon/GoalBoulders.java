@@ -11,23 +11,12 @@ import java.util.stream.Collectors;
  */
 public class GoalBoulders implements Goal {
 
-    private Dungeon dungeon;
-
-    public GoalBoulders(Dungeon dungeon) {
-        this.dungeon = dungeon;
-    }
-
-    public Dungeon getDungeon() {
-        return this.dungeon;
-    }
-
     /**
      * Determine if every Floor Switch is activated (i.e. with a Boulder on top of it)
      * @return true if all Switches are activated, otherwise false
      */
     @Override
-    public Boolean isCompleted() {
-        Dungeon dungeon = getDungeon();
+    public Boolean isCompleted(Dungeon dungeon) {
         // Gather all switches
         List<Entity> switches = dungeon.getEntities()
             .stream()

@@ -10,7 +10,6 @@ package unsw.dungeon;
  */
 public class Player extends Entity implements Moveable, Interactable {
 
-    private Dungeon dungeon;
     private Sword sword;
     private int potion;
     private Key key;
@@ -20,18 +19,14 @@ public class Player extends Entity implements Moveable, Interactable {
      * @param x
      * @param y
      */
-    public Player(Dungeon dungeon, int x, int y) {
-        super(x, y);
-        this.dungeon = dungeon;
+    public Player(int x, int y, Dungeon dungeon) {
+        super(x, y, dungeon);
         this.sword = null;
         this.potion = 0;
         this.key = null;
     }
 
     // Getters
-    public Dungeon getDungeon() {
-        return this.dungeon;
-    }
 
     public Sword getSword() {
         return this.sword;

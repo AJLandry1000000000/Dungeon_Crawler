@@ -8,23 +8,12 @@ package unsw.dungeon;
  */
 public class GoalEnemies implements Goal {
         
-    private Dungeon dungeon;
-
-    public GoalEnemies(Dungeon dungeon) {
-        this.dungeon = dungeon;
-    }
-
-    public Dungeon getDungeon() {
-        return this.dungeon;
-    }
-
     /**
      * Determine if all enemies have been killed
      * @return true if no enemies active, otherwise false
      */
     @Override
-    public Boolean isCompleted() {
-        Dungeon dungeon = getDungeon();
+    public Boolean isCompleted(Dungeon dungeon) {
         // Gather the count of all current Enemy entities
         long totalEnemies = dungeon.getEntities()
             .stream()

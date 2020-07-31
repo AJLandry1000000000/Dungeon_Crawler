@@ -8,15 +8,8 @@ package unsw.dungeon;
  */
 public class Exit extends Entity implements Interactable {
 
-    private Dungeon dungeon;
-
-    public Exit(Dungeon dungeon, int x, int y) {
-        super(x, y);
-        this.dungeon = dungeon;
-    }
-
-    public Dungeon getDungeon() {
-        return this.dungeon;
+    public Exit(int x, int y, Dungeon dungeon) {
+        super(x, y, dungeon);
     }
 
     /**

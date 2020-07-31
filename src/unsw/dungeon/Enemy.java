@@ -7,16 +7,9 @@ package unsw.dungeon;
  * @author Austin Landry
  */
 public class Enemy extends Entity implements Moveable, Interactable {
-
-    private Dungeon dungeon;
     
-    public Enemy(Dungeon dungeon, int x, int y) {
-        super(x, y);
-        this.dungeon = dungeon;
-    }
-
-    public Dungeon getDungeon() {
-        return this.dungeon;
+    public Enemy(int x, int y, Dungeon dungeon) {
+        super(x, y, dungeon);
     }
 
     /**

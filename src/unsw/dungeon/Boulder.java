@@ -8,18 +8,13 @@ package unsw.dungeon;
  */
 public class Boulder extends Entity implements Moveable, Interactable {
 
-    private Dungeon dungeon;
     private Switch floor;
 
-    public Boulder(Dungeon dungeon, int x, int y) {
-        super(x, y);
-        this.dungeon = dungeon;
+    public Boulder(int x, int y, Dungeon dungeon) {
+        super(x, y, dungeon);
         this.floor = null;
     }
 
-    public Dungeon getDungeon() {
-        return this.dungeon;
-    }
 
     public Switch getSwitch() {
         return this.floor;
