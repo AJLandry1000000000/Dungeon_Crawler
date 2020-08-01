@@ -75,8 +75,9 @@ public class Boulder extends Entity implements Moveable, Interactable {
 
         // Determine if there is an entity at the new position
         Entity checkEntity = dungeon.getEntity(newPositionX, newPositionY);
+
         // If the entity is a floor switch, but already has a Boulder on it
-        if (checkEntity.getClass().equals(Switch.class)) {
+        if (checkEntity instanceof Switch) {
             if (!((Switch)checkEntity).interact(this)) {
                 return false;
             }
@@ -98,7 +99,7 @@ public class Boulder extends Entity implements Moveable, Interactable {
                 resetSwitch();
             }
             // If boulder is moving onto a switch
-            if (checkEntity.getClass().equals(Switch.class)) {
+            if (checkEntity instanceof Switch) {
                 addSwitch((Switch)checkEntity);
             }
             return true;

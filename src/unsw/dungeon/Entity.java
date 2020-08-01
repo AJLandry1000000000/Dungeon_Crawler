@@ -1,6 +1,8 @@
 package unsw.dungeon;
 
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
 /**
@@ -13,6 +15,7 @@ public class Entity {
     // IntegerProperty is used so that changes to the entities position can be
     // externally observed.
     private IntegerProperty x, y;
+    private BooleanProperty visible;
     Dungeon dungeon;
 
     /**
@@ -23,6 +26,7 @@ public class Entity {
     public Entity(int x, int y, Dungeon dungeon) {
         this.x = new SimpleIntegerProperty(x);
         this.y = new SimpleIntegerProperty(y);
+        this.visible = new SimpleBooleanProperty(true);
         this.dungeon = dungeon;
     }
 
@@ -32,6 +36,10 @@ public class Entity {
 
     public IntegerProperty y() {
         return y;
+    }
+
+    public BooleanProperty visible() {
+        return visible;
     }
 
     public int getY() {

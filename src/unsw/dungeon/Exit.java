@@ -28,6 +28,7 @@ public class Exit extends Entity implements Interactable {
         }
         // Otherwise, goals must be reached before the player can access the exit
         System.out.println("Goals must be completed before entering exit");
+        dungeon.leaveExit();
         return false;
     }
 }

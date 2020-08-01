@@ -9,7 +9,7 @@ package unsw.dungeon;
 public class Key extends Entity implements Interactable {
 
     private int id;
-    
+
     public Key(int x, int y, Dungeon dungeon, int id) {
         super(x, y, dungeon);
         this.id = id;

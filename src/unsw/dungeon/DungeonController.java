@@ -1,6 +1,7 @@
 package unsw.dungeon;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Collections;
@@ -10,6 +11,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
 
 /**
  * A JavaFX controller for the dungeon.
@@ -29,11 +31,20 @@ public class DungeonController {
 
     private ArrayList<Entity> enemies;
 
+    private int steps;
+
+    private Stage stage;
+
     public DungeonController(Dungeon dungeon, List<ImageView> initialEntities) {
         this.dungeon = dungeon;
         this.player = dungeon.getPlayer();
         this.enemies = dungeon.getEnemies();
         this.initialEntities = new ArrayList<>(initialEntities);
+        this.steps = 0; 
+    }
+
+    public void setStage(Stage stage) {
+        this.stage = stage;
     }
 
     public Player getPlayer() {
@@ -49,11 +60,10 @@ public class DungeonController {
                 squares.add(new ImageView(ground), x, y);
             }
         }
+
         for (ImageView entity : initialEntities) {
             squares.getChildren().add(entity);
         }
-
-
     }
 
     /**
@@ -125,6 +135,7 @@ public class DungeonController {
      * and all Enemy will move. The Enemy movement is dependent on Player having a Potion.
      */
     public void notifyObservers() {
+        this.steps++;
         // Notify Player with the current move total.
         player.decrementPotionSteps();
 
@@ -146,30 +157,30 @@ public class DungeonController {
             double down = distanceToPlayer(en.getX(), en.getY() + 1);
             // Move stay.
             double stay = distanceToPlayer(en.getX(), en.getY());
-    
+
             if (!player.hasPotion()) {
                 // Play does not have a potion. So move the enemies closer to the player.
-                optimalMove(en, "minimise", left, right, up, down, stay);
+                if (e instanceof Ghost) {
+                    if (this.steps % 3 == 0) optimalMove(en, "minimise", left, right, up, down, stay);
+                } else {
+                    optimalMove(en, "minimise", left, right, up, down, stay);
+                }
             } else {
                 // Play does have a potion. So move the enemies further from the player.
-                optimalMove(en, "maximise", left, right, up, down, stay);
+                if (e instanceof Ghost) {
+                    if (this.steps % 3 == 0) optimalMove(en, "maximise", left, right, up, down, stay);
+                } else if (this.steps % 2 == 0) {
+                    optimalMove(en, "maximise", left, right, up, down, stay);
+                }
             }
             this.enemies = dungeon.getEnemies();
         }
     }
 
     @FXML
-    public void handleKeyPress(KeyEvent event) {
+    public void handleKeyPress(KeyEvent event) throws IOException {
         // If the Player has already completed all Goals, disallow movement
-        if (this.dungeon.goalsCompleted()) {
-            System.out.println("All Goals Completed, Level is Complete");
-            return;
-        }         
-        // If the Player has lost the game, disallow movement
-        else if (this.dungeon.isGameOver()) {
-            System.out.println("Player has been Defeated");
-            return;
-        }
+        checkGoals();
         switch (event.getCode()) {
         case UP:
             player.move(Direction.UP);
@@ -199,9 +210,34 @@ public class DungeonController {
         default:
             break;
         }
+        // Check if the players last move completed the goals.
+        checkGoals();
         // Update all enemies and potion.
         notifyObservers();
     }
 
+    public void checkGoals() throws IOException {
+        if (this.dungeon.goalsCompleted()) {
+            System.out.println("All Goals Completed, Level is Complete");
+            successScreen();
+            return;
+        }         
+        // If the Player has lost the game, disallow movement
+        else if (this.dungeon.isGameOver()) {
+            System.out.println("Player has been Defeated");
+            failureScreen();
+            return;
+        }
+    }
+
+    public void successScreen() throws IOException {
+        SuccessScreen ss = new SuccessScreen(this.stage);
+        ss.start();
+    }
+
+    public void failureScreen() throws IOException {
+        FailScreen fc = new FailScreen(this.stage);
+        fc.start();
+    }
 }
 

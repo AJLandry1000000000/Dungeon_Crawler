@@ -5,26 +5,23 @@ import java.io.IOException;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
-public class InstructionsScreen {
+public class SuccessScreen {
     private Stage stage;
     private String title;
-    private InstructionsController controller;
+    private SuccessController controller;
     private Scene scene;
 
-    private Image playerImage;
-
-    
-    public InstructionsScreen(Stage stage) throws IOException {
+    public SuccessScreen(Stage stage) throws IOException {
         this.stage = stage;
-        title = "Instructions";
-        this.controller = new InstructionsController(stage);
+        title = "SUCCESS";
+        this.controller = new SuccessController(stage);
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("Instructions.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("Succeeded.fxml"));
         loader.setController(controller);
         Parent root = loader.load();
+
         this.scene = new Scene(root);
     }
 
@@ -33,6 +30,5 @@ public class InstructionsScreen {
         stage.setScene(scene);
         stage.show();
     }
-
 
 }

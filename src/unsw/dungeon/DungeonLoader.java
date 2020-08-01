@@ -3,6 +3,9 @@ package unsw.dungeon;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 
+import java.util.List;
+import java.util.ArrayList;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
@@ -28,7 +31,7 @@ public abstract class DungeonLoader {
     public DungeonLoader(JSONObject json) {
         this.json = json;
     }
-    
+
     /**
      * Parses the JSON to create a dungeon.
      * @return
@@ -40,6 +43,12 @@ public abstract class DungeonLoader {
         Dungeon dungeon = new Dungeon(width, height);
 
         JSONArray jsonEntities = json.getJSONArray("entities");
+
+        List<JSONObject> jsonValues = new ArrayList<JSONObject>();
+        for (int i = 0; i < jsonEntities.length(); i++) {
+            jsonValues.add(jsonEntities.getJSONObject(i));
+        }
+
 
         for (int i = 0; i < jsonEntities.length(); i++) {
             loadEntity(dungeon, jsonEntities.getJSONObject(i));
@@ -163,8 +172,21 @@ public abstract class DungeonLoader {
             onLoad(treasure);
             entity = treasure;
             break;
+        case "hammer":
+            Hammer hammer = new Hammer(x, y, dungeon);
+            onLoad(hammer);
+            entity = hammer;
+            break;
+        case "ghost":
+            Ghost ghost = new Ghost(x, y, dungeon);
+            onLoad(ghost);
+            entity = ghost;
+            break;
         default:
             break;
+        }
+        if (entity == null) {
+            return;
         }
         // Check and process if Entities are on the same location
         if (!checkEntityLocation(dungeon, entity, x, y)) {
@@ -197,7 +219,6 @@ public abstract class DungeonLoader {
 
     public abstract void onLoad(Entity player);
     public abstract void onLoad(Wall wall);
-    // Additional abstract methods are added here
     public abstract void onLoad(Boulder boulder);
     public abstract void onLoad(Door door);
     public abstract void onLoad(Enemy enemy);
@@ -208,5 +229,7 @@ public abstract class DungeonLoader {
     public abstract void onLoad(Switch floor);
     public abstract void onLoad(Sword sword);
     public abstract void onLoad(Treasure treasure);
+    public abstract void onLoad(Hammer hammer);
+    public abstract void onLoad(Ghost ghost);
 
 }

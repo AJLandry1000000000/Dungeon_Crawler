@@ -36,18 +36,30 @@ public class Enemy extends Entity implements Moveable, Interactable {
         // Determine if there is an entity at the new position
         Entity checkEntity = dungeon.getEntity(newX, newY);
 
+        // If the Enemy wants to walk on a square that has more than two entities, it is disallowed
+        if (dungeon.getEntities(newX, newY).size() > 1) {
+            return false;
+        }
+
         // Assume that the enemy cannot interact with the new entity
         Boolean canAttack = false;
+        
         // If this entity is a Player
-        if (checkEntity.getClass().equals(Player.class)) {
+        if (checkEntity instanceof Player) {
             // If this Enemy can destroy the player, return true
             // Otherwise return false (e.g. if the player has an Invincibility potion).
             canAttack = ((Interactable)checkEntity).interact(this);
         }
 
+
+        Boolean isDoorOpen = false;
+        if (checkEntity instanceof Door) {
+            if (((Door)checkEntity).isOpen()) isDoorOpen = true;
+        }
+
         // If the Enemy can attack the Player or If the Enemy is moving onto an empty space
         // And the new position must be within the dungeon boundaries
-        if ((canAttack || checkEntity == null) && dungeon.checkBoundaries(newX, newY)) {
+        if ((canAttack || isDoorOpen || checkEntity == null) && dungeon.checkBoundaries(newX, newY)) {
             // Allow the Enemy to change its coordinates to the new X & Y
             x().set(newX);
             y().set(newY);

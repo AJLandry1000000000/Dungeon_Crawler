@@ -35,7 +35,7 @@ public class Sword extends Entity implements Interactable {
             return false;
         }
 
-        Player player = (Player) entity;
+        Player player = (Player)entity;
         // Determine if the Player does not have a current Sword
         if (!player.hasSword()) {
             // Player acquires the Sword which is then removed from the level
