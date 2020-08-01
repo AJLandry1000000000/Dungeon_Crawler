@@ -31,7 +31,7 @@ public class Sword extends Entity implements Interactable {
     @Override
     public Boolean interact(Entity entity) {
         // Only a Player is allowed to interact with a Sword
-        if (!(entity.equals(Player.class))) {
+        if (!(entity.getClass().equals(Player.class))) {
             return false;
         }
 

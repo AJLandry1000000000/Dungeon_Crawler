@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane maxHeight="900.0" maxWidth="900.0" minHeight="800.0" minWidth="900.0" prefHeight="500.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/11.0.4" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label layoutX="375.0" text="Instructions">
+         <font>
+            <Font name="System Bold" size="19.0" />
+         </font></Label>
+      <Button fx:id="BackToMainMenu" layoutX="400.0" layoutY="750.0" mnemonicParsing="false" onAction="#handleBackToMainMenu" text="Main Menu" />
+      <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="20.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@images/human_new.png" />
+         </image>
+      </ImageView>
+      <ImageView layoutX="20.0" layoutY="70.0">
+         <image>
+            <Image url="@images/boulder.png" />
+         </image>
+      </ImageView>
+      <ImageView layoutX="20.0" layoutY="120.0">
+         <image>
+            <Image url="@images/brick_brown_0.png" />
+         </image>
+      </ImageView>
+      <ImageView layoutX="20.0" layoutY="170.0">
+         <image>
+            <Image url="@images/brilliant_blue_new.png" />
+         </image>
+      </ImageView>
+      <ImageView layoutX="22.0" layoutY="220.0">
+         <image>
+            <Image url="@images/closed_door.png" />
+         </image>
+      </ImageView>
+      <ImageView layoutX="20.0" layoutY="270.0">
+         <image>
+            <Image url="@images/deep_elf_master_archer.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="66.0" layoutY="30.0" text="Player - Player moves with arrow keys. Steps on objects to Interact with them." />
+      <ImageView layoutX="20.0" layoutY="320.0">
+         <image>
+            <Image url="@images/key.png" />
+         </image>
+      </ImageView>
+      <ImageView layoutX="20.0" layoutY="370.0">
+         <image>
+            <Image url="@images/greatsword_1_new.png" />
+         </image>
+      </ImageView>
+      <ImageView layoutX="20.0" layoutY="420.0">
+         <image>
+            <Image url="@images/portal.png" />
+         </image>
+      </ImageView>
+      <ImageView layoutX="20.0" layoutY="570.0">
+         <image>
+            <Image url="@images/exit.png" />
+         </image>
+      </ImageView>
+      <ImageView layoutX="20.0" layoutY="520.0">
+         <image>
+            <Image url="@images/gold_pile.png" />
+         </image>
+      </ImageView>
+      <ImageView layoutX="20.0" layoutY="470.0">
+         <image>
+            <Image url="@images/pressure_plate.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="66.0" layoutY="80.0" text="Boulder - Acts like a wall in most cases. The only difference being that it can be pushed by the player. " />
+      <Label layoutX="66.0" layoutY="128.0" text="Wall - Blocks the movement of the player, enemies and boulders." />
+      <Label layoutX="66.0" layoutY="178.0" text="Potion - If the Player picks this up enemies will run away. If Player attacks enemies, the enemy is destroyed instantly." />
+      <Label layoutX="66.0" layoutY="228.0" text="Door - Doors open if the Player walks into it with its corresponding key." />
+      <Label layoutX="66.0" layoutY="278.0" text="Enemy - Constantly moves toward the player. The player dies upon collision with an enemy." />
+      <Label layoutX="66.0" layoutY="328.0" text="Key - Keys open the cooresponding door (door will be indicated). Player can only hold one key at a time." />
+      <Label layoutX="66.0" layoutY="379.0" text="Sword - Swords can be used to destroy 5 enemies. Player destroys an enemy by holding a sword and stepping on the enemy." />
+      <Label layoutX="66.0" layoutY="430.0" text="Portal - Teleports entities to a corresponding portal." />
+      <Label layoutX="66.0" layoutY="480.0" text="Switch - Player pushes boulders onto switches to complete goals." />
+      <Label layoutX="66.0" layoutY="530.0" text="Treasure - Can be collected by player to complete goals." />
+      <Label layoutX="66.0" layoutY="580.0" text="Exit - If the player completes all the marked goals and moves through the exit, the level is complete." />
+   </children>
+</Pane>
