@@ -131,7 +131,7 @@ public class DungeonController {
         // Notify Player with the current move total.
         player.decrementPotionSteps();
 
-        // If the Goal condition has been completed, do not allow the Enemy to move
+        // If the Goal condition has been completed, do not allow the Enemy to move.
         if (this.dungeon.goalsCompleted()) {
             return;
         }   
@@ -210,7 +210,7 @@ public class DungeonController {
         default:
             break;
         }
-        // Update all enemies.
+        // Update all enemies and potion.
         notifyObservers();
     }
 
