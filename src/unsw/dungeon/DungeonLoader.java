@@ -172,8 +172,21 @@ public abstract class DungeonLoader {
             onLoad(treasure);
             entity = treasure;
             break;
+        case "hammer":
+            Hammer hammer = new Hammer(x, y, dungeon);
+            onLoad(hammer);
+            entity = hammer;
+            break;
+        case "ghost":
+            Ghost ghost = new Ghost(x, y, dungeon);
+            onLoad(ghost);
+            entity = ghost;
+            break;
         default:
             break;
+        }
+        if (entity == null) {
+            return;
         }
         // Check and process if Entities are on the same location
         if (!checkEntityLocation(dungeon, entity, x, y)) {
@@ -216,5 +229,7 @@ public abstract class DungeonLoader {
     public abstract void onLoad(Switch floor);
     public abstract void onLoad(Sword sword);
     public abstract void onLoad(Treasure treasure);
+    public abstract void onLoad(Hammer hammer);
+    public abstract void onLoad(Ghost ghost);
 
 }

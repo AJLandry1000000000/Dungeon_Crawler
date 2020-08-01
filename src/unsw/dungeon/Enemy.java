@@ -52,7 +52,6 @@ public class Enemy extends Entity implements Moveable, Interactable {
         }
 
 
-
         Boolean isDoorOpen = false;
         if (checkEntity instanceof Door) {
             if (((Door)checkEntity).isOpen()) isDoorOpen = true;

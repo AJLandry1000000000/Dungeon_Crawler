@@ -18,7 +18,7 @@ public class Dungeon {
     private int width, height;
     private ArrayList<Entity> entities;
     private Player player;
-    private boolean exitReached;
+    private Boolean exitReached;
     private Goal goal;
     private Boolean gameOver;
 
@@ -84,7 +84,7 @@ public class Dungeon {
     public ArrayList<Entity> getEnemies() {
         ArrayList<Entity> enemies = new ArrayList<Entity>();
         for (Entity e : entities) {
-            if (e.getClass().equals(Enemy.class)) {
+            if (e instanceof Enemy) {
                 enemies.add(e);
             }
         }

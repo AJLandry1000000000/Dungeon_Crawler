@@ -59,6 +59,11 @@ public class DungeonMockLoader extends DungeonLoader {
     }
     public void onLoad(Treasure treasure) {
         return;
-
+    }
+    public void onLoad(Hammer hammer) {
+        return;
+    }
+    public void onLoad(Ghost ghost) {
+        return;
     }
 }

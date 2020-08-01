@@ -16,9 +16,11 @@ import javafx.beans.property.SimpleIntegerProperty;
 public class Player extends Entity implements Moveable, Interactable {
 
     private Sword sword;
+    private BooleanProperty swordEquipped;
     private IntegerProperty potion;
     private Key key;
-    private BooleanProperty swordEquipped;
+    private Hammer hammer;
+    private BooleanProperty hammerEquipped;
 
     /**
      * Create a player positioned in square (x,y)
@@ -31,12 +33,17 @@ public class Player extends Entity implements Moveable, Interactable {
         this.potion = new SimpleIntegerProperty(0);
         this.key = null;
         this.swordEquipped = new SimpleBooleanProperty(false);
+        this.hammerEquipped = new SimpleBooleanProperty(false);
     }
 
     // Getters
 
     public Sword getSword() {
         return this.sword;
+    }
+
+    public Hammer getHammer() {
+        return this.hammer;
     }
 
     public Key getKey() {
@@ -55,6 +62,10 @@ public class Player extends Entity implements Moveable, Interactable {
         return this.swordEquipped;
     }
 
+    public BooleanProperty isHammerEquipped() {
+        return this.hammerEquipped;
+    }
+
     // Setters
     /**
      * Allow the Player Entity to equip a Sword
@@ -66,6 +77,15 @@ public class Player extends Entity implements Moveable, Interactable {
         getDungeon().removeEntity(newSword);
     }
 
+    /**
+     * Allow the Player Entity to equip a hammer
+     * @param newSword the Sword to be equipped by the Player
+     */
+    public void giveHammer(Hammer hammer) {
+        this.hammer = hammer;
+        this.hammerEquipped.set(true);
+        getDungeon().removeEntity(hammer);
+    }    
     /**
      * Allow the Player Entity to hold a key
      * @param newKey the key a Player holds until the Player comes in contact with corresponding Door
@@ -120,6 +140,14 @@ public class Player extends Entity implements Moveable, Interactable {
     }
 
     /**
+     * Check if the Player is currently wielding a hammer
+     * @return true if the player has a hammer already, otherwise false
+     */
+    public boolean hasHammer() {
+        return this.hammer != null;
+    }
+
+    /**
      * Check if the Sword has exceeded the number of uses it has
      */
     public void checkSword() {
@@ -127,6 +155,17 @@ public class Player extends Entity implements Moveable, Interactable {
         if (hasSword() && getSword().getHits() <= 0) {
             this.swordEquipped.set(false);
             this.sword = null;
+        }
+    }
+
+    /**
+     * Check if the hammer has exceeded the number of uses it has
+     */
+    public void checkHammer() {
+        // If we have a hammer and it has zero or less hits left, remove this hammer from the Player.
+        if (hasHammer() && getHammer().getHits() <= 0) {
+            this.hammerEquipped.set(false);
+            this.hammer = null;
         }
     }
 

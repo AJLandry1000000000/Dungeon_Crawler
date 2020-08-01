@@ -29,11 +29,14 @@ public class DungeonController {
 
     private ArrayList<Entity> enemies;
 
+    private int steps;
+
     public DungeonController(Dungeon dungeon, List<ImageView> initialEntities) {
         this.dungeon = dungeon;
         this.player = dungeon.getPlayer();
         this.enemies = dungeon.getEnemies();
         this.initialEntities = new ArrayList<>(initialEntities);
+        this.steps = 0; 
     }
 
     public Player getPlayer() {
@@ -51,7 +54,7 @@ public class DungeonController {
         }
 
         for (ImageView entity : initialEntities) {
-            squares.getChildren().addAll(entity);
+            squares.getChildren().add(entity);
         }
     }
 
@@ -124,6 +127,7 @@ public class DungeonController {
      * and all Enemy will move. The Enemy movement is dependent on Player having a Potion.
      */
     public void notifyObservers() {
+        this.steps++;
         // Notify Player with the current move total.
         player.decrementPotionSteps();
 
@@ -145,13 +149,21 @@ public class DungeonController {
             double down = distanceToPlayer(en.getX(), en.getY() + 1);
             // Move stay.
             double stay = distanceToPlayer(en.getX(), en.getY());
-    
+
             if (!player.hasPotion()) {
                 // Play does not have a potion. So move the enemies closer to the player.
-                optimalMove(en, "minimise", left, right, up, down, stay);
+                if (e instanceof Ghost) {
+                    if (this.steps % 3 == 0) optimalMove(en, "minimise", left, right, up, down, stay);
+                } else {
+                    optimalMove(en, "minimise", left, right, up, down, stay);
+                }
             } else {
                 // Play does have a potion. So move the enemies further from the player.
-                optimalMove(en, "maximise", left, right, up, down, stay);
+                if (e instanceof Ghost) {
+                    if (this.steps % 3 == 0) optimalMove(en, "maximise", left, right, up, down, stay);
+                } else if (this.steps % 2 == 0) {
+                    optimalMove(en, "maximise", left, right, up, down, stay);
+                }
             }
             this.enemies = dungeon.getEnemies();
         }
