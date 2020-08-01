@@ -43,6 +43,9 @@ public class DungeonControllerLoader extends DungeonLoader {
     private Image treasureImage;
     private Image doorAlertImage;
     private Image playerSwordImage;
+    private Image playerPotionImage;
+    private Image playerSwordPotionImage;
+
 
     public DungeonControllerLoader(String filename) throws FileNotFoundException {        
         super(filename);
@@ -67,7 +70,11 @@ public class DungeonControllerLoader extends DungeonLoader {
         treasureImage = new Image((new File("images/gold_pile.png")).toURI().toString());
 
         playerSwordImage = new Image((new File("images/player_w_sword.png")).toURI().toString());
+        playerPotionImage = new Image((new File("images/player_w_potion.png")).toURI().toString());
+        playerSwordPotionImage = new Image((new File("images/player_w_potion_sword.png")).toURI().toString());
+
     }
+
 
     @Override
     public void onLoad(Entity player) {
@@ -182,14 +189,15 @@ public class DungeonControllerLoader extends DungeonLoader {
 
 
         if (entity.getClass().equals(Door.class)) {
-            ((Door)entity).doorStatus().addListener(new ChangeListener<Boolean>() {
+            Door door = ((Door)entity);
+            door.doorStatus().addListener(new ChangeListener<Boolean>() {
                 @Override
                 public void changed(ObservableValue<? extends Boolean> observable,
                         Boolean oldValue, Boolean newValue) {
                     ((ImageView)node).setImage(doorOpenImage);
                 }
             });
-            ((Door)entity).keyStatus().addListener(new ChangeListener<Boolean>() {
+            door.keyStatus().addListener(new ChangeListener<Boolean>() {
                 @Override
                 public void changed(ObservableValue<? extends Boolean> observable,
                 Boolean oldValue, Boolean newValue) {
@@ -199,25 +207,42 @@ public class DungeonControllerLoader extends DungeonLoader {
         }
 
         else if (entity.getClass().equals(Player.class)) {
-            ((Player)entity).potionSteps().addListener(new ChangeListener<Number>() {
+            Player player = ((Player)entity);
+            player.potionSteps().addListener(new ChangeListener<Number>() {
                 @Override
                 public void changed(ObservableValue<? extends Number> observable,
                     Number oldValue, Number newValue) {
                     if (newValue.intValue() > 0) {
-                        ((ImageView)node).setImage(playerSwordImage);
+                        if (player.hasSword()) {
+                            ((ImageView)node).setImage(playerSwordPotionImage);
+                        } else {
+                            ((ImageView)node).setImage(playerPotionImage);
+                        }
                     } else {
-                        ((ImageView)node).setImage(playerImage);
+                        if (player.hasSword()) {
+                            ((ImageView)node).setImage(playerSwordImage);
+                        } else {
+                            ((ImageView)node).setImage(playerImage);
+                        }
                     }
                 }
             });
-            ((Player)entity).isSwordEquipped().addListener(new ChangeListener<Boolean>() {
+            player.isSwordEquipped().addListener(new ChangeListener<Boolean>() {
                 @Override
                 public void changed(ObservableValue<? extends Boolean> observable,
                     Boolean oldValue, Boolean newValue) {
                     if (newValue) {
-                        ((ImageView)node).setImage(playerSwordImage);
+                        if (player.hasPotion()) {
+                            ((ImageView)node).setImage(playerSwordPotionImage);
+                        } else {
+                            ((ImageView)node).setImage(playerSwordImage);
+                        }
                     } else {
-                        ((ImageView)node).setImage(playerImage);
+                        if (player.hasPotion()) {
+                            ((ImageView)node).setImage(playerPotionImage);
+                        } else {
+                            ((ImageView)node).setImage(playerImage);
+                        }
                     }
                 }
             });
