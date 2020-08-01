@@ -12,6 +12,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+
+
 
 /**
  * A JavaFX controller for the dungeon.
@@ -52,7 +56,7 @@ public class DungeonController {
     }
 
     @FXML
-    public void initialize() {
+    public void initialize() throws IOException {
         Image ground = new Image((new File("images/dirt_0_new.png")).toURI().toString());
         // Add the ground first so it is below all other entities
         for (int x = 0; x < dungeon.getWidth(); x++) {
@@ -64,6 +68,22 @@ public class DungeonController {
         for (ImageView entity : initialEntities) {
             squares.getChildren().add(entity);
         }
+
+        dungeon.gameOver().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable,
+                Boolean oldValue, Boolean newValue) {
+                    System.out.println("ADD YOUR CHANGE SCREEN HERE");
+                    try {
+                        checkGoals();
+                    } catch (IOException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+
+            }
+        });
+
     }
 
     /**
@@ -179,8 +199,6 @@ public class DungeonController {
 
     @FXML
     public void handleKeyPress(KeyEvent event) throws IOException {
-        // If the Player has already completed all Goals, disallow movement
-        checkGoals();
         switch (event.getCode()) {
         case UP:
             player.move(Direction.UP);
@@ -210,8 +228,6 @@ public class DungeonController {
         default:
             break;
         }
-        // Check if the players last move completed the goals.
-        checkGoals();
         // Update all enemies and potion.
         notifyObservers();
     }

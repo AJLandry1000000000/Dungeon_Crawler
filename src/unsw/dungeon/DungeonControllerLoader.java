@@ -2,6 +2,7 @@ package unsw.dungeon;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
@@ -325,10 +326,12 @@ public class DungeonControllerLoader extends DungeonLoader {
                 public void changed(ObservableValue<? extends Boolean> observable,
                     Boolean oldValue, Boolean newValue) {
                         System.out.println("ADD YOUR CHANGE SCREEN HERE");
+
                 }
             });
         }
     }
+
 
     /**
      * Create a controller that can be attached to the DungeonView with all the
