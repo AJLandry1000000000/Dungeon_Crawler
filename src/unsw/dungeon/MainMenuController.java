@@ -92,7 +92,7 @@ public class MainMenuController {
 
     @FXML
     public void handleLevel3Button(ActionEvent event) {
-        changeStage("boulders.json");
+        changeStage("maze.json");
     }
 
     @FXML
