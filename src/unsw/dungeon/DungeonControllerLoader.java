@@ -6,10 +6,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 import java.util.stream.Collectors;
+import java.util.Random;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.Node;
+import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -46,9 +48,12 @@ public class DungeonControllerLoader extends DungeonLoader {
     private Image playerPotionImage;
     private Image playerSwordPotionImage;
 
+    private int colourSwitch;
 
     public DungeonControllerLoader(String filename) throws FileNotFoundException {        
         super(filename);
+
+        this.colourSwitch = 0;
 
         baseLayer = new ArrayList<>();
         collectableLayer = new ArrayList<>();
@@ -114,6 +119,14 @@ public class DungeonControllerLoader extends DungeonLoader {
     @Override
     public void onLoad(Portal portal) {
         ImageView view = new ImageView(portalImage);
+
+        //Instantiating the ColorAdjust class 
+        ColorAdjust colorAdjust = new ColorAdjust(); 
+
+        if (portal.getID() % 2 == 0) colorAdjust.setHue((portal.getID() % 10) * 0.1);     
+        else colorAdjust.setHue((portal.getID() % 10) * -0.1);     
+
+        view.setEffect(colorAdjust);
         addEntity(portal, view, 2);
     }
     @Override
