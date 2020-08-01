@@ -21,7 +21,7 @@ public class DungeonApplication extends Application {
     public void start(Stage primaryStage) throws IOException {
         primaryStage.setTitle("Dungeon");
         // Read from a JSON file
-        DungeonControllerLoader dungeonLoader = new DungeonControllerLoader("boulders.json");
+        DungeonControllerLoader dungeonLoader = new DungeonControllerLoader("test.json");
         DungeonController controller = dungeonLoader.loadController();
         // JavaFX processing
         FXMLLoader loader = new FXMLLoader(getClass().getResource("DungeonView.fxml"));

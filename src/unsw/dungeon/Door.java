@@ -1,5 +1,8 @@
 package unsw.dungeon;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+
 /**
  * Door entity, which corresponds to a Key entity, that locks part of the level
  * @author Sean Smith
@@ -8,11 +11,13 @@ package unsw.dungeon;
 public class Door extends Entity implements Interactable {
 
     private int id;
-    private boolean open;
+    private BooleanProperty open;
+    private BooleanProperty key;
     
     public Door(int x, int y, Dungeon dungeon, int id) {
         super(x, y, dungeon);
-        this.open = false;
+        this.open = new SimpleBooleanProperty(false);
+        this.key = new SimpleBooleanProperty(false);
         this.id = id;
     }
 
@@ -20,17 +25,32 @@ public class Door extends Entity implements Interactable {
         return this.id;
     }
 
+    public BooleanProperty doorStatus() {
+        return this.open;
+    }
+
+    public BooleanProperty keyStatus() {
+        return this.key;
+    }
+
     public boolean isOpen() {
-        return open;
+        return this.open.get();
     }
 
     /**
      * Change the Door's state to open
      */
     public void openDoor() {
-        this.open = true;
+        this.open.set(true);
     }
     
+    /**
+     * Change the Door's state to alert
+     */
+    public void alertDoor() {
+        this.key.set(true);
+    }
+
     /**
      * If the Door is open, let the Player move through the Door.
      * If the Door is closed, it tests whether the Player has the corresponding key. 

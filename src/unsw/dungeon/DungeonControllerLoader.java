@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
+import java.util.stream.Collectors;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -21,13 +23,15 @@ import javafx.scene.layout.GridPane;
  */
 public class DungeonControllerLoader extends DungeonLoader {
 
-    private List<ImageView> entities;
+    private List<ImageView> baseLayer;
+    private List<ImageView> collectableLayer;
+    private List<ImageView> moveableLayer;
 
     //Images
     private Image playerImage;
     private Image wallImage;
     private Image boulderImage;
-    //private Image doorOpenImage;
+    private Image doorOpenImage;
     private Image doorClosedImage;
     private Image enemyImage;
     private Image exitImage;
@@ -37,15 +41,21 @@ public class DungeonControllerLoader extends DungeonLoader {
     private Image switchImage;
     private Image swordImage;
     private Image treasureImage;
+    private Image doorAlertImage;
+    private Image playerSwordImage;
 
     public DungeonControllerLoader(String filename) throws FileNotFoundException {        
         super(filename);
-        entities = new ArrayList<>();
+
+        baseLayer = new ArrayList<>();
+        collectableLayer = new ArrayList<>();
+        moveableLayer = new ArrayList<>();
+
         playerImage = new Image((new File("images/human_new.png")).toURI().toString());
         wallImage = new Image((new File("images/brick_brown_0.png")).toURI().toString());
-        // Added new images
         boulderImage = new Image((new File("images/boulder.png")).toURI().toString());
-        //doorOpenImage = new Image((new File("images/open_door.png")).toURI().toString());
+        doorOpenImage = new Image((new File("images/open_door.png")).toURI().toString());
+        doorAlertImage = new Image((new File("images/door_alert.png")).toURI().toString());
         doorClosedImage = new Image((new File("images/closed_door.png")).toURI().toString());
         enemyImage = new Image((new File("images/deep_elf_master_archer.png")).toURI().toString());
         exitImage = new Image((new File("images/exit.png")).toURI().toString());
@@ -55,72 +65,84 @@ public class DungeonControllerLoader extends DungeonLoader {
         switchImage = new Image((new File("images/pressure_plate.png")).toURI().toString());
         swordImage = new Image((new File("images/greatsword_1_new.png")).toURI().toString());
         treasureImage = new Image((new File("images/gold_pile.png")).toURI().toString());
+
+        playerSwordImage = new Image((new File("images/player_w_sword.png")).toURI().toString());
     }
 
     @Override
     public void onLoad(Entity player) {
         ImageView view = new ImageView(playerImage);
-        addEntity(player, view);
+        addEntity(player, view, 3);
     }
     @Override
     public void onLoad(Wall wall) {
         ImageView view = new ImageView(wallImage);
-        addEntity(wall, view);
+        addEntity(wall, view, 1);
     }
     @Override
     public void onLoad(Boulder boulder) {
         ImageView view = new ImageView(boulderImage);
-        addEntity(boulder, view);
+        addEntity(boulder, view, 3);
     }
     @Override
     public void onLoad(Door door) {
         ImageView view = new ImageView(doorClosedImage);
-        addEntity(door, view);
+        addEntity(door, view, 2);
     }
     @Override
     public void onLoad(Enemy enemy) {
         ImageView view = new ImageView(enemyImage);
-        addEntity(enemy, view);
+        addEntity(enemy, view, 3);
     }
     @Override
     public void onLoad(Exit exit) {
         ImageView view = new ImageView(exitImage);
-        addEntity(exit, view);
+        addEntity(exit, view, 2);
     }
     @Override
     public void onLoad(Key key) {
         ImageView view = new ImageView(keyImage);
-        addEntity(key, view);
+        addEntity(key, view, 2);
     }
     @Override
     public void onLoad(Portal portal) {
         ImageView view = new ImageView(portalImage);
-        addEntity(portal, view);
+        addEntity(portal, view, 2);
     }
     @Override
     public void onLoad(Potion potion) {
         ImageView view = new ImageView(potionImage);
-        addEntity(potion, view);
+        addEntity(potion, view, 2);
     }
     @Override
     public void onLoad(Switch floor) {
         ImageView view = new ImageView(switchImage);
-        addEntity(floor, view);
+        addEntity(floor, view, 1);
     }
     @Override
     public void onLoad(Sword sword) {
         ImageView view = new ImageView(swordImage);
-        addEntity(sword, view);
+        addEntity(sword, view, 2);
     }
     @Override
     public void onLoad(Treasure treasure) {
         ImageView view = new ImageView(treasureImage);
-        addEntity(treasure, view);
+        addEntity(treasure, view, 2);
     }
 
-    private void addEntity(Entity entity, ImageView view) {
+    private void addEntity(Entity entity, ImageView view, int level) {
+        switch (level) {
+            case 1:
+                baseLayer.add(view);
+                break;
+            case 2:
+                collectableLayer.add(view);
+                break;
+            case 3:
+                moveableLayer.add(view);
+                break;
+        }
         trackPosition(entity, view);
-        entities.add(view);
     }
 
     /**
@@ -150,6 +172,56 @@ public class DungeonControllerLoader extends DungeonLoader {
                 GridPane.setRowIndex(node, newValue.intValue());
             }
         });
+        entity.visible().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable,
+                    Boolean oldValue, Boolean newValue) {
+                node.setVisible(false);
+            }
+        });
+
+
+        if (entity.getClass().equals(Door.class)) {
+            ((Door)entity).doorStatus().addListener(new ChangeListener<Boolean>() {
+                @Override
+                public void changed(ObservableValue<? extends Boolean> observable,
+                        Boolean oldValue, Boolean newValue) {
+                    ((ImageView)node).setImage(doorOpenImage);
+                }
+            });
+            ((Door)entity).keyStatus().addListener(new ChangeListener<Boolean>() {
+                @Override
+                public void changed(ObservableValue<? extends Boolean> observable,
+                Boolean oldValue, Boolean newValue) {
+                    ((ImageView)node).setImage(doorAlertImage);  
+                }
+            });
+        }
+
+        else if (entity.getClass().equals(Player.class)) {
+            ((Player)entity).potionSteps().addListener(new ChangeListener<Number>() {
+                @Override
+                public void changed(ObservableValue<? extends Number> observable,
+                    Number oldValue, Number newValue) {
+                    if (newValue.intValue() > 0) {
+                        ((ImageView)node).setImage(playerSwordImage);
+                    } else {
+                        ((ImageView)node).setImage(playerImage);
+                    }
+                }
+            });
+            ((Player)entity).isSwordEquipped().addListener(new ChangeListener<Boolean>() {
+                @Override
+                public void changed(ObservableValue<? extends Boolean> observable,
+                    Boolean oldValue, Boolean newValue) {
+                    if (newValue) {
+                        ((ImageView)node).setImage(playerSwordImage);
+                    } else {
+                        ((ImageView)node).setImage(playerImage);
+                    }
+                }
+            });
+        }
     }
 
     /**
@@ -159,7 +231,11 @@ public class DungeonControllerLoader extends DungeonLoader {
      * @throws FileNotFoundException
      */
     public DungeonController loadController() throws FileNotFoundException {
-        return new DungeonController(load(), entities);
+        
+        return new DungeonController(load(), Stream.of(baseLayer, collectableLayer, moveableLayer)
+            .flatMap(x -> x.stream())
+            .collect(Collectors.toList())
+        );
     }
 
 

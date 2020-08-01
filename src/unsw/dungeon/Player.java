@@ -1,5 +1,10 @@
 package unsw.dungeon;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+
 /**
  * The player entity moves around the map interacting with other Entities. 
  * The Enemy can interact with the Player to destroy it and end the game. 
@@ -11,8 +16,9 @@ package unsw.dungeon;
 public class Player extends Entity implements Moveable, Interactable {
 
     private Sword sword;
-    private int potion;
+    private IntegerProperty potion;
     private Key key;
+    private BooleanProperty swordEquipped;
 
     /**
      * Create a player positioned in square (x,y)
@@ -22,8 +28,9 @@ public class Player extends Entity implements Moveable, Interactable {
     public Player(int x, int y, Dungeon dungeon) {
         super(x, y, dungeon);
         this.sword = null;
-        this.potion = 0;
+        this.potion = new SimpleIntegerProperty(0);
         this.key = null;
+        this.swordEquipped = new SimpleBooleanProperty(false);
     }
 
     // Getters
@@ -37,7 +44,15 @@ public class Player extends Entity implements Moveable, Interactable {
     }
 
     public int potionStepsLeft() {
+        return this.potion.get();
+    }
+
+    public IntegerProperty potionSteps() {
         return this.potion;
+    }
+
+    public BooleanProperty isSwordEquipped() {
+        return this.swordEquipped;
     }
 
     // Setters
@@ -47,6 +62,7 @@ public class Player extends Entity implements Moveable, Interactable {
      */
     public void giveSword(Sword newSword) {
         this.sword = newSword;
+        this.swordEquipped.set(true);
         getDungeon().removeEntity(newSword);
     }
 
@@ -56,6 +72,7 @@ public class Player extends Entity implements Moveable, Interactable {
      */
     public void giveKey(Key newKey) {
         this.key = newKey;
+        getDungeon().alertDoor(newKey.getId());
         getDungeon().removeEntity(newKey);
     }
 
@@ -72,7 +89,7 @@ public class Player extends Entity implements Moveable, Interactable {
      */
     public void givePotion(Potion potion) {
         getDungeon().removeEntity(potion);
-        this.potion = 11;
+        this.potion.set(11);
     }
 
     /**
@@ -80,8 +97,8 @@ public class Player extends Entity implements Moveable, Interactable {
      */
     public void decrementPotionSteps() {
         if (hasPotion()) {
-            System.out.println("Player has " + (this.potion - 1) + " steps of potion left");
-            this.potion--;
+            System.out.println("Player has " + (this.potion.get() - 1) + " steps of potion left");
+            this.potion.set(this.potion.get() - 1);
         }
     }
 
@@ -108,6 +125,7 @@ public class Player extends Entity implements Moveable, Interactable {
     public void checkSword() {
         // If we have a Sword and it has zero or less hits left, remove this Sword from the Player.
         if (hasSword() && getSword().getHits() <= 0) {
+            this.swordEquipped.set(false);
             this.sword = null;
         }
     }
@@ -123,7 +141,7 @@ public class Player extends Entity implements Moveable, Interactable {
      * @return true if the Player has leftover invincible steps
      */
     public boolean hasPotion() {
-        return this.potion > 0 ? true : false;
+        return this.potion.get() > 0 ? true : false;
     }
 
     /**
@@ -131,7 +149,6 @@ public class Player extends Entity implements Moveable, Interactable {
      */
     @Override
     public Boolean move(Direction direction) {
-        Dungeon dungeon = getDungeon();
         // Calculate the new position coordinates
         int newX = getX() + direction.getX();
         int newY = getY() + direction.getY();
@@ -141,13 +158,13 @@ public class Player extends Entity implements Moveable, Interactable {
 
         // Assume that the player cannot interact with the new entity.
         Boolean canInteract = false;
-        if (checkEntity.getClass().equals(Interactable.class)) {
+        if (checkEntity instanceof Interactable) {
             // Check if the Player is allowed to interact with the entity at the new position
             canInteract = ((Interactable)checkEntity).interact(this);
         }
 
         // If the entity at the new position is a Portal, allow the Player to access it
-        if (checkEntity.getClass().equals(Portal.class)) {
+        if (checkEntity instanceof Portal) {
             return true;
         }
 

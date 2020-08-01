@@ -138,6 +138,7 @@ public class Dungeon {
     }
 
     public void removeEntity(Entity entity) {
+        entity.visible().set(false);
         this.entities.remove(entity);
     }
 
@@ -159,6 +160,17 @@ public class Dungeon {
 
     public boolean getGameOver() {
         return this.gameOver;
+    }
+
+    public void alertDoor(int id) {
+        for (Entity e : entities) {
+            if (e.getClass().equals(Door.class)) {
+                if (((Door)e).getID() == id) {
+                    ((Door)e).alertDoor();
+                    break;
+                }
+            }
+        }
     }
 
 
