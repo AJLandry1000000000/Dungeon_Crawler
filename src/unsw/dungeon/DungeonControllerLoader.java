@@ -320,6 +320,13 @@ public class DungeonControllerLoader extends DungeonLoader {
                     }
                 }
             });
+            player.getDungeon().gameOver().addListener(new ChangeListener<Boolean>() {
+                @Override
+                public void changed(ObservableValue<? extends Boolean> observable,
+                    Boolean oldValue, Boolean newValue) {
+                        System.out.println("ADD YOUR CHANGE SCREEN HERE");
+                }
+            });
         }
     }
 
