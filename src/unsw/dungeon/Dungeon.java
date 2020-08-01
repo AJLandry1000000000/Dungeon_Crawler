@@ -2,6 +2,10 @@ package unsw.dungeon;
 
 import java.util.ArrayList;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+
+
 /**
  * A dungeon in the interactive dungeon player.
  *
@@ -20,7 +24,7 @@ public class Dungeon {
     private Player player;
     private Boolean exitReached;
     private Goal goal;
-    private Boolean gameOver;
+    private BooleanProperty gameOver;
 
     public Dungeon(int width, int height) {
         this.width = width;
@@ -28,7 +32,7 @@ public class Dungeon {
         this.entities = new ArrayList<Entity>();
         this.player = null;
         this.exitReached = false;
-        this.gameOver = false;
+        this.gameOver = new SimpleBooleanProperty(false);
     }
 
     // Getters 
@@ -155,11 +159,11 @@ public class Dungeon {
     }
 
     public void setGameOver() {
-        this.gameOver = true;
+        this.gameOver.set(true);
     }
 
     public boolean getGameOver() {
-        return this.gameOver;
+        return this.gameOver.get();
     }
 
     public void alertDoor(int id) {
@@ -210,6 +214,10 @@ public class Dungeon {
      * @return either true if the game is over, otherwise false
      */
     public Boolean isGameOver() {
+        return this.gameOver.get();
+    }
+
+    public BooleanProperty gameOver() {
         return this.gameOver;
     }
 }

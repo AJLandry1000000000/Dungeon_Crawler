@@ -100,6 +100,7 @@ public class Enemy extends Entity implements Moveable, Interactable {
             System.out.println("Player has been killed by an Enemy");
             dungeon.removeEntity(player);
             dungeon.setGameOver();
+            dungeon.goalsCompleted();
         }
         return true;
     }
