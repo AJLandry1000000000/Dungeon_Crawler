@@ -92,24 +92,6 @@ public class DungeonControllerLoader extends DungeonLoader {
     @Override
     public void onLoad(Entity player) {
         ImageView view = new ImageView(playerImage);
-        /*
-        List<Image> images = new ArrayList<>();
-        for (int i = )
-        // populate images...
-
-        Transition animation = new Transition() {
-            {
-                setCycleDuration(Duration.millis(1000)); // total time for animation
-            }
-
-            @Override
-            protected void interpolate(double fraction) {
-                int index = (int) (fraction*(images.size()-1));
-                imageView.setImage(images.get(index)); 
-            }
-        }
-        animation.play();
-        */
         addEntity(player, view, 3);
     }
     @Override
@@ -183,7 +165,7 @@ public class DungeonControllerLoader extends DungeonLoader {
     @Override
     public void onLoad(Ghost ghost) {
         ImageView view = new ImageView(ghostImage);
-        addEntity(ghost, view, 2);
+        addEntity(ghost, view, 3);
     }
 
     private void addEntity(Entity entity, ImageView view, int level) {
