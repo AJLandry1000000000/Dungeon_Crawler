@@ -4,6 +4,8 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 
 /**
  * The player entity moves around the map interacting with other Entities. 
@@ -17,11 +19,15 @@ public class Player extends Entity implements Moveable, Interactable {
 
     private Sword sword;
     private BooleanProperty swordEquipped;
-    private IntegerProperty potion;
-    private Potion potionItem;
-    private Key key;
     private Hammer hammer;
     private BooleanProperty hammerEquipped;
+    private Potion potionItem;
+    private IntegerProperty potion;
+    private Key key;
+    private BooleanProperty holdingKey;
+    private IntegerProperty numTreasures;
+    private StringProperty action;
+    private IntegerProperty tick;
 
     /**
      * Create a player positioned in square (x,y)
@@ -31,11 +37,16 @@ public class Player extends Entity implements Moveable, Interactable {
     public Player(int x, int y, Dungeon dungeon) {
         super(x, y, dungeon);
         this.sword = null;
-        this.potion = new SimpleIntegerProperty(0);
-        this.potionItem = null;
-        this.key = null;
         this.swordEquipped = new SimpleBooleanProperty(false);
+        this.hammer = null;
         this.hammerEquipped = new SimpleBooleanProperty(false);
+        this.potionItem = null;
+        this.potion = new SimpleIntegerProperty(0);
+        this.key = null;
+        this.holdingKey = new SimpleBooleanProperty(false);
+        this.numTreasures = new SimpleIntegerProperty(0);
+        this.action = new SimpleStringProperty("");
+        this.numTreasures = new SimpleIntegerProperty(0);
     }
 
     // Getters
@@ -72,6 +83,26 @@ public class Player extends Entity implements Moveable, Interactable {
         return this.hammerEquipped;
     }
 
+    public IntegerProperty numTreasures() {
+        return this.numTreasures;
+    }
+
+    public int getNumTreasures() {
+        return this.numTreasures.get();
+    }
+
+    public BooleanProperty holdingKey() {
+        return this.holdingKey;
+    }
+
+    public Boolean isHoldingKey() {
+        return this.holdingKey.get();
+    }
+
+    public StringProperty actionTaken() {
+        return this.action;
+    }
+
     // Setters
     /**
      * Allow the Player Entity to equip a Sword
@@ -81,6 +112,7 @@ public class Player extends Entity implements Moveable, Interactable {
         this.sword = newSword;
         this.swordEquipped.set(true);
         getDungeon().removeEntity(newSword);
+        this.actionTaken().set("Player has equipped a Sword");
     }
 
     /**
@@ -90,6 +122,7 @@ public class Player extends Entity implements Moveable, Interactable {
     public void giveHammer(Hammer hammer) {
         this.hammer = hammer;
         this.hammerEquipped.set(true);
+        this.actionTaken().set("Player has equipped a Hammer");
         getDungeon().removeEntity(hammer);
     }    
     /**
@@ -100,13 +133,16 @@ public class Player extends Entity implements Moveable, Interactable {
         this.key = newKey;
         getDungeon().alertDoor(newKey.getId());
         getDungeon().removeEntity(newKey);
+        this.actionTaken().set("Player has found a Key");
+        this.holdingKey.set(true);
     }
 
     /**
      * Remove a Key from the Player's inventory
      */
     public void takeKey() {
-        this.key = null;
+        this.holdingKey.set(false);
+        this.actionTaken().set("Player has used a Key to open a Door");
     }
 
     /**
@@ -124,7 +160,7 @@ public class Player extends Entity implements Moveable, Interactable {
      */
     public void decrementPotionSteps() {
         if (hasPotion()) {
-            System.out.println("Player has " + (this.potion.get() - 1) + " steps of potion left");
+            this.action.set("Player has " + (this.potion.get() - 1) + " steps of potion left");
             this.potion.set(this.potion.get() - 1);
         }
     }
@@ -135,6 +171,16 @@ public class Player extends Entity implements Moveable, Interactable {
     public void teleport(int x, int y) {
         x().set(x);
         y().set(y); 
+        this.actionTaken().set("Player has teleported through a Portal");
+    }
+
+
+    public void addTreasure() {
+        this.numTreasures.set(getNumTreasures() + 1);
+    }
+
+    public void tick() {
+        this.tick.set(this.tick.get() + 1);
     }
 
     // Checkers
@@ -209,6 +255,10 @@ public class Player extends Entity implements Moveable, Interactable {
             canInteract = ((Interactable)checkEntity).interact(this);
         }
 
+        if (!canInteract) {
+            this.action.set("");
+
+        }
         // If the entity at the new position is a Portal, allow the Player to access it
         if (checkEntity instanceof Portal) {
             return true;
@@ -240,14 +290,14 @@ public class Player extends Entity implements Moveable, Interactable {
         // If the Player has an Invincibility potion
         if (hasPotion()) {
             // The Enemy is destroyed and goal conditions are checked
-            System.out.println("Player has killed an Enemy");
+            this.action.set("Player has killed an Enemy");
             dungeon.removeEntity(attackingEnemy);
             dungeon.goalsCompleted();
         }
         // If the Player has a Sword
         else if (hasSword()) {
             // The Enemy is destroyed, the Sword hits are decremented and goal conditions are checked
-            System.out.println("Player has killed an Enemy");
+            this.action.set("Player has killed an Enemy");
             dungeon.removeEntity(attackingEnemy);
             this.sword.decrementHits();
             checkSword();
@@ -255,7 +305,7 @@ public class Player extends Entity implements Moveable, Interactable {
         }
         // Otherwise, the Player is killed and game is set to game over
         else {
-            System.out.println("Player has been killed by an Enemy");
+            this.action.set("Player has been killed by an Enemy");
             dungeon.removeEntity(this);
             dungeon.setGameOver();
         }

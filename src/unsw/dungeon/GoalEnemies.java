@@ -20,6 +20,11 @@ public class GoalEnemies implements Goal {
             .filter(x -> x.getClass().equals(Enemy.class))
             .count();
         // Check if there no Enemies remaining
-        return (totalEnemies == 0) ? true : false;
+        if (totalEnemies == 0) {
+            Player player = dungeon.getPlayer();
+            player.actionTaken().set("Player has completed a Goal");
+            return true;
+        }
+        return false;
     }
 }

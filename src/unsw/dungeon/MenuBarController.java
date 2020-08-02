@@ -61,6 +61,7 @@ public class MenuBarController {
     public String getGoals(JSONObject jsonGoal) {
         String goalCondition = jsonGoal.getString("goal");
         // Determine the type of Goal Condition
+        String goal = "";
         switch (goalCondition) {
         case "exit":
             return "exit\n";
@@ -71,22 +72,26 @@ public class MenuBarController {
         case "treasure":
             return "treasure\n";
         case "AND":
-            String goal = "AND\n";
+            goal = "AND\n";
             JSONArray subGoals = jsonGoals.getJSONArray("subgoals");
-            System.out.println(subGoals.length());
             for (Object sub : subGoals) {
-                //System.out.println(((JSONObject)sub).getString("goal"));
-                goal += getGoals((JSONObject)sub);
-                System.out.println("Here");
+                try {
+                    goal.concat(getGoals((JSONObject)sub));
+                } finally {
+                    return "";
+                }
             }
             return goal;
-            //return "";
-
         case "OR":
-            
+            goal = "OR\n";
+            subGoals = jsonGoals.getJSONArray("subgoals");
+            for (Object sub : subGoals) {
+                goal.concat(getGoals((JSONObject)sub));
+            }
+            return goal;
+        default:
             return "";
         }
-        return "";
     }
     
 }

@@ -1,11 +1,19 @@
 package unsw.dungeon;
 
+import java.io.File;
 import java.io.IOException;
 
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Side;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuBar;
+import javafx.scene.image.Image;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -25,6 +33,16 @@ public class LevelLoader {
         // Overall container
         BorderPane root = new BorderPane();
 
+        Image image1 = new Image((new File("images/invent_bg.png")).toURI().toString());
+        // create a background fill for this node from the tile image
+        BackgroundPosition backgroundPosition = new BackgroundPosition(
+                Side.LEFT, 0, false, Side.TOP, 0, false);
+        BackgroundImage backgroundImage = new BackgroundImage(image1,
+                BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT,
+                backgroundPosition, BackgroundSize.DEFAULT);
+        Background background = new Background(backgroundImage);
+        // apply that background fill
+        root.setBackground(background);
         
         // Top Menu
         MenuBarController menuBarController = new MenuBarController(this.stage, this.file);
@@ -65,9 +83,6 @@ public class LevelLoader {
         
         // Show Scene
         Scene scene = new Scene(root);
-        scene.getStylesheets().addAll(getClass().getResource(
-            "Inventory.css"
-        ).toExternalForm());
         gameRoot.requestFocus();
         this.stage.setTitle("Dungeon");
         this.stage.setScene(scene);
