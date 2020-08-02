@@ -81,12 +81,12 @@ public class MainMenuController {
 
     @FXML
     public void handleLevel5Button(ActionEvent event) {
-        changeStage("boulders.json", 5);
+        changeStage("level5.json", 5);
     }
 
     @FXML
     public void handleLevel6Button(ActionEvent event) {
-        changeStage("boulders.json", 6);
+        changeStage("level6.json", 6);
     }
 
     
