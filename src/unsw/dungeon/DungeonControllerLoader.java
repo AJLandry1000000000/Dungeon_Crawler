@@ -98,7 +98,10 @@ public class DungeonControllerLoader extends DungeonLoader {
 
         hammerImage = new Image((new File("images/hammer.png")).toURI().toString());
         ghostImage = new Image((new File("images/ghost_new.png")).toURI().toString());
+    }
 
+    public Label getConsoleDisplay() {
+        return ((Label)this.inventory.getChildren().get(0));
     }
 
     public GridPane getInventory() {
@@ -111,7 +114,7 @@ public class DungeonControllerLoader extends DungeonLoader {
 
     public void removeInventoryEntity(Entity entity) {
         for (EntityData e : inventoryEntities()) {
-            if (e.getEntity().equals(entity)) {
+            if (e.getEntity() != null && e.getEntity().equals(entity)) {
                 inventoryEntities().remove(e);
                 return;
             }
@@ -127,16 +130,20 @@ public class DungeonControllerLoader extends DungeonLoader {
             inventory.add(entity.getImage(), i, 0);
 
             Label counter = new Label();
-            if (entity.getEntity().getClass().equals(Sword.class)) {
+            if (entity.getEntity() == null) {
+                counter.setText(String.valueOf(this.player.getNumTreasures()));
+            } else if (entity.getEntity().getClass().equals(Sword.class)) {
                 Sword sword = ((Sword)entity.getEntity());
                 counter.setText(String.valueOf(sword.getHits()));
             } else if (entity.getEntity().getClass().equals(Hammer.class)) {
                 Hammer hammer = ((Hammer)entity.getEntity());
                 counter.setText(String.valueOf(hammer.getHits()));
             } else if (entity.getEntity().getClass().equals(Potion.class)) {
-                counter.setText(String.valueOf(this.player.potionStepsLeft()));
+                counter.setText(String.valueOf(this.player.potionStepsLeft() - 1));
             } else if (entity.getEntity().getClass().equals(Treasure.class)) {
                 counter.setText(String.valueOf(1));
+            } else if (entity.getEntity().getClass().equals(Key.class)) {
+                continue;
             }
             counter.setStyle(
                 "-fx-background-radius: 5em; " +
@@ -269,7 +276,9 @@ public class DungeonControllerLoader extends DungeonLoader {
             public void changed(ObservableValue<? extends Number> observable,
                     Number oldValue, Number newValue) {
                 GridPane.setColumnIndex(node, newValue.intValue());
-                renderInventory();
+                if (entity.getClass().equals(Player.class)) {
+                    renderInventory();
+                }
             }
         });
         entity.y().addListener(new ChangeListener<Number>() {
@@ -277,7 +286,9 @@ public class DungeonControllerLoader extends DungeonLoader {
             public void changed(ObservableValue<? extends Number> observable,
                     Number oldValue, Number newValue) {
                 GridPane.setRowIndex(node, newValue.intValue());
-                renderInventory();
+                if (entity.getClass().equals(Player.class)) {
+                    renderInventory();
+                }            
             }
         });
     }
@@ -293,7 +304,6 @@ public class DungeonControllerLoader extends DungeonLoader {
                 node.setVisible(false);
             }
         });
-
 
         if (entity.getClass().equals(Door.class)) {
             Door door = ((Door)entity);
@@ -312,18 +322,7 @@ public class DungeonControllerLoader extends DungeonLoader {
                 }
             });
         }
-        /*
-        else if (entity.getClass().equals(Treasure.class)) {
-            Treasure treasure = ((Treasure)entity);
-            treasure.found().addListener(new ChangeListener<Boolean>() {
-                @Override
-                public void changed(ObservableValue<? extends Boolean> observable,
-                        Boolean oldValue, Boolean newValue) {
-                    inventoryEntities().add(new EntityData(player.getSword(), new ImageView(treasureImage)));
-                }
-            });
-        }
-        */
+        
         else if (entity.getClass().equals(Player.class)) {
             Player player = ((Player)entity);
 
@@ -394,7 +393,7 @@ public class DungeonControllerLoader extends DungeonLoader {
                     if (newValue.intValue() == 11) {
                         inventoryEntities().add(new EntityData(player.getPotion(), new ImageView(potionImage)));
                     }
-                    if (newValue.intValue() > 0) {
+                    if (newValue.intValue() > 1) {
                         if (player.hasSword() && player.hasHammer()) {
                             ((ImageView)node).setImage(playerSwordHammerPotionImage);
                         } else if (player.hasSword()) {
@@ -418,6 +417,40 @@ public class DungeonControllerLoader extends DungeonLoader {
                     }
                 }
             });
+
+            player.numTreasures().addListener(new ChangeListener<Number>() {
+                @Override
+                public void changed(ObservableValue<? extends Number> observable,
+                    Number oldValue, Number newValue) {
+                        if (newValue.intValue() == 1) {
+                            inventoryEntities().add(new EntityData(null, new ImageView(treasureImage)));
+                        }
+                }
+            });
+
+            player.holdingKey().addListener(new ChangeListener<Boolean>() {
+                @Override
+                public void changed(ObservableValue<? extends Boolean> observable,
+                    Boolean oldValue, Boolean newValue) {
+                        if (newValue) {
+                            inventoryEntities().add(new EntityData(player.getKey(), new ImageView(keyImage)));
+                        } else {
+                            removeInventoryEntity(player.getKey());
+                        }
+                }
+            });
+
+            player.actionTaken().addListener(new ChangeListener<String>() {
+                @Override
+                public void changed(ObservableValue<? extends String> observable,
+                    String oldValue, String newValue) {
+                        if (!newValue.equals(oldValue)) {
+                            getConsoleDisplay().setText(newValue);
+                        } else {
+                            getConsoleDisplay().setText("");
+                        }
+                }
+            }); 
         }
     }
     /**

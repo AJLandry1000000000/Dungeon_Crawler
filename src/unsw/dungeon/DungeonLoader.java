@@ -40,8 +40,6 @@ public abstract class DungeonLoader {
         int width = json.getInt("width");
         int height = json.getInt("height");
 
-        System.out.println("WDITH:" +width);
-
         Dungeon dungeon = new Dungeon(width, height);
 
         JSONArray jsonEntities = json.getJSONArray("entities");

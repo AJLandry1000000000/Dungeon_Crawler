@@ -22,9 +22,11 @@ public class Treasure extends Entity implements Interactable {
         if (!(entity.getClass().equals(Player.class))) {
             return false;
         }
+        Player player = ((Player)entity);
+        ((Player)entity).addTreasure();
         // Player acquires the treasure which is removed from the level
         getDungeon().removeEntity(this);
-        System.out.println("Player has picked up a treasure");
+        player.actionTaken().set("Played has found a Treasure");
         // Check is all goal conditions have been met
         getDungeon().goalsCompleted();
         return true;

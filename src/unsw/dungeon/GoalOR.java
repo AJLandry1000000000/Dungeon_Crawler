@@ -27,6 +27,8 @@ public class GoalOR implements GoalComposite {
     public Boolean isCompleted(Dungeon dungeon) {
         for (Goal g : goals) {
             if (g.isCompleted(dungeon)) {
+                Player player = dungeon.getPlayer();
+                player.actionTaken().set("Player has completed a Goal");
                 return true;
             }
         }

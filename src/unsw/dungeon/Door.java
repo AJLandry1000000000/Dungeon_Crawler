@@ -63,12 +63,14 @@ public class Door extends Entity implements Interactable {
         if (!(entity.getClass().equals(Player.class))) {
             return false;
         }
-        Player player = (Player) entity;
+        Player player = (Player)entity;
         // If the door is closed
         if (!isOpen()) {
             // Check if the Player is holding a Key
             Key playersKey = player.getKey();
             if (playersKey == null) {
+                System.out.println(playersKey);
+                player.actionTaken().set("Player must find a Key to open this Door");
                 return false;
             }
             

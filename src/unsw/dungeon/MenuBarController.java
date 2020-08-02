@@ -5,7 +5,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import javafx.event.ActionEvent;
@@ -13,13 +12,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
-import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import org.json.JSONTokener;
 
@@ -103,7 +98,7 @@ public class MenuBarController {
         }
     }
     /*
-    pass dungeon to menubarcontroller via dungeoncontroller
+    pass dungeon to menuBarController via DungeonController
     write a isGoalPassed(String) function
     create 6 dungeons
     */
@@ -111,6 +106,7 @@ public class MenuBarController {
     /*public String getGoals(JSONObject jsonGoal) {
         String goalCondition = jsonGoal.getString("goal");
         // Determine the type of Goal Condition
+        String goal = "";
         switch (goalCondition) {
         case "exit":
             return "exit";
@@ -136,7 +132,13 @@ public class MenuBarController {
             return goal + "}";
 
         case "OR":
-            
+            goal = "OR\n";
+            subGoals = jsonGoals.getJSONArray("subgoals");
+            for (Object sub : subGoals) {
+                goal.concat(getGoals((JSONObject)sub));
+            }
+            return goal;
+        default:
             return "";
         }
         return "";

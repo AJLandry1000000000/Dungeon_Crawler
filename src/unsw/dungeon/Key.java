@@ -31,10 +31,9 @@ public class Key extends Entity implements Interactable {
         }
         Player player = (Player) entity;
         // If a player is not currently holding a Key
-        if (!player.hasKey()) {
+        if (!player.isHoldingKey()) {
             // Player is given the Key which is also removed from the level
             player.giveKey(this);
-            System.out.println("Player has picked up a key of ID: " + this.id);
             return true;
         }
         // Otherwise disallow the Player from acquiring the key as the player already is holding a current key

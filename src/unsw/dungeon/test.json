@@ -615,6 +615,11 @@
         "type": "treasure"
       },
       {
+        "x": 15,
+        "y": 5,
+        "type": "treasure"
+      },
+      {
         "x": 16,
         "y": 1,
         "type": "exit"

@@ -82,14 +82,14 @@ public class Enemy extends Entity implements Moveable, Interactable {
         // If the Player has an Invincibility potion
         if (player.hasPotion()) {
             // Remove the Enemy from the level and check if goal conditions are complete
-            System.out.println("Player has killed an Enemy");
+            player.actionTaken().set("Player has killed an Enemy");
             dungeon.removeEntity(this);
             dungeon.goalsCompleted();
         }
         // If the Player has a Sword
         else if (player.hasSword()) {
             // Remove the Enemy from the Level, decrement the Sword hits, check the goal conditions
-            System.out.println("Player has killed an Enemy");
+            player.actionTaken().set("Player has killed an Enemy");
             dungeon.removeEntity(this);
             player.getSword().decrementHits();
             player.checkSword();
@@ -97,7 +97,7 @@ public class Enemy extends Entity implements Moveable, Interactable {
         }
         // Otherwise, the Player is destroyed and game is set to Game Over
         else {
-            System.out.println("Player has been killed by an Enemy");
+            player.actionTaken().set("Player has been killed by an Enemy");
             dungeon.removeEntity(player);
             dungeon.setGameOver();
             dungeon.goalsCompleted();

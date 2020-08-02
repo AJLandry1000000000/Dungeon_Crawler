@@ -24,7 +24,7 @@ public class Wall extends Entity implements Interactable {
         Player player = (Player)entity;
         // If the Player has a hammer
         if (player.hasHammer()) {
-            System.out.println("Player has broken a Wall");
+            player.actionTaken().set("Player has broken a Wall");
             dungeon.removeEntity(this);
             player.getHammer().decrementHits();
             player.checkHammer();
