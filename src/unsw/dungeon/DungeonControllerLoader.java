@@ -296,11 +296,7 @@ public class DungeonControllerLoader extends DungeonLoader {
                         } else if (player.hasHammer()) {
                             ((ImageView)node).setImage(playerSwordHammerImage);
                         } else {
-
-                            // HEEERREEEE
                             getInventory().add(new ImageView(swordImage), 0, 0, 2, 1);
-
-
                             ((ImageView)node).setImage(playerSwordImage);
                         }
                     } else {
