@@ -22,7 +22,10 @@
          </items></Menu>
       <Menu mnemonicParsing="false" text="Theme">
         <items>
+            <MenuItem mnemonicParsing="false" onAction="#HandleIceButton" text="Ice Theme" />
           <MenuItem fx:id="lava" mnemonicParsing="false" onAction="#HandleLavaButton" text="Lava Theme" />
+            <MenuItem mnemonicParsing="false" onAction="#HandleMossButton" text="Moss Theme" />
+            <MenuItem mnemonicParsing="false" onAction="#HandleWaterButton" text="Water Theme" />
         </items>
       </Menu>
   </menus>

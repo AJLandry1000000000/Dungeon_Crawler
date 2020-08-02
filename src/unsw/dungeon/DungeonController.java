@@ -59,6 +59,10 @@ public class DungeonController {
         return this.dungeon;
     }
 
+    public GridPane getSquares() {
+        return this.squares;
+    }
+
     @FXML
     public void initialize() throws IOException {
         Image ground = new Image((new File("images/dirt_0_new.png")).toURI().toString());

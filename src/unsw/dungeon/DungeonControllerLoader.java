@@ -4,8 +4,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -107,7 +107,7 @@ public class DungeonControllerLoader extends DungeonLoader {
                 newImage = new Image((new File("images/" + theme + "/" + n.getId() + ".png")).toURI().toString());
                 ((ImageView)n).setImage(newImage);
             }
-        }   
+        }
     }
 
 
@@ -193,7 +193,6 @@ public class DungeonControllerLoader extends DungeonLoader {
     @Override
     public void onLoad(Door door) {
         ImageView view = new ImageView(doorClosedImage);
-        ((Node)view).setId("door");
         addEntity(door, view, 2);
     }
     @Override
