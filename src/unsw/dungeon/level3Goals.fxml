@@ -37,17 +37,17 @@
             <Image url="@images/fail.png" />
          </image>
       </ImageView>
-      <Label layoutX="90.0" layoutY="250.0" text="AND">
+      <Label layoutX="90.0" layoutY="250.0" text="THEN">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <Label layoutX="90.0" layoutY="300.0" text="Destroy all the enemies">
+      <Label layoutX="90.0" layoutY="300.0" text="Get to the exit">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="30.0" layoutY="290.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="exitGoalMark" fitHeight="50.0" fitWidth="50.0" layoutX="30.0" layoutY="290.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@images/fail.png" />
          </image>

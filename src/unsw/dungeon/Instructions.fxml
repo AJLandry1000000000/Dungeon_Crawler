@@ -86,5 +86,17 @@
       <Label layoutX="66.0" layoutY="480.0" text="Switch - Player pushes boulders onto switches to complete goals." />
       <Label layoutX="66.0" layoutY="530.0" text="Treasure - Can be collected by player to complete goals." />
       <Label layoutX="66.0" layoutY="580.0" text="Exit - If the player completes all the marked goals and moves through the exit, the level is complete." />
+      <ImageView layoutX="20.0" layoutY="620.0">
+         <image>
+            <Image url="@images/hammer.png" />
+         </image>
+      </ImageView>
+      <ImageView layoutX="20.0" layoutY="670.0">
+         <image>
+            <Image url="@images/ghost_new.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="66.0" layoutY="630.0" text="Hammer - Hammers can be used to destroy 5 walls. Player destroys a wall by holding a hammer and stepping on the wall." />
+      <Label layoutX="66.0" layoutY="680.0" text="Ghost - Ghosts are enemies that move towards the player once every 3 player moves. Ghosts can move through walls." />
    </children>
 </Pane>
