@@ -30,6 +30,8 @@ public class GoalAND implements GoalComposite {
                 return false;
             }
         }
+        Player player = dungeon.getPlayer();
+        player.actionTaken().set("Player has completed an AND Goal");
         return true;
     }
 }
