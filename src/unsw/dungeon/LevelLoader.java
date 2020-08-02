@@ -4,7 +4,6 @@ import java.io.IOException;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuBar;
 import javafx.scene.layout.BorderPane;
@@ -26,20 +25,21 @@ public class LevelLoader {
         // Overall container
         BorderPane root = new BorderPane();
 
+        
         // Top Menu
         MenuBarController menuBarController = new MenuBarController();
         FXMLLoader menuBar = new FXMLLoader(getClass().getResource("MenuBar.fxml"));
-        //menuBar.setController(menuBarController);
+        menuBar.setController(menuBarController);
         Node menu = menuBar.load();
         root.setTop(menu);
 
         // Inventory
         InventoryController inventoryController = new InventoryController();
         FXMLLoader inventoryBar = new FXMLLoader(getClass().getResource("Inventory.fxml"));
-        //inventoryBar.setController(inventoryController);
+        inventoryBar.setController(inventoryController);
         Node inventory = inventoryBar.load();
         root.setBottom(inventory);
-
+        
         /*
         BorderPane inventory = new BorderPane();
         GridPane menuBar2 = new GridPane();
@@ -61,14 +61,14 @@ public class LevelLoader {
         FXMLLoader game = new FXMLLoader(getClass().getResource("DungeonView.fxml"));
         game.setController(gameController);
         Node gameRoot = game.load();
-        root.setCenter(gameRoot);
-        gameRoot.requestFocus();
+        root.setCenter(gameRoot);        
+        
+        System.out.println( gameRoot.getBoundsInLocal() );
 
-
-        root.setPrefWidth(((GridPane)gameRoot).getPrefWidth());
 
         // Show Scene
         Scene scene = new Scene(root);
+        gameRoot.requestFocus();
         this.stage.setTitle("Dungeon");
         this.stage.setScene(scene);
         this.stage.show();
