@@ -4,22 +4,21 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 
-<MenuBar xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1">
+<MenuBar xmlns="http://javafx.com/javafx/11.0.4" xmlns:fx="http://javafx.com/fxml/1">
   <menus>
-    <Menu mnemonicParsing="false" text="File">
+    <Menu mnemonicParsing="false" text="Main menu">
       <items>
-        <MenuItem mnemonicParsing="false" text="Close" />
+        <MenuItem fx:id="Menu" mnemonicParsing="false" onAction="#HandleMenuButton" text="Go to main menu" />
       </items>
     </Menu>
-    <Menu mnemonicParsing="false" text="Edit">
+    <Menu mnemonicParsing="false" text="Goals">
       <items>
-        <MenuItem mnemonicParsing="false" text="Delete" />
+        <MenuItem fx:id="Goals" mnemonicParsing="false" onAction="#HandleGoalButton" text="List goals" />
       </items>
     </Menu>
-    <Menu mnemonicParsing="false" text="Help">
-      <items>
-        <MenuItem mnemonicParsing="false" text="About" />
-      </items>
-    </Menu>
+    <Menu mnemonicParsing="false" text="Restart">
+         <items>
+            <MenuItem fx:id="Restart" mnemonicParsing="false" onAction="#HandleRestartButton" text="Restart this Level" />
+         </items></Menu>
   </menus>
 </MenuBar>

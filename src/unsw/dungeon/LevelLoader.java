@@ -15,6 +15,7 @@ public class LevelLoader {
     Stage stage;
     String file;
 
+
     public LevelLoader(Stage stage, String file) throws IOException {
         this.stage = stage;
         this.file = file;
@@ -26,7 +27,7 @@ public class LevelLoader {
 
         
         // Top Menu
-        MenuBarController menuBarController = new MenuBarController();
+        MenuBarController menuBarController = new MenuBarController(this.stage, this.file);
         FXMLLoader menuBar = new FXMLLoader(getClass().getResource("MenuBar.fxml"));
         menuBar.setController(menuBarController);
         Node menu = menuBar.load();
@@ -73,4 +74,6 @@ public class LevelLoader {
         this.stage.show();
         this.stage.setMaxWidth(122 * 32);
     }
+
+
 }

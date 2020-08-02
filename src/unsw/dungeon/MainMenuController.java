@@ -47,6 +47,7 @@ public class MainMenuController {
             System.out.println("We dont have the files for " + file);
         } catch (IOException io) {
             System.out.println("Input/Output problem with " + file);
+            io.printStackTrace();
         }
 
     }
@@ -56,7 +57,6 @@ public class MainMenuController {
     public void handleInstructionsButton(ActionEvent event) throws IOException {
         InstructionsScreen in = new InstructionsScreen(this.stage);
         in.start();
-
     }
 
     @FXML
