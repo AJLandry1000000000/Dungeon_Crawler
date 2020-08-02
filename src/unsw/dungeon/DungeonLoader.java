@@ -24,6 +24,8 @@ public abstract class DungeonLoader {
 
     private JSONObject json;
 
+    private Dungeon dungeon;
+
     public DungeonLoader(String filename) throws FileNotFoundException {
         json = new JSONObject(new JSONTokener(new FileReader("dungeons/" + filename)));
     }
@@ -53,6 +55,7 @@ public abstract class DungeonLoader {
         for (int i = 0; i < jsonEntities.length(); i++) {
             loadEntity(dungeon, jsonEntities.getJSONObject(i));
         }
+        this.dungeon = dungeon;
 
         // Extract the goal and process it
         JSONObject jsonGoals = (JSONObject)json.get("goal-condition");
@@ -69,16 +72,25 @@ public abstract class DungeonLoader {
     public Goal processGoals(JSONObject jsonGoals) {
         String goalCondition = jsonGoals.getString("goal");
         GoalComposite goal = null;
+        Goal newLeafGoal = null;
         // Determine the type of Goal Condition
         switch (goalCondition) {
         case "exit":
-            return new GoalExit();
+            newLeafGoal = new GoalExit();
+            this.dungeon.addGoalType(newLeafGoal);
+            return newLeafGoal;
         case "enemies":
-            return new GoalEnemies();
+            newLeafGoal = new GoalEnemies();
+            this.dungeon.addGoalType(newLeafGoal);
+            return newLeafGoal;
         case "boulders":
-            return new GoalBoulders();
+            newLeafGoal = new GoalBoulders();
+            this.dungeon.addGoalType(newLeafGoal);
+            return newLeafGoal;
         case "treasure":
-            return new GoalTreasure();
+            newLeafGoal = new GoalTreasure();
+            this.dungeon.addGoalType(newLeafGoal);
+            return newLeafGoal;
         case "AND":
             goal = new GoalAND();
             break;
