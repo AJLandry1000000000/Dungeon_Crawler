@@ -17,7 +17,6 @@ public class MenuBarController {
     @FXML
     private MenuItem Goals;
     
-
     private Stage stage;
     
     private String file;
@@ -44,5 +43,7 @@ public class MenuBarController {
         System.out.println("goal");
 
     }
+
+    
     
 }
