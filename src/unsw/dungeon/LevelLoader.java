@@ -63,12 +63,9 @@ public class LevelLoader {
         Node gameRoot = game.load();
         root.setCenter(gameRoot);        
         
-<<<<<<< HEAD
         // Pass the dungeon to the MenuBarController.
         menuBarController.setDungeon(gameController.getDungeon());
 
-=======
->>>>>>> fcf57e40ab3a5e0a4b6aae78238138d8ede1bed9
         // Show Scene
         Scene scene = new Scene(root);
         scene.getStylesheets().addAll(getClass().getResource(
