@@ -3,6 +3,8 @@ package unsw.dungeon;
 import java.io.File;
 import java.io.IOException;
 
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
@@ -21,6 +23,9 @@ public class LevelLoader {
     Stage stage;
     String file;
 
+    //@FXML
+    //private Menu Restart;
+
     public LevelLoader(Stage stage, String file) throws IOException {
         this.stage = stage;
         this.file = file;
@@ -32,6 +37,7 @@ public class LevelLoader {
 
         // Top Menu
         FXMLLoader loader2 = new FXMLLoader(getClass().getResource("MenuBar.fxml"));
+        //loader2.setController(this);
         root.setTop(loader2.load());
 
         // Inventory
@@ -64,4 +70,12 @@ public class LevelLoader {
         this.stage.setScene(scene);
         this.stage.show();
     }
+
+    /*
+    @FXML
+    public void handleRestartButton(ActionEvent event) throws IOException {
+        System.out.println("Found restart button!!!");
+    }
+    */
+
 }
