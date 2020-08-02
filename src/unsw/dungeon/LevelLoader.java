@@ -30,9 +30,9 @@ public class LevelLoader {
         BorderPane root = new BorderPane();
 
         // Top Menu
-        //MenuBarController menuBarController = new MenuBarController();
+        MenuBarController menuBarController = new MenuBarController(this.stage, this.file);
         FXMLLoader menuBar = new FXMLLoader(getClass().getResource("MenuBar.fxml"));
-        //menuBar.setController(menuBarController);
+        menuBar.setController(menuBarController);
         Node menu = menuBar.load();
         root.setTop(menu);
 
@@ -65,13 +65,13 @@ public class LevelLoader {
         game.setController(gameController);
         Node gameRoot = game.load();
         root.setCenter(gameRoot);
-        gameRoot.requestFocus();
-
-
+        
+        
         root.setPrefWidth(((GridPane)gameRoot).getPrefWidth());
-
+        
         // Show Scene
         Scene scene = new Scene(root);
+        gameRoot.requestFocus();
         this.stage.setTitle("Dungeon");
         this.stage.setScene(scene);
         this.stage.show();
