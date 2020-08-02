@@ -204,6 +204,7 @@ public class Dungeon {
     public Boolean goalsCompleted() {
         if (this.goal.isCompleted(this)) {
             System.out.println("All Goals completed, Level is Complete");
+            setGameOver();
             return true;
         }
         return false;

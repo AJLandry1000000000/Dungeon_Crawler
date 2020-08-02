@@ -21,7 +21,7 @@ public class DungeonApplication extends Application {
     public void start(Stage primaryStage) throws IOException {
         // MainMenuScreen mm = new MainMenuScreen(primaryStage);
         // mm.start();
-
+        
         primaryStage.setTitle("Main Menu");
         MainMenuController mainMenuController = new MainMenuController(primaryStage);
         FXMLLoader loader = new FXMLLoader(getClass().getResource("MainMenu.fxml"));

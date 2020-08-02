@@ -1,15 +1,20 @@
 package unsw.dungeon;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import org.json.JSONTokener;
 
@@ -28,6 +33,8 @@ public class MenuBarController {
     
     private String file;
 
+    private Dungeon dungeon;
+
     private JSONObject jsonGoals;
 
 
@@ -38,6 +45,10 @@ public class MenuBarController {
         // Get the goals JSONObject for the 'Goals' button
         JSONObject json = new JSONObject(new JSONTokener(new FileReader("dungeons/" + file)));
         this.jsonGoals = (JSONObject)json.get("goal-condition");
+    }
+
+    public void setDungeon(Dungeon dungeon) {
+        this.dungeon = dungeon;
     }
 
     @FXML
@@ -54,34 +65,72 @@ public class MenuBarController {
 
     @FXML
     public void HandleGoalButton(ActionEvent event) throws IOException {
-        //String goalCondition = this.jsonGoals.getString("goal");
-        System.out.println(getGoals(this.jsonGoals));
-    }
+        Stage s = new Stage();
+        s.setTitle("Goals");
+        if (file.equals("boulders.json")) {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("bouldersGoals.fxml"));
+            Parent root = loader.load();
+            Scene sc = new Scene(root);
 
-    public String getGoals(JSONObject jsonGoal) {
+            if (this.dungeon.goalsCompleted()) {
+                Image im = new Image((new File("images/success.png")).toURI().toString());
+                ImageView i = (ImageView) sc.lookup("#image1");
+                i.setImage(im);
+            }
+            root.requestFocus();
+            s.setScene(sc);
+            s.show();
+
+        } else if (file.equals("advanced.json")) {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("bouldersGoals.fxml"));
+            Parent root = loader.load();
+            Scene sc = new Scene(root);
+
+            if (this.dungeon.goalsCompleted()) {
+                Image im = new Image((new File("images/success.png")).toURI().toString());
+                ImageView i = (ImageView) sc.lookup("#image1");
+                i.setImage(im);
+            }
+            root.requestFocus();
+            s.setScene(sc);
+            s.show();
+            
+        }
+    }
+    /*
+    pass dungeon to menuBarController via DungeonController
+    write a isGoalPassed(String) function
+    create 6 dungeons
+    */
+
+    /*public String getGoals(JSONObject jsonGoal) {
         String goalCondition = jsonGoal.getString("goal");
         // Determine the type of Goal Condition
         String goal = "";
         switch (goalCondition) {
         case "exit":
-            return "exit\n";
+            return "exit";
         case "enemies":
-            return "enemies\n";
+            return "enemies";
         case "boulders":
-            return "boulders\n";
+            return "boulders";
         case "treasure":
-            return "treasure\n";
+            return "treasure";
         case "AND":
-            goal = "AND\n";
-            JSONArray subGoals = jsonGoals.getJSONArray("subgoals");
+            String goal = "AND {\n";
+            JSONArray subGoals = jsonGoal.getJSONArray("subgoals");
+            //System.out.println(subGoals.length());
+            int iters = 0;
             for (Object sub : subGoals) {
-                try {
-                    goal.concat(getGoals((JSONObject)sub));
-                } finally {
-                    return "";
+                //System.out.println(((JSONObject)sub).getString("goal"));
+                goal += "     "+getGoals((JSONObject)sub);
+                if (iters != subGoals.length()-1) {
+                    goal += ",\n";
                 }
+                iters++;
             }
-            return goal;
+            return goal + "}";
+
         case "OR":
             goal = "OR\n";
             subGoals = jsonGoals.getJSONArray("subgoals");
@@ -92,6 +141,7 @@ public class MenuBarController {
         default:
             return "";
         }
-    }
+        return "";
+    }*/
     
 }

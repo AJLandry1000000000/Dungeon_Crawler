@@ -22,8 +22,8 @@ public class MainMenuScreen {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("MainMenu.fxml"));
         loader.setController(controller);
         Parent root = loader.load();
-
         this.scene = new Scene(root);
+
     }
 
     public void start() {
