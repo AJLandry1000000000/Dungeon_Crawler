@@ -95,18 +95,18 @@ public class DungeonControllerLoader extends DungeonLoader {
     }
 
     public void changeTheme(String theme) {
+        changeImages(baseLayer, theme);
+        changeImages(collectableLayer, theme);
+        changeImages(moveableLayer, theme); 
+    }
+
+    public void changeImages(List<ImageView> images, String theme) {
         Image newImage = null;
-        for (Node b : baseLayer) {
-            newImage = new Image((new File("images/" + theme + "/" + b.getId() + ".png")).toURI().toString());
-            ((ImageView)b).setImage(newImage);
-        }
-        for (Node c : collectableLayer) {
-            newImage = new Image((new File("images/" + theme + "/" + c.getId() + ".png")).toURI().toString());
-            ((ImageView)c).setImage(newImage);
-        }      
-        for (Node m : moveableLayer) {
-            newImage = new Image((new File("images/" + theme + "/" + m.getId() + ".png")).toURI().toString());
-            ((ImageView)m).setImage(newImage);
+        for (Node n : images) {
+            if (n.getId() != null) {
+                newImage = new Image((new File("images/" + theme + "/" + n.getId() + ".png")).toURI().toString());
+                ((ImageView)n).setImage(newImage);
+            }
         }   
     }
 
