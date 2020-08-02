@@ -22,11 +22,11 @@ public class DungeonApplication extends Application {
         // MainMenuScreen mm = new MainMenuScreen(primaryStage);
         // mm.start();
 
+        primaryStage.setTitle("Main Menu");
         MainMenuController mainMenuController = new MainMenuController(primaryStage);
         FXMLLoader loader = new FXMLLoader(getClass().getResource("MainMenu.fxml"));
         loader.setController(mainMenuController);
         Parent root = loader.load();
-        primaryStage.setTitle("Main Menu");
         Scene scene = new Scene(root);
         root.requestFocus();
         primaryStage.setScene(scene);
