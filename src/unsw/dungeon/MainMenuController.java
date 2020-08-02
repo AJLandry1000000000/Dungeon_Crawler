@@ -41,9 +41,8 @@ public class MainMenuController {
 
     public void changeStage(String file, int level) {
         try {
-            
-            LevelLoader container = new LevelLoader(this.stage, file);
-            container.load();
+            LevelLoader levelScreen = new LevelLoader(this.stage, file);
+            levelScreen.load();
         } catch (FileNotFoundException f) {
             System.out.println("We dont have the files for " + file);
         } catch (IOException io) {

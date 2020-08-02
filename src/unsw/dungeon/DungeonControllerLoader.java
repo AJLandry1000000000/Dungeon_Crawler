@@ -10,10 +10,13 @@ import java.util.stream.Collectors;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.Node;
+import javafx.scene.control.MenuBar;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 
 /**
  * A DungeonLoader that also creates the necessary ImageViews for the UI,
@@ -53,10 +56,12 @@ public class DungeonControllerLoader extends DungeonLoader {
     private Image playerSwordHammerImage;
     private Image ghostImage;
 
-    private GridPane inventory;
+    private MenuBar menuBar;
+    private VBox inventory;
 
-    public DungeonControllerLoader(String filename, GridPane inventory) throws FileNotFoundException {
+    public DungeonControllerLoader(String filename, MenuBar menuBar, VBox inventory) throws FileNotFoundException {
         super(filename);
+        this.menuBar = menuBar;
         this.inventory = inventory;
 
         baseLayer = new ArrayList<>();
@@ -92,7 +97,7 @@ public class DungeonControllerLoader extends DungeonLoader {
     }
 
     public GridPane getInventory() {
-        return this.inventory;
+        return ((GridPane)this.inventory.getChildren().get(2));
     }
 
     @Override
