@@ -2,7 +2,6 @@ package unsw.dungeon;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
@@ -54,8 +53,11 @@ public class DungeonControllerLoader extends DungeonLoader {
     private Image playerSwordHammerImage;
     private Image ghostImage;
 
-    public DungeonControllerLoader(String filename) throws FileNotFoundException {        
+    private GridPane inventory;
+
+    public DungeonControllerLoader(String filename, GridPane inventory) throws FileNotFoundException {
         super(filename);
+        this.inventory = inventory;
 
         baseLayer = new ArrayList<>();
         collectableLayer = new ArrayList<>();
@@ -89,6 +91,9 @@ public class DungeonControllerLoader extends DungeonLoader {
 
     }
 
+    public GridPane getInventory() {
+        return this.inventory;
+    }
 
     @Override
     public void onLoad(Entity player) {
@@ -181,7 +186,8 @@ public class DungeonControllerLoader extends DungeonLoader {
                 moveableLayer.add(view);
                 break;
         }
-        trackPosition(entity, view);
+        trackMoveable(entity, view);
+        trackInteractable(entity, view);
     }
 
     /**
@@ -194,9 +200,10 @@ public class DungeonControllerLoader extends DungeonLoader {
      * @param entity
      * @param node
      */
-    private void trackPosition(Entity entity, Node node) {
+    private void trackMoveable(Entity entity, Node node) {
         GridPane.setColumnIndex(node, entity.getX());
         GridPane.setRowIndex(node, entity.getY());
+        
         entity.x().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observable,
@@ -211,6 +218,12 @@ public class DungeonControllerLoader extends DungeonLoader {
                 GridPane.setRowIndex(node, newValue.intValue());
             }
         });
+    }
+
+    private void trackInteractable(Entity entity, Node node) {
+        GridPane.setColumnIndex(node, entity.getX());
+        GridPane.setRowIndex(node, entity.getY());
+
         entity.visible().addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable,
@@ -279,6 +292,11 @@ public class DungeonControllerLoader extends DungeonLoader {
                         } else if (player.hasHammer()) {
                             ((ImageView)node).setImage(playerSwordHammerImage);
                         } else {
+
+                            // HEEERREEEE
+                            // GridPane.add(new ImageView(swordImage), 0, 0, 2, 1);
+
+
                             ((ImageView)node).setImage(playerSwordImage);
                         }
                     } else {
@@ -321,18 +339,8 @@ public class DungeonControllerLoader extends DungeonLoader {
                     }
                 }
             });
-            player.getDungeon().gameOver().addListener(new ChangeListener<Boolean>() {
-                @Override
-                public void changed(ObservableValue<? extends Boolean> observable,
-                    Boolean oldValue, Boolean newValue) {
-                        System.out.println("ADD YOUR CHANGE SCREEN HERE");
-
-                }
-            });
         }
     }
-
-
     /**
      * Create a controller that can be attached to the DungeonView with all the
      * loaded entities.

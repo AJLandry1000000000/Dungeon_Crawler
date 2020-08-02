@@ -77,7 +77,6 @@ public class DungeonController {
                     try {
                         checkGoals();
                     } catch (IOException e) {
-                        // TODO Auto-generated catch block
                         e.printStackTrace();
                     }
 
