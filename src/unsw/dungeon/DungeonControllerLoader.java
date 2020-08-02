@@ -12,7 +12,6 @@ import javafx.beans.value.ObservableValue;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
-import javafx.scene.control.MenuBar;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -57,20 +56,17 @@ public class DungeonControllerLoader extends DungeonLoader {
     private Image playerSwordHammerImage;
     private Image ghostImage;
 
-    private MenuBar menuBar;
     private VBox inventory;
     private ArrayList<EntityData> inventoryEntities;
     private Player player;
 
-    public DungeonControllerLoader(String filename, MenuBar menuBar, VBox inventory) throws FileNotFoundException {
+    public DungeonControllerLoader(String filename, VBox inventory) throws FileNotFoundException {
         super(filename);
-        this.menuBar = menuBar;
-        this.inventory = inventory;
 
+        this.inventory = inventory;
         baseLayer = new ArrayList<>();
         collectableLayer = new ArrayList<>();
         moveableLayer = new ArrayList<>();
-
         inventoryEntities = new ArrayList<EntityData>();
 
         playerImage = new Image((new File("images/human_new.png")).toURI().toString());
@@ -87,7 +83,6 @@ public class DungeonControllerLoader extends DungeonLoader {
         switchImage = new Image((new File("images/pressure_plate.png")).toURI().toString());
         swordImage = new Image((new File("images/greatsword_1_new.png")).toURI().toString());
         treasureImage = new Image((new File("images/gold_pile.png")).toURI().toString());
-
         playerSwordImage = new Image((new File("images/player_w_sword.png")).toURI().toString());
         playerPotionImage = new Image((new File("images/player_w_potion.png")).toURI().toString());
         playerHammerImage = new Image((new File("images/player_w_hammer.png")).toURI().toString());
@@ -95,10 +90,26 @@ public class DungeonControllerLoader extends DungeonLoader {
         playerHammerPotionImage = new Image((new File("images/player_w_potion_hammer.png")).toURI().toString());
         playerSwordHammerPotionImage = new Image((new File("images/player_w_potion_sword_hammer.png")).toURI().toString());
         playerSwordHammerImage = new Image((new File("images/player_w_sword_hammer.png")).toURI().toString());
-
         hammerImage = new Image((new File("images/hammer.png")).toURI().toString());
         ghostImage = new Image((new File("images/ghost_new.png")).toURI().toString());
     }
+
+    public void changeTheme(String theme) {
+        changeImages(baseLayer, theme);
+        changeImages(collectableLayer, theme);
+        changeImages(moveableLayer, theme); 
+    }
+
+    public void changeImages(List<ImageView> images, String theme) {
+        Image newImage = null;
+        for (Node n : images) {
+            if (n.getId() != null) {
+                newImage = new Image((new File("images/" + theme + "/" + n.getId() + ".png")).toURI().toString());
+                ((ImageView)n).setImage(newImage);
+            }
+        }   
+    }
+
 
     public Label getConsoleDisplay() {
         return ((Label)this.inventory.getChildren().get(0));
@@ -170,26 +181,31 @@ public class DungeonControllerLoader extends DungeonLoader {
     @Override
     public void onLoad(Wall wall) {
         ImageView view = new ImageView(wallImage);
+        ((Node)view).setId("wall");
         addEntity(wall, view, 1);
     }
     @Override
     public void onLoad(Boulder boulder) {
         ImageView view = new ImageView(boulderImage);
+        ((Node)view).setId("boulder");
         addEntity(boulder, view, 3);
     }
     @Override
     public void onLoad(Door door) {
         ImageView view = new ImageView(doorClosedImage);
+        ((Node)view).setId("door");
         addEntity(door, view, 2);
     }
     @Override
     public void onLoad(Enemy enemy) {
         ImageView view = new ImageView(enemyImage);
+        ((Node)view).setId("enemy");
         addEntity(enemy, view, 3);
     }
     @Override
     public void onLoad(Exit exit) {
         ImageView view = new ImageView(exitImage);
+        ((Node)view).setId("exit");
         addEntity(exit, view, 2);
     }
     @Override
@@ -204,10 +220,12 @@ public class DungeonControllerLoader extends DungeonLoader {
         //Instantiating the ColorAdjust class 
         ColorAdjust colorAdjust = new ColorAdjust(); 
 
-        if (portal.getID() % 2 == 0) colorAdjust.setHue((portal.getID() % 10) * 0.1);     
+        if (portal.getID() % 2 == 0) colorAdjust.setHue((portal.getID() % 15) * 0.075);     
         else colorAdjust.setHue((portal.getID() % 10) * -0.1);     
 
         view.setEffect(colorAdjust);
+        ((Node)view).setId("portal");
+
         addEntity(portal, view, 2);
     }
     @Override
@@ -218,6 +236,7 @@ public class DungeonControllerLoader extends DungeonLoader {
     @Override
     public void onLoad(Switch floor) {
         ImageView view = new ImageView(switchImage);
+        ((Node)view).setId("floor");
         addEntity(floor, view, 1);
     }
     @Override
@@ -238,6 +257,7 @@ public class DungeonControllerLoader extends DungeonLoader {
     @Override
     public void onLoad(Ghost ghost) {
         ImageView view = new ImageView(ghostImage);
+        ((Node)view).setId("ghost");
         addEntity(ghost, view, 3);
     }
 
@@ -341,6 +361,7 @@ public class DungeonControllerLoader extends DungeonLoader {
                             ((ImageView)node).setImage(playerSwordImage);
                         }
                         inventoryEntities().add(new EntityData(player.getSword(), new ImageView(swordImage)));
+
                     } else {
                         if (player.hasPotion() && player.hasHammer()) {
                             ((ImageView)node).setImage(playerHammerPotionImage);

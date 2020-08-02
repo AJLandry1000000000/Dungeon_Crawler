@@ -7,7 +7,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Side;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.MenuBar;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
@@ -43,14 +42,7 @@ public class LevelLoader {
         Background background = new Background(backgroundImage);
         // apply that background fill
         root.setBackground(background);
-        
-        // Top Menu
-        MenuBarController menuBarController = new MenuBarController(this.stage, this.file);
-        FXMLLoader menuBar = new FXMLLoader(getClass().getResource("MenuBar.fxml"));
-        menuBar.setController(menuBarController);
-        Node menu = menuBar.load();
-        root.setTop(menu);
-
+    
         // Inventory
         // HUDController HUDController = new HUDController();
         FXMLLoader HUDLoader = new FXMLLoader(getClass().getResource("HUD.fxml"));
@@ -73,7 +65,7 @@ public class LevelLoader {
         */
 
         // Game Window
-        DungeonControllerLoader dungeonLoader = new DungeonControllerLoader(this.file, ((MenuBar)menu), ((VBox)HUD));
+        DungeonControllerLoader dungeonLoader = new DungeonControllerLoader(this.file, ((VBox)HUD));
         DungeonController gameController = dungeonLoader.loadController();
         gameController.setStage(this.stage);
         FXMLLoader game = new FXMLLoader(getClass().getResource("DungeonView.fxml"));
@@ -81,6 +73,12 @@ public class LevelLoader {
         Node gameRoot = game.load();
         root.setCenter(gameRoot);        
         
+        // Top Menu
+        MenuBarController menuBarController = new MenuBarController(this.stage, this.file, dungeonLoader);
+        FXMLLoader menuBar = new FXMLLoader(getClass().getResource("MenuBar.fxml"));
+        menuBar.setController(menuBarController);
+        Node menu = menuBar.load();
+        root.setTop(menu);
         // Pass the dungeon to the MenuBarController.
         menuBarController.setDungeon(gameController.getDungeon());
 

@@ -28,6 +28,9 @@ public class MenuBarController {
 
     @FXML
     private MenuItem Goals;
+
+    @FXML
+    private MenuItem Theme;    
     
     private Stage stage;
     
@@ -37,10 +40,13 @@ public class MenuBarController {
 
     private JSONObject jsonGoals;
 
+    private DungeonControllerLoader dungeonLoader;
 
-    public MenuBarController(Stage stage, String file) throws FileNotFoundException {
+
+    public MenuBarController(Stage stage, String file, DungeonControllerLoader dungeonLoader) throws FileNotFoundException {
         this.stage = stage;
         this.file = file;
+        this.dungeonLoader = dungeonLoader;
 
         // Get the goals JSONObject for the 'Goals' button
         JSONObject json = new JSONObject(new JSONTokener(new FileReader("dungeons/" + file)));
@@ -144,4 +150,11 @@ public class MenuBarController {
         return "";
     }*/
     
+
+
+    @FXML
+    public void HandleLavaButton(ActionEvent event) throws IOException {
+
+        dungeonLoader.changeTheme("lava");
+    }
 }
