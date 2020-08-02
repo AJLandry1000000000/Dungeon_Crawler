@@ -55,6 +55,10 @@ public class DungeonController {
         return this.player;
     }
 
+    public Dungeon getDungeon() {
+        return this.dungeon;
+    }
+
     @FXML
     public void initialize() throws IOException {
         Image ground = new Image((new File("images/dirt_0_new.png")).toURI().toString());
@@ -73,7 +77,6 @@ public class DungeonController {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable,
                 Boolean oldValue, Boolean newValue) {
-                    System.out.println("ADD YOUR CHANGE SCREEN HERE");
                     try {
                         checkGoals();
                     } catch (IOException e) {
@@ -82,6 +85,20 @@ public class DungeonController {
 
             }
         });
+        /*
+        dungeon.goalsCompleted().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable,
+                Boolean oldValue, Boolean newValue) {
+                    try {
+                        checkGoals();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+            }
+        });*/
+        
 
     }
 
@@ -233,7 +250,7 @@ public class DungeonController {
 
     public void checkGoals() throws IOException {
         if (this.dungeon.goalsCompleted()) {
-            System.out.println("All Goals Completed, Level is Complete");
+            System.out.println("All Goals Completed, Level is Complete :)");
             successScreen();
             return;
         }         

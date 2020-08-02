@@ -5,6 +5,7 @@ import java.io.IOException;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
 public class MainMenuScreen {
@@ -22,8 +23,8 @@ public class MainMenuScreen {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("MainMenu.fxml"));
         loader.setController(controller);
         Parent root = loader.load();
-
         this.scene = new Scene(root);
+
     }
 
     public void start() {
