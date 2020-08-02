@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import org.json.JSONObject;
 
@@ -65,37 +66,85 @@ public class MenuBarController {
 
     @FXML
     public void HandleGoalButton(ActionEvent event) throws IOException {
+        if (file.equals("level1.json")) {
+            level1GoalScreen();
+        } else if (file.equals("level2.json")) {
+            level2GoalScreen();
+        } else if (file.equals("level3.json")) {
+            
+            
+        } else if (file.equals("level4.json")) {
+
+        } else if (file.equals("level5.json")) {
+
+        } else if (file.equals("level6.json")) {
+
+        }
+    }
+
+    public void level1GoalScreen() throws IOException {
+        // Create a new stage.
         Stage s = new Stage();
         s.setTitle("Goals");
-        if (file.equals("boulders.json")) {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("bouldersGoals.fxml"));
-            Parent root = loader.load();
-            Scene sc = new Scene(root);
 
-            if (this.dungeon.goalsCompleted()) {
-                Image im = new Image((new File("images/success.png")).toURI().toString());
-                ImageView i = (ImageView) sc.lookup("#image1");
-                i.setImage(im);
+        // Load the goals for this level.
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("level1Goals.fxml"));
+        Parent root = loader.load();
+        Scene sc = new Scene(root);
+
+        ArrayList<Goal> level1Goals = this.dungeon.getGoalTypes();
+        for (Goal g : level1Goals) {
+            // Get each specific goal.
+            if (g.getClass().equals(GoalBoulders.class)) {
+                GoalBoulders gb = (GoalBoulders) g;
+                if (gb.isCompleted(this.dungeon)) {
+                    Image im = new Image((new File("images/success.png")).toURI().toString());
+                    ImageView i = (ImageView) sc.lookup("#boulderGoalMark");
+                    i.setImage(im);
+                }
             }
-            root.requestFocus();
-            s.setScene(sc);
-            s.show();
-
-        } else if (file.equals("advanced.json")) {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("bouldersGoals.fxml"));
-            Parent root = loader.load();
-            Scene sc = new Scene(root);
-
-            if (this.dungeon.goalsCompleted()) {
-                Image im = new Image((new File("images/success.png")).toURI().toString());
-                ImageView i = (ImageView) sc.lookup("#image1");
-                i.setImage(im);
-            }
-            root.requestFocus();
-            s.setScene(sc);
-            s.show();
-            
         }
+
+        // Show the stage.
+        root.requestFocus();
+        s.setScene(sc);
+        s.show();
+    }
+
+    public void level2GoalScreen() throws IOException {
+        // Create a new stage.
+        Stage s = new Stage();
+        s.setTitle("Goals");
+
+        // Load the goals for this level.
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("level2Goals.fxml"));
+        Parent root = loader.load();
+        Scene sc = new Scene(root);
+
+        ArrayList<Goal> level2Goals = this.dungeon.getGoalTypes();
+        for (Goal g : level2Goals) {
+            // Get each specific goal.
+            if (g.getClass().equals(GoalTreasure.class)) {
+                GoalTreasure gt = (GoalTreasure) g;
+                if (gt.isCompleted(this.dungeon)) {
+                    Image im = new Image((new File("images/success.png")).toURI().toString());
+                    ImageView i = (ImageView) sc.lookup("#treasureGoalMark");
+                    i.setImage(im);
+                }
+            } else if (g.getClass().equals(GoalEnemies.class)) {
+                GoalEnemies ge = (GoalEnemies) g;
+                if (ge.isCompleted(this.dungeon)) {
+                    Image im = new Image((new File("images/success.png")).toURI().toString());
+                    ImageView i = (ImageView) sc.lookup("#enemyGoalMark");
+                    i.setImage(im);
+                }
+            }
+        }
+
+        // Show the stage.
+        root.requestFocus();
+        s.setScene(sc);
+        s.show();
     }
     /*
     pass dungeon to menuBarController via DungeonController

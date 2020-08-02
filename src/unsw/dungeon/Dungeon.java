@@ -24,6 +24,7 @@ public class Dungeon {
     private Player player;
     private Boolean exitReached;
     private Goal goal;
+    private ArrayList<Goal> goalTypes;
     private BooleanProperty gameOver;
 
     public Dungeon(int width, int height) {
@@ -32,6 +33,7 @@ public class Dungeon {
         this.entities = new ArrayList<Entity>();
         this.player = null;
         this.exitReached = false;
+        this.goalTypes = new ArrayList<Goal>();
         this.gameOver = new SimpleBooleanProperty(false);
     }
 
@@ -141,6 +143,10 @@ public class Dungeon {
         entities.add(entity);
     }
 
+    public void addGoalType(Goal goal) {
+        this.goalTypes.add(goal);
+    }
+
     public void removeEntity(Entity entity) {
         entity.visible().set(false);
         this.entities.remove(entity);
@@ -220,5 +226,9 @@ public class Dungeon {
 
     public BooleanProperty gameOver() {
         return this.gameOver;
+    }
+
+    public ArrayList<Goal> getGoalTypes() {
+        return this.goalTypes;
     }
 }
