@@ -9,7 +9,9 @@ import java.util.stream.Collectors;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.control.MenuBar;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
@@ -57,6 +59,8 @@ public class DungeonControllerLoader extends DungeonLoader {
 
     private MenuBar menuBar;
     private VBox inventory;
+    private ArrayList<EntityData> inventoryEntities;
+    private Player player;
 
     public DungeonControllerLoader(String filename, MenuBar menuBar, VBox inventory) throws FileNotFoundException {
         super(filename);
@@ -66,6 +70,8 @@ public class DungeonControllerLoader extends DungeonLoader {
         baseLayer = new ArrayList<>();
         collectableLayer = new ArrayList<>();
         moveableLayer = new ArrayList<>();
+
+        inventoryEntities = new ArrayList<EntityData>();
 
         playerImage = new Image((new File("images/human_new.png")).toURI().toString());
         wallImage = new Image((new File("images/brick_brown_0.png")).toURI().toString());
@@ -86,7 +92,7 @@ public class DungeonControllerLoader extends DungeonLoader {
         playerPotionImage = new Image((new File("images/player_w_potion.png")).toURI().toString());
         playerHammerImage = new Image((new File("images/player_w_hammer.png")).toURI().toString());
         playerSwordPotionImage = new Image((new File("images/player_w_potion_sword.png")).toURI().toString());
-        playerHammerPotionImage =new Image((new File("images/player_w_potion_hammer.png")).toURI().toString());
+        playerHammerPotionImage = new Image((new File("images/player_w_potion_hammer.png")).toURI().toString());
         playerSwordHammerPotionImage = new Image((new File("images/player_w_potion_sword_hammer.png")).toURI().toString());
         playerSwordHammerImage = new Image((new File("images/player_w_sword_hammer.png")).toURI().toString());
 
@@ -99,9 +105,59 @@ public class DungeonControllerLoader extends DungeonLoader {
         return ((GridPane)this.inventory.getChildren().get(2));
     }
 
+    public ArrayList<EntityData> inventoryEntities() {
+        return this.inventoryEntities;
+    }
+
+    public void removeInventoryEntity(Entity entity) {
+        for (EntityData e : inventoryEntities()) {
+            if (e.getEntity().equals(entity)) {
+                inventoryEntities().remove(e);
+                return;
+            }
+        }
+    }
+
+    public void renderInventory() {
+        GridPane inventory = getInventory();
+        ArrayList<EntityData> entities = inventoryEntities();
+        inventory.getChildren().clear();
+        for (int i = 0; i < entities.size(); i++) {
+            EntityData entity = entities.get(i);
+            inventory.add(entity.getImage(), i, 0);
+
+            Label counter = new Label();
+            if (entity.getEntity().getClass().equals(Sword.class)) {
+                Sword sword = ((Sword)entity.getEntity());
+                counter.setText(String.valueOf(sword.getHits()));
+            } else if (entity.getEntity().getClass().equals(Hammer.class)) {
+                Hammer hammer = ((Hammer)entity.getEntity());
+                counter.setText(String.valueOf(hammer.getHits()));
+            } else if (entity.getEntity().getClass().equals(Potion.class)) {
+                counter.setText(String.valueOf(this.player.potionStepsLeft()));
+            } else if (entity.getEntity().getClass().equals(Treasure.class)) {
+                counter.setText(String.valueOf(1));
+            }
+            counter.setStyle(
+                "-fx-background-radius: 5em; " +
+                "-fx-background-size: 50;" +
+                "-fx-min-width: 16;" +
+                "-fx-text-fill: white;" +
+                "-fx-font-weight: bold;" +
+                "-fx-font-weight: bold;" +
+                "-fx-background-color: black;"
+            );
+            counter.setAlignment(Pos.CENTER);
+            counter.setTranslateX(1);
+            counter.setTranslateY(-6);
+            inventory.add(counter, i, 0);
+        }
+    }
+
     @Override
     public void onLoad(Entity player) {
         ImageView view = new ImageView(playerImage);
+        this.player = ((Player)player);
         addEntity(player, view, 3);
     }
     @Override
@@ -213,6 +269,7 @@ public class DungeonControllerLoader extends DungeonLoader {
             public void changed(ObservableValue<? extends Number> observable,
                     Number oldValue, Number newValue) {
                 GridPane.setColumnIndex(node, newValue.intValue());
+                renderInventory();
             }
         });
         entity.y().addListener(new ChangeListener<Number>() {
@@ -220,6 +277,7 @@ public class DungeonControllerLoader extends DungeonLoader {
             public void changed(ObservableValue<? extends Number> observable,
                     Number oldValue, Number newValue) {
                 GridPane.setRowIndex(node, newValue.intValue());
+                renderInventory();
             }
         });
     }
@@ -254,13 +312,88 @@ public class DungeonControllerLoader extends DungeonLoader {
                 }
             });
         }
-
+        /*
+        else if (entity.getClass().equals(Treasure.class)) {
+            Treasure treasure = ((Treasure)entity);
+            treasure.found().addListener(new ChangeListener<Boolean>() {
+                @Override
+                public void changed(ObservableValue<? extends Boolean> observable,
+                        Boolean oldValue, Boolean newValue) {
+                    inventoryEntities().add(new EntityData(player.getSword(), new ImageView(treasureImage)));
+                }
+            });
+        }
+        */
         else if (entity.getClass().equals(Player.class)) {
             Player player = ((Player)entity);
+
+            player.isSwordEquipped().addListener(new ChangeListener<Boolean>() {
+                @Override
+                public void changed(ObservableValue<? extends Boolean> observable,
+                    Boolean oldValue, Boolean newValue) {
+                    if (newValue) {
+                        if (player.hasPotion() && player.hasHammer()) {
+                            ((ImageView)node).setImage(playerSwordHammerPotionImage);
+                        } else if (player.hasPotion()) {
+                            ((ImageView)node).setImage(playerSwordPotionImage);
+                        } else if (player.hasHammer()) {
+                            ((ImageView)node).setImage(playerSwordHammerImage);
+                        } else {
+                            ((ImageView)node).setImage(playerSwordImage);
+                        }
+                        inventoryEntities().add(new EntityData(player.getSword(), new ImageView(swordImage)));
+                    } else {
+                        if (player.hasPotion() && player.hasHammer()) {
+                            ((ImageView)node).setImage(playerHammerPotionImage);
+                        } else if (player.hasPotion()) {
+                            ((ImageView)node).setImage(playerPotionImage);
+                        } else if (player.hasHammer()) {
+                            ((ImageView)node).setImage(playerHammerImage);
+                        }  else {
+                            ((ImageView)node).setImage(playerImage);
+                        }
+                        removeInventoryEntity(player.getSword());
+                    }
+                }
+            });
+            player.isHammerEquipped().addListener(new ChangeListener<Boolean>() {
+                @Override
+                public void changed(ObservableValue<? extends Boolean> observable,
+                    Boolean oldValue, Boolean newValue) {
+                    if (newValue) {
+                        if (player.hasPotion() && player.hasSword()) {
+                            ((ImageView)node).setImage(playerSwordHammerPotionImage);
+                        } else if (player.hasPotion()) {
+                            ((ImageView)node).setImage(playerHammerPotionImage);
+                        } else if (player.hasSword()) {
+                            ((ImageView)node).setImage(playerSwordHammerImage);
+                        } else {
+                            ((ImageView)node).setImage(playerHammerImage);
+                        }
+                        inventoryEntities().add(new EntityData(player.getHammer(), new ImageView(hammerImage)));
+                    } else {
+                        if (player.hasSword() && player.hasPotion()) {
+                            ((ImageView)node).setImage(playerSwordPotionImage);
+                        } else if (player.hasSword()) {
+                            ((ImageView)node).setImage(playerSwordImage);
+                        } else if (player.hasPotion()) {
+                            ((ImageView)node).setImage(playerPotionImage);
+                        }  else {
+                            ((ImageView)node).setImage(playerImage);
+                        }
+                        removeInventoryEntity(player.getHammer()); 
+                    }
+                }
+            });
+
+
             player.potionSteps().addListener(new ChangeListener<Number>() {
                 @Override
                 public void changed(ObservableValue<? extends Number> observable,
                     Number oldValue, Number newValue) {
+                    if (newValue.intValue() == 11) {
+                        inventoryEntities().add(new EntityData(player.getPotion(), new ImageView(potionImage)));
+                    }
                     if (newValue.intValue() > 0) {
                         if (player.hasSword() && player.hasHammer()) {
                             ((ImageView)node).setImage(playerSwordHammerPotionImage);
@@ -281,61 +414,7 @@ public class DungeonControllerLoader extends DungeonLoader {
                         }  else {
                             ((ImageView)node).setImage(playerImage);
                         }
-                    }
-                }
-            });
-            player.isSwordEquipped().addListener(new ChangeListener<Boolean>() {
-                @Override
-                public void changed(ObservableValue<? extends Boolean> observable,
-                    Boolean oldValue, Boolean newValue) {
-                    if (newValue) {
-                        if (player.hasPotion() && player.hasHammer()) {
-                            ((ImageView)node).setImage(playerSwordHammerPotionImage);
-                        } else if (player.hasPotion()) {
-                            ((ImageView)node).setImage(playerSwordPotionImage);
-                        } else if (player.hasHammer()) {
-                            ((ImageView)node).setImage(playerSwordHammerImage);
-                        } else {
-                            getInventory().add(new ImageView(swordImage), 0, 0, 2, 1);
-                            ((ImageView)node).setImage(playerSwordImage);
-                        }
-                    } else {
-                        if (player.hasPotion() && player.hasHammer()) {
-                            ((ImageView)node).setImage(playerHammerPotionImage);
-                        } else if (player.hasPotion()) {
-                            ((ImageView)node).setImage(playerPotionImage);
-                        } else if (player.hasHammer()) {
-                            ((ImageView)node).setImage(playerHammerImage);
-                        }  else {
-                            ((ImageView)node).setImage(playerImage);
-                        }
-                    }
-                }
-            });
-            player.isHammerEquipped().addListener(new ChangeListener<Boolean>() {
-                @Override
-                public void changed(ObservableValue<? extends Boolean> observable,
-                    Boolean oldValue, Boolean newValue) {
-                    if (newValue) {
-                        if (player.hasPotion() && player.hasSword()) {
-                            ((ImageView)node).setImage(playerSwordHammerPotionImage);
-                        } else if (player.hasPotion()) {
-                            ((ImageView)node).setImage(playerHammerPotionImage);
-                        } else if (player.hasSword()) {
-                            ((ImageView)node).setImage(playerSwordHammerImage);
-                        } else {
-                            ((ImageView)node).setImage(playerHammerImage);
-                        }
-                    } else {
-                        if (player.hasSword() && player.hasPotion()) {
-                            ((ImageView)node).setImage(playerSwordPotionImage);
-                        } else if (player.hasSword()) {
-                            ((ImageView)node).setImage(playerSwordImage);
-                        } else if (player.hasPotion()) {
-                            ((ImageView)node).setImage(playerPotionImage);
-                        }  else {
-                            ((ImageView)node).setImage(playerImage);
-                        }
+                        removeInventoryEntity(player.getPotion());
                     }
                 }
             });

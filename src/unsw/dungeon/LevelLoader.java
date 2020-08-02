@@ -2,14 +2,11 @@ package unsw.dungeon;
 
 import java.io.IOException;
 
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuBar;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -37,11 +34,11 @@ public class LevelLoader {
         root.setTop(menu);
 
         // Inventory
-        InventoryController inventoryController = new InventoryController();
-        FXMLLoader inventoryBar = new FXMLLoader(getClass().getResource("Inventory.fxml"));
-        inventoryBar.setController(inventoryController);
-        Node inventory = inventoryBar.load();
-        root.setBottom(inventory);
+        // HUDController HUDController = new HUDController();
+        FXMLLoader HUDLoader = new FXMLLoader(getClass().getResource("HUD.fxml"));
+        // HUDLoader.setController(HUDController);
+        Node HUD = HUDLoader.load();
+        root.setBottom(HUD);
         
         /*
         BorderPane inventory = new BorderPane();
@@ -58,7 +55,7 @@ public class LevelLoader {
         */
 
         // Game Window
-        DungeonControllerLoader dungeonLoader = new DungeonControllerLoader(this.file, ((MenuBar)menu), ((VBox)inventory));
+        DungeonControllerLoader dungeonLoader = new DungeonControllerLoader(this.file, ((MenuBar)menu), ((VBox)HUD));
         DungeonController gameController = dungeonLoader.loadController();
         gameController.setStage(this.stage);
         FXMLLoader game = new FXMLLoader(getClass().getResource("DungeonView.fxml"));
@@ -66,15 +63,22 @@ public class LevelLoader {
         Node gameRoot = game.load();
         root.setCenter(gameRoot);        
         
+<<<<<<< HEAD
         // Pass the dungeon to the MenuBarController.
         menuBarController.setDungeon(gameController.getDungeon());
 
+=======
+>>>>>>> fcf57e40ab3a5e0a4b6aae78238138d8ede1bed9
         // Show Scene
         Scene scene = new Scene(root);
+        scene.getStylesheets().addAll(getClass().getResource(
+            "Inventory.css"
+        ).toExternalForm());
         gameRoot.requestFocus();
         this.stage.setTitle("Dungeon");
         this.stage.setScene(scene);
         this.stage.show();
+        this.stage.setMaxWidth(122 * 32);
     }
 
 

@@ -18,6 +18,7 @@ public class Player extends Entity implements Moveable, Interactable {
     private Sword sword;
     private BooleanProperty swordEquipped;
     private IntegerProperty potion;
+    private Potion potionItem;
     private Key key;
     private Hammer hammer;
     private BooleanProperty hammerEquipped;
@@ -31,6 +32,7 @@ public class Player extends Entity implements Moveable, Interactable {
         super(x, y, dungeon);
         this.sword = null;
         this.potion = new SimpleIntegerProperty(0);
+        this.potionItem = null;
         this.key = null;
         this.swordEquipped = new SimpleBooleanProperty(false);
         this.hammerEquipped = new SimpleBooleanProperty(false);
@@ -48,6 +50,10 @@ public class Player extends Entity implements Moveable, Interactable {
 
     public Key getKey() {
         return this.key;
+    }
+
+    public Potion getPotion() {
+        return this.potionItem;
     }
 
     public int potionStepsLeft() {
@@ -108,6 +114,7 @@ public class Player extends Entity implements Moveable, Interactable {
      * @param potion the Potion to give to the Player
      */
     public void givePotion(Potion potion) {
+        this.potionItem = potion;
         getDungeon().removeEntity(potion);
         this.potion.set(11);
     }
