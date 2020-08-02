@@ -294,7 +294,7 @@ public class DungeonControllerLoader extends DungeonLoader {
                         } else {
 
                             // HEEERREEEE
-                            // GridPane.add(new ImageView(swordImage), 0, 0, 2, 1);
+                            getInventory().add(new ImageView(swordImage), 0, 0, 2, 1);
 
 
                             ((ImageView)node).setImage(playerSwordImage);

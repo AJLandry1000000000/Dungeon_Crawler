@@ -39,10 +39,11 @@ public class MainMenuController {
         this.stage = stage;
     }
 
-    public void changeStage(String file) {
+    public void changeStage(String file, int level) {
         try {
-            LevelLoader level = new LevelLoader(this.stage, file);
-            level.load();
+            
+            LevelLoader container = new LevelLoader(this.stage, file);
+            container.load();
         } catch (FileNotFoundException f) {
             System.out.println("We dont have the files for " + file);
         } catch (IOException io) {
@@ -61,32 +62,32 @@ public class MainMenuController {
 
     @FXML
     public void handleLevel1Button(ActionEvent event) {
-        changeStage("boulders.json");
+        changeStage("boulders.json", 1);
     }
 
     @FXML
     public void handleLevel2Button(ActionEvent event) {
-        changeStage("advanced.json");
+        changeStage("advanced.json", 2);
     }
 
     @FXML
     public void handleLevel3Button(ActionEvent event) {
-        changeStage("test.json");
+        changeStage("test.json", 3);
     }
 
     @FXML
     public void handleLevel4Button(ActionEvent event) {
-        changeStage("boulders.json");
+        changeStage("boulders.json", 4);
     }
 
     @FXML
     public void handleLevel5Button(ActionEvent event) {
-        changeStage("boulders.json");
+        changeStage("boulders.json", 5);
     }
 
     @FXML
     public void handleLevel6Button(ActionEvent event) {
-        changeStage("boulders.json");
+        changeStage("boulders.json", 6);
     }
 
     

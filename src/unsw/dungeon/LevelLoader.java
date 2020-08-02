@@ -31,13 +31,8 @@ public class LevelLoader {
         BorderPane root = new BorderPane();
 
         // Top Menu
-        final Menu main = new Menu("Menu");
-        final Menu instructions = new Menu("Instructions");
-        final Menu goals = new Menu("Goals");
-        final Menu restart = new Menu("Restart");
-        MenuBar menuBar = new MenuBar();
-        menuBar.getMenus().addAll(main, instructions, goals, restart);
-        root.setTop(menuBar);
+        FXMLLoader loader2 = new FXMLLoader(getClass().getResource("MenuBar.fxml"));
+        root.setTop(loader2.load());
 
         // Inventory
         BorderPane inventory = new BorderPane();
