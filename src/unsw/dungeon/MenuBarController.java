@@ -296,6 +296,10 @@ public class MenuBarController {
         return "";
     }*/
     
+    @FXML
+    public void HandleNormalButton(ActionEvent event) throws IOException {
+        dungeonLoader.changeTheme("normal");
+    }
 
     @FXML
     public void HandleIceButton(ActionEvent event) throws IOException {
