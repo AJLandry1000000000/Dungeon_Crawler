@@ -1,14 +1,23 @@
 package test;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import javafx.scene.control.CheckBox;
 import javafx.scene.image.ImageView;
-
-import unsw.dungeon.*;
+import unsw.dungeon.Direction;
+import unsw.dungeon.Dungeon;
+import unsw.dungeon.DungeonController;
+import unsw.dungeon.Enemy;
+import unsw.dungeon.GoalEnemies;
+import unsw.dungeon.Player;
+import unsw.dungeon.Potion;
+import unsw.dungeon.Sword;
 
 /**
  * Testing functionality of Player interacting and utilising a Potion against Enemies
@@ -23,8 +32,9 @@ public class EnemyAndPotionTest {
     public void initialize() {
         // Create dungeon.
         this.dungeon = new Dungeon(10, 10);
+        CheckBox placeholder = new CheckBox();
         // Give the dungeon a random goal (to avoid null pointer error).
-        GoalEnemies ge = new GoalEnemies();
+        GoalEnemies ge = new GoalEnemies(placeholder);
         this.dungeon.setGoal(ge);
         // Create Player.
         this.player = new Player(4, 4, dungeon);

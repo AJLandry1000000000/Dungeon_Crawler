@@ -1,5 +1,11 @@
 package unsw.dungeon;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.scene.control.CheckBox;
+
 /**
  * Leaf Goal that allows for specific checking if all Enemies have been killed
  * 
@@ -8,6 +14,29 @@ package unsw.dungeon;
  */
 public class GoalEnemies implements Goal {
         
+
+    private BooleanProperty completed;
+    private CheckBox check;
+
+    public GoalEnemies(CheckBox check) {
+        this.check = check;
+        this.completed = new SimpleBooleanProperty(false);
+        this.completed.addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable,
+                Boolean oldValue, Boolean newValue) {
+                getCheckBox().setSelected(newValue);
+            }
+        }); 
+    }
+
+    public CheckBox getCheckBox() {
+        return this.check;
+    }
+
+    public BooleanProperty checkCompleted() {
+        return this.completed;
+    }
     /**
      * Determine if all enemies have been killed
      * @return true if no enemies active, otherwise false
@@ -23,6 +52,7 @@ public class GoalEnemies implements Goal {
         if (totalEnemies == 0) {
             Player player = dungeon.getPlayer();
             player.actionTaken().set("Player has completed a Goal");
+            checkCompleted().set(true);
             return true;
         }
         return false;

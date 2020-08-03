@@ -1,14 +1,22 @@
 package unsw.dungeon;
 
+import javafx.event.EventHandler;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
+
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
+
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.geometry.Insets;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 
 /**
  * Loads a dungeon from a .json file.
@@ -36,9 +44,10 @@ public abstract class DungeonLoader {
 
     /**
      * Parses the JSON to create a dungeon.
+     * 
      * @return
      */
-    public Dungeon load() {
+    public Dungeon load(VBox goals) {
         int width = json.getInt("width");
         int height = json.getInt("height");
 
@@ -51,61 +60,115 @@ public abstract class DungeonLoader {
             jsonValues.add(jsonEntities.getJSONObject(i));
         }
 
-
         for (int i = 0; i < jsonEntities.length(); i++) {
             loadEntity(dungeon, jsonEntities.getJSONObject(i));
         }
         this.dungeon = dungeon;
 
         // Extract the goal and process it
-        JSONObject jsonGoals = (JSONObject)json.get("goal-condition");
-        dungeon.setGoal(processGoals(jsonGoals));
+        JSONObject jsonGoals = (JSONObject) json.get("goal-condition");
+        dungeon.setGoal(processGoals(jsonGoals, goals, 0));
         return dungeon;
     }
 
     /**
      * Process Goals turning them into potential Leaf and Composite Goals
-     * @param dungeon the given dungeon level
+     * 
+     * @param dungeon   the given dungeon level
      * @param jsonGoals the JSONObject that is holding 1 or more Goals
      * @return the overall Goal that will hold potential further Goals
      */
-    public Goal processGoals(JSONObject jsonGoals) {
+    public Goal processGoals(JSONObject jsonGoals, VBox goals, int level) {
         String goalCondition = jsonGoals.getString("goal");
         GoalComposite goal = null;
         Goal newLeafGoal = null;
+        CheckBox check = new CheckBox();
+        check.setDisable(true);
+        HBox container = new HBox();
+        container.setSpacing(10);
+        VBox.setMargin(container, new Insets(0, 0, 0, level));
+
+        Label goalLabel = new Label();
+        goalLabel.setStyle(
+            "-fx-text-fill: white;" +
+            "-fx-font-size: 14px;" +
+            "-fx-opacity: 0.75;" +
+            "-fx-background-color: rgba(0, 0, 0, .25);"
+        );
+        goalLabel.addEventHandler(MouseEvent.MOUSE_ENTERED,
+        new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent e) {
+                goalLabel.setStyle(
+                    "-fx-text-fill: white;" +
+                    "-fx-font-size: 14px;" +
+                    "-fx-opacity: 1;" +
+                    "-fx-background-color: rgba(0, 0, 0, .5);"
+                );
+                check.setStyle(
+                    "-fx-opacity: 8;"
+                );
+            }
+        });
+        goalLabel.addEventHandler(MouseEvent.MOUSE_EXITED,
+        new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent e) {
+                goalLabel.setStyle(
+                    "-fx-text-fill: white;" +
+                    "-fx-font-size: 14px;" +
+                    "-fx-opacity: 0.75;" +
+                    "-fx-background-color: rgba(0, 0, 0, .22);"
+                );
+                check.setStyle(
+                    "-fx-opacity: 0.5;"
+                );
+            }
+        });
+
+        container.getChildren().addAll(check, goalLabel);
+        goals.getChildren().add(container);
+
         // Determine the type of Goal Condition
         switch (goalCondition) {
         case "exit":
-            newLeafGoal = new GoalExit();
+            goalLabel.setText("Reach Exit");
+            newLeafGoal = new GoalExit(check);
             this.dungeon.addGoalType(newLeafGoal);
             return newLeafGoal;
-        case "enemies":
-            newLeafGoal = new GoalEnemies();
+        case "enemies": 
+            goalLabel.setText("Kill Enemies");
+            newLeafGoal = new GoalEnemies(check);
             this.dungeon.addGoalType(newLeafGoal);
             return newLeafGoal;
         case "boulders":
-            newLeafGoal = new GoalBoulders();
+            goalLabel.setText("Activate Floor Switches");
+            newLeafGoal = new GoalBoulders(check);
             this.dungeon.addGoalType(newLeafGoal);
             return newLeafGoal;
         case "treasure":
-            newLeafGoal = new GoalTreasure();
+            goalLabel.setText("Collect Treasures");
+            newLeafGoal = new GoalTreasure(check);
             this.dungeon.addGoalType(newLeafGoal);
             return newLeafGoal;
         case "AND":
-            goal = new GoalAND();
+            goalLabel.setText("AND Composite");            
+            goal = new GoalAND(check);
+            this.dungeon.addGoalType(goal);
             break;
         case "OR":
-            goal = new GoalOR();
+            goalLabel.setText("OR Composite");
+            goal = new GoalOR(check);
+            this.dungeon.addGoalType(goal);
             break;
         }
         // If the Goal is composite, add subgoals to it
         JSONArray subGoals = jsonGoals.getJSONArray("subgoals");
         for (Object sub : subGoals) {
-            goal.add(processGoals((JSONObject)sub));
+            goal.add(processGoals((JSONObject)sub, goals, level + 15));
         }
         return ((Goal)goal);
     }
-
+    
     /**
      * Load, process and add each Entity to the Dungeon whilst checking for potential multi layering
      * @param dungeon the given Dungeon level to house all entities

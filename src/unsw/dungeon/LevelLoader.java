@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.geometry.Side;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -14,6 +15,7 @@ import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -64,23 +66,33 @@ public class LevelLoader {
         inventory.setBottom(menuBar2);
         */
 
+        StackPane container = new StackPane();
+
+
+        VBox goals = new VBox();
+        goals.setVisible(false);
+        goals.setPadding(new Insets(5, 0, 0, 5));
+        goals.setSpacing(2);
+
         // Game Window
         DungeonControllerLoader dungeonLoader = new DungeonControllerLoader(this.file, ((VBox)HUD));
-        DungeonController gameController = dungeonLoader.loadController();
+        DungeonController gameController = dungeonLoader.loadController(goals);
         gameController.setStage(this.stage);
         FXMLLoader game = new FXMLLoader(getClass().getResource("DungeonView.fxml"));
         game.setController(gameController);
         Node gameRoot = game.load();
-        root.setCenter(gameRoot);        
         
         // Top Menu
-        MenuBarController menuBarController = new MenuBarController(this.stage, this.file, dungeonLoader);
+        MenuBarController menuBarController = new MenuBarController(this.stage, this.file, dungeonLoader, goals);
         FXMLLoader menuBar = new FXMLLoader(getClass().getResource("MenuBar.fxml"));
         menuBar.setController(menuBarController);
         Node menu = menuBar.load();
         root.setTop(menu);
         // Pass the dungeon to the MenuBarController.
         menuBarController.setDungeon(gameController.getDungeon());
+        
+        container.getChildren().addAll(gameRoot, goals);
+        root.setCenter(container);        
 
         // Show Scene
         Scene scene = new Scene(root);

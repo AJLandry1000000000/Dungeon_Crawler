@@ -12,6 +12,9 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
+
+import javafx.scene.layout.VBox;
+
 import org.junit.jupiter.api.TestMethodOrder;
 
 import unsw.dungeon.*;
@@ -32,7 +35,8 @@ public class GoalLeafBouldersTest {
     @BeforeAll
     public void initialise() {
         DungeonMockLoader dungeonLoader = new DungeonMockLoader(JSONDungeons.boulders());
-        this.dungeon = dungeonLoader.load();
+        VBox placeholder = new VBox();
+        this.dungeon = dungeonLoader.load(placeholder);
         this.player = dungeon.getPlayer();
     }
 

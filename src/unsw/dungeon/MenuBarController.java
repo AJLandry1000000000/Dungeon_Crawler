@@ -16,6 +16,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.json.JSONTokener;
 
@@ -43,8 +44,11 @@ public class MenuBarController {
 
     private DungeonControllerLoader dungeonLoader;
 
+    private VBox goals;
 
-    public MenuBarController(Stage stage, String file, DungeonControllerLoader dungeonLoader) throws FileNotFoundException {
+
+    public MenuBarController(Stage stage, String file, DungeonControllerLoader dungeonLoader, VBox goals) throws FileNotFoundException {
+        this.goals = goals;
         this.stage = stage;
         this.file = file;
         this.dungeonLoader = dungeonLoader;
@@ -84,7 +88,6 @@ public class MenuBarController {
         } else if (file.equals("level5.json")) {
 
         } else if (file.equals("level6.json")) {
-
         }
     }
 
@@ -199,6 +202,12 @@ public class MenuBarController {
         return "";
     }*/
     
+
+    @FXML
+    public void HandleGoalOverlay(ActionEvent event) throws IOException {
+        goals.setVisible(!goals.isVisible());
+    }
+
     @FXML
     public void HandleNormalButton(ActionEvent event) throws IOException {
         dungeonLoader.changeTheme("normal");

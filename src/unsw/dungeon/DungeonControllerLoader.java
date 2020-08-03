@@ -479,9 +479,9 @@ public class DungeonControllerLoader extends DungeonLoader {
      * @return
      * @throws FileNotFoundException
      */
-    public DungeonController loadController() throws FileNotFoundException {
+    public DungeonController loadController(VBox goals) throws FileNotFoundException {
         
-        return new DungeonController(load(), Stream.of(baseLayer, collectableLayer, moveableLayer)
+        return new DungeonController(load(goals), Stream.of(baseLayer, collectableLayer, moveableLayer)
             .flatMap(x -> x.stream())
             .collect(Collectors.toList())
         );
