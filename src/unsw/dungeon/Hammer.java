@@ -24,20 +24,24 @@ public class Hammer extends Entity implements Interactable {
      */
     @Override
     public Boolean interact(Entity entity) {
-        // Only a Player is allowed to interact with a hammer
+        // Disallow any non-Player from interacting with a Hammer
         if (!(entity.getClass().equals(Player.class))) {
             return false;
         }
 
+        // Determine if the Player does not have a current Hammer
         Player player = (Player)entity;
-        // Determine if the Player does not have a current hammer
         if (!player.hasHammer()) {
-            // Player acquires the hammer which is then removed from the level
-            player.giveHammer(this);
+            // Player acquires the Hammer which is then removed from the level
+            player.equipHammer(this);
+            // Remove the Hammer from the map
+            dungeon.removeEntity(this);
+            // Update the console
+            dungeon.setConsoleText("Played has equipped a Hammer");
             return true;
-        } else {
-            // Otherwise disallow the interaction as the Player has a current hammer
-            return false;
-        }  
+        } 
+        // Otherwise disallow the interaction as the Player has a current Hammer and update console
+        dungeon.setConsoleText("Played is already wielding a Hammer");
+        return false;
     }
 }

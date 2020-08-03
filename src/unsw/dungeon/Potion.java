@@ -17,23 +17,24 @@ public class Potion extends Entity implements Interactable {
      */
     @Override
     public Boolean interact(Entity entity) {
-        // Only a Player is allowed to interact with a Potion
+        // Disallow any non-Player from interacting with a Potion
         if (!(entity.getClass().equals(Player.class))) {
             return false;
         }
 
-        Player player = (Player)entity;
         // If the Player does not have a current active Potion
+        Player player = (Player)entity;
         if (!player.hasPotion()) {
             // Give the Player the Potion and activate it
-            player.givePotion(this);
-            System.out.println("Player has picked up a Potion");
+            player.drinkPotion(this);
+            // Remove the Potion from the map
+            dungeon.removeEntity(this);
+            // Set the Console message
+            dungeon.setConsoleText("Played has drank a Potion. 10 Steps left of invincibility");
             return true;
         } 
         // Otherwise, disallow the Player from picking up the Potion
-        else {
-            System.out.println("Player already has a Potion activated");
-           return false;
-        }
+        dungeon.setConsoleText("Played is already has a Potion active");
+        return false;
     }
 }

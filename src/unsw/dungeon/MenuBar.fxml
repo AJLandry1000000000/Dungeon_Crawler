@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+
+<MenuBar xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+  <menus>
+    <Menu mnemonicParsing="false" text="Main menu">
+      <items>
+        <MenuItem fx:id="Menu" mnemonicParsing="false" onAction="#HandleMenuButton" text="Go to main menu" />
+      </items>
+    </Menu>
+    <Menu mnemonicParsing="false" text="Goals">
+      <items>
+        <MenuItem fx:id="Goals" mnemonicParsing="false" onAction="#HandleGoalButton" text="List goals" />
+            <MenuItem mnemonicParsing="false" onAction="#HandleGoalOverlay" text="Overlay Goals" />
+      </items>
+    </Menu>
+    <Menu mnemonicParsing="false" text="Restart">
+         <items>
+            <MenuItem fx:id="Restart" mnemonicParsing="false" onAction="#HandleRestartButton" text="Restart this Level" />
+         </items></Menu>
+      <Menu mnemonicParsing="false" text="Theme">
+        <items>
+            <MenuItem mnemonicParsing="false" onAction="#HandleNormalButton" text="Normal Theme" />
+            <MenuItem mnemonicParsing="false" onAction="#HandleIceButton" text="Ice Theme" />
+          <MenuItem fx:id="lava" mnemonicParsing="false" onAction="#HandleLavaButton" text="Lava Theme" />
+            <MenuItem mnemonicParsing="false" onAction="#HandleMossButton" text="Moss Theme" />
+            <MenuItem mnemonicParsing="false" onAction="#HandleWaterButton" text="Water Theme" />
+        </items>
+      </Menu>
+  </menus>
+</MenuBar>

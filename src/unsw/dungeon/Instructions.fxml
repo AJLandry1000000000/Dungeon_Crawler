@@ -13,7 +13,7 @@
          <font>
             <Font name="System Bold" size="19.0" />
          </font></Label>
-      <Button fx:id="BackToMainMenu" layoutX="400.0" layoutY="750.0" mnemonicParsing="false" onAction="#handleBackToMainMenu" text="Main Menu" />
+      <Button fx:id="BackToMainMenu" layoutX="400.0" layoutY="770.0" mnemonicParsing="false" onAction="#handleBackToMainMenu" text="Main Menu" />
       <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="20.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@images/human_new.png" />
@@ -86,5 +86,23 @@
       <Label layoutX="66.0" layoutY="480.0" text="Switch - Player pushes boulders onto switches to complete goals." />
       <Label layoutX="66.0" layoutY="530.0" text="Treasure - Can be collected by player to complete goals." />
       <Label layoutX="66.0" layoutY="580.0" text="Exit - If the player completes all the marked goals and moves through the exit, the level is complete." />
+      <ImageView layoutX="20.0" layoutY="620.0">
+         <image>
+            <Image url="@images/hammer.png" />
+         </image>
+      </ImageView>
+      <ImageView layoutX="20.0" layoutY="670.0">
+         <image>
+            <Image url="@images/ghost_new.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="66.0" layoutY="630.0" text="Hammer - Hammers can be used to destroy 5 walls. Player destroys a wall by holding a hammer and stepping on the wall." />
+      <Label layoutX="66.0" layoutY="680.0" text="Ghost - Ghosts are enemies that move towards the player once every 3 player moves. Ghosts can move through walls." />
+      <Label layoutX="66.0" layoutY="730.0" maxWidth="820.0" text="Goals - Goals must be completed to pass the level. A list of goals completed/not completed can be seen using the Goal button at the top of the level." wrapText="true" />
+      <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="20.0" layoutY="720.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@images/success.png" />
+         </image>
+      </ImageView>
    </children>
 </Pane>

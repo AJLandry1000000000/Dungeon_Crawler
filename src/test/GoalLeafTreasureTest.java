@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import javafx.scene.layout.VBox;
 import unsw.dungeon.*;
 
 /**
@@ -23,7 +24,8 @@ public class GoalLeafTreasureTest {
     @BeforeEach
     public void initialise() {
         DungeonMockLoader dungeonLoader = new DungeonMockLoader(JSONDungeons.simpleTreasure());
-        this.dungeon = dungeonLoader.load();
+        VBox placeholder = new VBox();
+        this.dungeon = dungeonLoader.load(placeholder);
         this.player = dungeon.getPlayer();
     }
 

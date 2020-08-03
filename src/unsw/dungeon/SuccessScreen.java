@@ -23,6 +23,7 @@ public class SuccessScreen {
         Parent root = loader.load();
 
         this.scene = new Scene(root);
+        start();
     }
 
     public void start() {

@@ -1,9 +1,12 @@
 package unsw.dungeon;
 
+
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 
 /**
  * The player entity moves around the map interacting with other Entities. 
@@ -16,11 +19,17 @@ import javafx.beans.property.SimpleIntegerProperty;
 public class Player extends Entity implements Moveable, Interactable {
 
     private Sword sword;
-    private BooleanProperty swordEquipped;
-    private IntegerProperty potion;
-    private Key key;
     private Hammer hammer;
+    private Potion potion;
+    private Key key;
+
+    // JavaFX Properties
+    private BooleanProperty swordEquipped;
     private BooleanProperty hammerEquipped;
+    private IntegerProperty potionSteps;
+    private BooleanProperty holdingKey;
+    private IntegerProperty numTreasures;
+    private StringProperty action;
 
     /**
      * Create a player positioned in square (x,y)
@@ -29,15 +38,47 @@ public class Player extends Entity implements Moveable, Interactable {
      */
     public Player(int x, int y, Dungeon dungeon) {
         super(x, y, dungeon);
+
         this.sword = null;
-        this.potion = new SimpleIntegerProperty(0);
+        this.hammer = null;
+        this.potion = null;
         this.key = null;
+
         this.swordEquipped = new SimpleBooleanProperty(false);
         this.hammerEquipped = new SimpleBooleanProperty(false);
+        this.holdingKey = new SimpleBooleanProperty(false);
+        this.potionSteps = new SimpleIntegerProperty(0);
+        this.numTreasures = new SimpleIntegerProperty(0);
+        this.numTreasures = new SimpleIntegerProperty(0);
+        this.action = new SimpleStringProperty("");
     }
 
-    // Getters
+    /* ----------------------------- JAVAFX --------------------------------- */
+    public BooleanProperty isSwordEquipped() {
+        return this.swordEquipped;
+    }
 
+    public BooleanProperty isHammerEquipped() {
+        return this.hammerEquipped;
+    }
+
+    public BooleanProperty isHoldingKey() {
+        return this.holdingKey;
+    }
+
+    public IntegerProperty potionStepsLeft() {
+        return this.potionSteps;
+    }
+
+    public IntegerProperty numTreasures() {
+        return this.numTreasures;
+    }
+
+    public StringProperty actionTaken() {
+        return this.action;
+    }
+
+    /* ----------------------------- GETTERS -------------------------------- */
     public Sword getSword() {
         return this.sword;
     }
@@ -50,78 +91,18 @@ public class Player extends Entity implements Moveable, Interactable {
         return this.key;
     }
 
-    public int potionStepsLeft() {
-        return this.potion.get();
-    }
-
-    public IntegerProperty potionSteps() {
+    public Potion getPotion() {
         return this.potion;
     }
 
-    public BooleanProperty isSwordEquipped() {
-        return this.swordEquipped;
-    }
-
-    public BooleanProperty isHammerEquipped() {
-        return this.hammerEquipped;
-    }
-
-    // Setters
     /**
-     * Allow the Player Entity to equip a Sword
-     * @param newSword the Sword to be equipped by the Player
+     * @return the number of Treasures t+ he Player has collected
      */
-    public void giveSword(Sword newSword) {
-        this.sword = newSword;
-        this.swordEquipped.set(true);
-        getDungeon().removeEntity(newSword);
+    public int getNumTreasures() {
+        return numTreasures().get();
     }
 
-    /**
-     * Allow the Player Entity to equip a hammer
-     * @param newSword the Sword to be equipped by the Player
-     */
-    public void giveHammer(Hammer hammer) {
-        this.hammer = hammer;
-        this.hammerEquipped.set(true);
-        getDungeon().removeEntity(hammer);
-    }    
-    /**
-     * Allow the Player Entity to hold a key
-     * @param newKey the key a Player holds until the Player comes in contact with corresponding Door
-     */
-    public void giveKey(Key newKey) {
-        this.key = newKey;
-        getDungeon().alertDoor(newKey.getId());
-        getDungeon().removeEntity(newKey);
-    }
-
-    /**
-     * Remove a Key from the Player's inventory
-     */
-    public void takeKey() {
-        this.key = null;
-    }
-
-    /**
-     * Allow the Player to activate a Potion for 10 steps of invincibility
-     * @param potion the Potion to give to the Player
-     */
-    public void givePotion(Potion potion) {
-        getDungeon().removeEntity(potion);
-        this.potion.set(11);
-    }
-
-    /**
-     * Each step the Player takes, decrement the number of Invincible steps the Player can make
-     */
-    public void decrementPotionSteps() {
-        if (hasPotion()) {
-            System.out.println("Player has " + (this.potion.get() - 1) + " steps of potion left");
-            this.potion.set(this.potion.get() - 1);
-        }
-    }
-
+    /* ----------------------------- SETTERS -------------------------------- */
     /**
      * Move the Player to another location 
      */
@@ -130,58 +111,126 @@ public class Player extends Entity implements Moveable, Interactable {
         y().set(y); 
     }
 
-    // Checkers
     /**
-     * Check if the Player is currently wielding a Sword
-     * @return true if the player has a Sword already, otherwise false
+     * Allow the Player to equip the given Sword
+     * @param sword
      */
-    public boolean hasSword() {
-        return this.sword != null;
+    public void equipSword(Sword sword) {
+        this.sword = sword;
+        isSwordEquipped().set(true);
     }
 
     /**
-     * Check if the Player is currently wielding a hammer
-     * @return true if the player has a hammer already, otherwise false
+     * Allow the Player to use the Sword on an enemy, decrementing its hits
      */
-    public boolean hasHammer() {
-        return this.hammer != null;
-    }
-
-    /**
-     * Check if the Sword has exceeded the number of uses it has
-     */
-    public void checkSword() {
-        // If we have a Sword and it has zero or less hits left, remove this Sword from the Player.
-        if (hasSword() && getSword().getHits() <= 0) {
+    public void useSword() {
+        this.sword.decrementHits();
+        // If we have a hammer and no more hits, the Hammer is destroyed
+        if (this.sword.getHits() < 1) {
             this.swordEquipped.set(false);
             this.sword = null;
         }
     }
 
     /**
-     * Check if the hammer has exceeded the number of uses it has
+     * Allow the Player to equip a Hammer
+     * @param hammer
      */
-    public void checkHammer() {
-        // If we have a hammer and it has zero or less hits left, remove this hammer from the Player.
-        if (hasHammer() && getHammer().getHits() <= 0) {
+    public void equipHammer(Hammer hammer) {
+        this.hammer = hammer;
+        isHammerEquipped().set(true);
+    }
+
+    /**
+     * Allow the Player to use the Hammer on a wall, decrementing its hits
+     */
+    public void useHammer() {
+        this.hammer.decrementHits();
+        // If we have a hammer and no more hits, the Hammer is destroyed
+        if (this.hammer.getHits() < 1) {
             this.hammerEquipped.set(false);
             this.hammer = null;
         }
     }
 
     /**
-     * @return true if player is holding a Key, otherwise false
+     * Allow the Player to activate a Potion for 10 steps of invincibility
+     * @param potion the Potion to give to the Player
      */
-    public boolean hasKey() {
-        return this.key != null;
+    public void drinkPotion(Potion potion) {
+        this.potion = potion;
+        potionStepsLeft().set(11);
     }
 
     /**
+     * Decrement the amount of Invincibility steps the Player has left
+     */
+    public void decrementPotionSteps() {
+        if (hasPotion()) {
+            potionStepsLeft().set(potionStepsLeft().get() - 1);
+            dungeon.setConsoleText("Player has " + (potionStepsLeft().get() - 1) + " steps of potion left");
+        }
+    }
+
+    /**
+     * Collect the key and transition the corresponding Door to have a visual alert
+     * @param key
+     */
+    public void acquireKey(Key key) {
+        this.key = key;
+        dungeon.alertDoor(key.getId());
+        isHoldingKey().set(true);
+    }
+
+    /**
+     * Use the key on the corresponding Door removing it from the Player's inventory
+     */
+    public void useKey() {
+        isHoldingKey().set(false);
+        this.key = null;
+        dungeon.setConsoleText("Player has used a Key to open a Door");
+    }
+
+    /**
+     * Increment the treasure count of the Player
+     */
+    public void addTreasure() {
+        numTreasures().set(getNumTreasures() + 1);
+    }
+
+
+    /* ----------------------------- CHECKERS ------------------------------- */
+    /**
      * @return true if the Player has leftover invincible steps
      */
-    public boolean hasPotion() {
-        return this.potion.get() > 0 ? true : false;
+    public Boolean hasPotion() {
+        return potionStepsLeft().get() > 0 ? true : false;
     }
+
+    /**
+     * Check if the Player is currently wielding a hammer
+     * @return true if the player has a hammer already, otherwise false
+     */
+    public Boolean hasHammer() {
+        return isHammerEquipped().get();
+    }
+
+    /**
+     * Check if the Player is currently wielding a Sword
+     * @return true if the player has a Sword already, otherwise false
+     */
+    public Boolean hasSword() {
+        return isSwordEquipped().get();
+    }
+
+    /**
+     * Check if the Player is currently holding a Key
+     * @return true if the player has a Key already, otherwise false
+     */
+    public Boolean hasKey() {
+        return isHoldingKey().get();
+    }
+
 
     /**
      * Process the Player's movement given a Direction and check if the new location can be accessed
@@ -197,13 +246,18 @@ public class Player extends Entity implements Moveable, Interactable {
 
         // Assume that the player cannot interact with the new entity.
         Boolean canInteract = false;
-        if (checkEntity instanceof Interactable) {
+        if (checkEntity != null && checkEntity instanceof Interactable) {
             // Check if the Player is allowed to interact with the entity at the new position
             canInteract = ((Interactable)checkEntity).interact(this);
         }
 
+        // If the Player has no potion and is walking on an empty square, reset the console display
+        if (checkEntity == null && !hasPotion()) {
+            dungeon.clearConsoleText();
+
+        }
         // If the entity at the new position is a Portal, allow the Player to access it
-        if (checkEntity instanceof Portal) {
+        if (checkEntity != null && checkEntity.getClass().equals(Portal.class)) {
             return true;
         }
 
@@ -224,31 +278,29 @@ public class Player extends Entity implements Moveable, Interactable {
      */
     @Override
     public Boolean interact(Entity entity) {
-        Dungeon dungeon = getDungeon();
         // If the enemy does not exist 
         if (!dungeon.findEntity(entity)) {
             return true;
         }
-        Enemy attackingEnemy = (Enemy) entity;
+        Enemy attackingEnemy = (Enemy)entity;
         // If the Player has an Invincibility potion
         if (hasPotion()) {
             // The Enemy is destroyed and goal conditions are checked
-            System.out.println("Player has killed an Enemy");
+            dungeon.setConsoleText("Player has killed an Enemy");
             dungeon.removeEntity(attackingEnemy);
             dungeon.goalsCompleted();
         }
         // If the Player has a Sword
         else if (hasSword()) {
             // The Enemy is destroyed, the Sword hits are decremented and goal conditions are checked
-            System.out.println("Player has killed an Enemy");
+            dungeon.setConsoleText("Player has killed an Enemy");
             dungeon.removeEntity(attackingEnemy);
-            this.sword.decrementHits();
-            checkSword();
+            useSword();
             dungeon.goalsCompleted();
         }
         // Otherwise, the Player is killed and game is set to game over
         else {
-            System.out.println("Player has been killed by an Enemy");
+            dungeon.setConsoleText("Player has been killed by an Enemy");
             dungeon.removeEntity(this);
             dungeon.setGameOver();
         }

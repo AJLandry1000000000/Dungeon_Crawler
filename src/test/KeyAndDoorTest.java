@@ -1,12 +1,10 @@
 package test;
 
-import java.util.ArrayList;
-
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import javafx.scene.image.ImageView;
+import javafx.scene.control.CheckBox;
 
 import unsw.dungeon.*;
 
@@ -23,8 +21,9 @@ public class KeyAndDoorTest {
     public void initialize() {
         // Create dungeon.
         this.dungeon = new Dungeon(10, 10);
+        CheckBox placeholder = new CheckBox();
         // Give the dungeon a random goal (to avoid null pointer error).
-        GoalEnemies ge = new GoalEnemies();
+        GoalEnemies ge = new GoalEnemies(placeholder);
         this.dungeon.setGoal(ge);
         // Create Player.
         this.player = new Player(4, 4, dungeon);
@@ -160,27 +159,6 @@ public class KeyAndDoorTest {
         assertEquals(4, b.getY());
         assertEquals(4, player.getX());
         assertEquals(4, player.getY());
-    }
-
-    // An Enemy cannot move through an open door.
-    @Test
-    public void KeyAndDoorTest7() {
-        // Place an open Door and an enemy to the right of the Player.
-        Door d = new Door(5, 4, dungeon, 2);
-        dungeon.addEntity(d);
-        d.openDoor();
-        Enemy en = new Enemy(7, 4, dungeon);
-        dungeon.addEntity(en);
-
-        
-        // Check that the enemy has not moved thought the open door.
-        DungeonController dc = new DungeonController(dungeon, new ArrayList<ImageView>());
-        dc.notifyObservers();
-        assertEquals(6, en.getX());
-        assertEquals(4, en.getY());
-        dc.notifyObservers();
-        assertEquals(6, en.getX());
-        assertEquals(4, en.getY());
     }
 
 }

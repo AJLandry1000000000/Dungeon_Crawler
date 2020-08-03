@@ -3,6 +3,12 @@ package unsw.dungeon;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.scene.control.CheckBox;
+
 /**
  * Leaf Goal that allows for specific checking if all floor switches are activated
  * 
@@ -10,6 +16,29 @@ import java.util.stream.Collectors;
  * @author Austin Landry
  */
 public class GoalBoulders implements Goal {
+
+    private BooleanProperty completed;
+    private CheckBox check;
+
+    public GoalBoulders(CheckBox check) {
+        this.check = check;
+        this.completed = new SimpleBooleanProperty(false);
+        this.completed.addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable,
+                Boolean oldValue, Boolean newValue) {
+                    getCheckBox().setSelected(newValue);
+                }
+        }); 
+    }
+
+    public BooleanProperty checkCompleted() {
+        return this.completed;
+    }
+
+    public CheckBox getCheckBox() {
+        return this.check;
+    }
 
     /**
      * Determine if every Floor Switch is activated (i.e. with a Boulder on top of it)
@@ -25,9 +54,11 @@ public class GoalBoulders implements Goal {
         // Check if all switches are activated
         for (Entity e : switches) {
             if (!((Switch)e).isActivated()) {
+                checkCompleted().set(false);
                 return false;
             }
         }
+        checkCompleted().set(true);
         return true;
     }
 }

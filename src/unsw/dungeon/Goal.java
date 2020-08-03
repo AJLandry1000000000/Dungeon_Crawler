@@ -1,5 +1,8 @@
 package unsw.dungeon;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.scene.control.CheckBox;
+
 /**
  * Interface representing the Goal condition
  * 
@@ -8,4 +11,6 @@ package unsw.dungeon;
  */
 public interface Goal {
     public Boolean isCompleted(Dungeon dungeon);
+    public BooleanProperty checkCompleted();
+    public CheckBox getCheckBox();
 }

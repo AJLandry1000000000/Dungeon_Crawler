@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import javafx.scene.image.ImageView;
-
+import javafx.scene.layout.VBox;
 import unsw.dungeon.*;
 
 /**
@@ -29,7 +29,8 @@ public class GoalCompositeANDTest {
     @BeforeEach
     public void initialise() {
         DungeonMockLoader dungeonLoader = new DungeonMockLoader(JSONDungeons.advanced());
-        this.dungeon = dungeonLoader.load();
+        VBox placeholder = new VBox();
+        this.dungeon = dungeonLoader.load(placeholder);
         this.controller = new DungeonController(dungeon, new ArrayList<ImageView>());
         this.player = dungeon.getPlayer();
     }
@@ -37,7 +38,9 @@ public class GoalCompositeANDTest {
     public void moveAndNotify(Direction direction) {
         player.move(direction);
         controller.notifyObservers();
+        controller.notifyObservers();
     }
+
     @Test
     public void enemyTreasureOrder() {
         // Player moves onto Sword

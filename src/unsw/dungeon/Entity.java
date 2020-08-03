@@ -38,10 +38,6 @@ public class Entity {
         return y;
     }
 
-    public BooleanProperty visible() {
-        return visible;
-    }
-
     public int getY() {
         return y().get();
     }
@@ -50,7 +46,10 @@ public class Entity {
         return x().get();
     }
 
-    public Dungeon getDungeon() {
-        return this.dungeon;
+    public BooleanProperty visible() {
+        return visible;
     }
+
+
+
 }

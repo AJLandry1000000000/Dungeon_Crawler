@@ -13,22 +13,11 @@ public class Enemy extends Entity implements Moveable, Interactable {
     }
 
     /**
-     * Determine if there is an Entity at a given location
-     * @param x coordinate location
-     * @param y coordinate location
-     * @return either return an Entity if found, otherwise null
-     */
-    public Entity entityAtPosition(int x, int y) {
-        return getDungeon().getEntity(x, y);
-    }
-
-    /**
      * Process Enemy's movement towards the Player
      * Enemy attacks Player if its new position has the Player on it
      */
     @Override
     public Boolean move(Direction direction) {
-        Dungeon dungeon = getDungeon();
         // Determine the new position based on the provided Direction
         int newX = getX() + direction.getX();
         int newY = getY() + direction.getY();
@@ -43,17 +32,16 @@ public class Enemy extends Entity implements Moveable, Interactable {
 
         // Assume that the enemy cannot interact with the new entity
         Boolean canAttack = false;
-        
         // If this entity is a Player
-        if (checkEntity instanceof Player) {
+        if (checkEntity != null && checkEntity.getClass().equals(Player.class)) {
             // If this Enemy can destroy the player, return true
             // Otherwise return false (e.g. if the player has an Invincibility potion).
             canAttack = ((Interactable)checkEntity).interact(this);
         }
 
-
+        // Check if the Entity is an open Doorway
         Boolean isDoorOpen = false;
-        if (checkEntity instanceof Door) {
+        if (checkEntity != null && checkEntity.getClass().equals(Door.class)) {
             if (((Door)checkEntity).isOpen()) isDoorOpen = true;
         }
 
@@ -73,32 +61,30 @@ public class Enemy extends Entity implements Moveable, Interactable {
      */
     @Override
     public Boolean interact(Entity entity) {
-        Dungeon dungeon = getDungeon();
         // If the player does not exist 
         if (!dungeon.findEntity(entity)) {
             return true;
         }
-        Player player = (Player) entity;
+        Player player = (Player)entity;
         // If the Player has an Invincibility potion
         if (player.hasPotion()) {
             // Remove the Enemy from the level and check if goal conditions are complete
-            System.out.println("Player has killed an Enemy");
             dungeon.removeEntity(this);
+            dungeon.setConsoleText("Player has killed an Enemy");
             dungeon.goalsCompleted();
         }
         // If the Player has a Sword
         else if (player.hasSword()) {
             // Remove the Enemy from the Level, decrement the Sword hits, check the goal conditions
-            System.out.println("Player has killed an Enemy");
+            player.useSword();
             dungeon.removeEntity(this);
-            player.getSword().decrementHits();
-            player.checkSword();
+            dungeon.setConsoleText("Player has killed an Enemy");
             dungeon.goalsCompleted();
         }
         // Otherwise, the Player is destroyed and game is set to Game Over
         else {
-            System.out.println("Player has been killed by an Enemy");
             dungeon.removeEntity(player);
+            player.actionTaken().set("Player has been killed by an Enemy");
             dungeon.setGameOver();
             dungeon.goalsCompleted();
         }

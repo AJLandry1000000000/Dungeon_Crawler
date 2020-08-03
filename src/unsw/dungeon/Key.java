@@ -25,7 +25,7 @@ public class Key extends Entity implements Interactable {
      */
     @Override
     public Boolean interact(Entity entity) {
-        // Only a Player is allowed to interact with a Key
+        // Disallow any non-Player from interacting with a Key
         if (!(entity.getClass().equals(Player.class))) {
             return false;
         }
@@ -33,13 +33,15 @@ public class Key extends Entity implements Interactable {
         // If a player is not currently holding a Key
         if (!player.hasKey()) {
             // Player is given the Key which is also removed from the level
-            player.giveKey(this);
-            System.out.println("Player has picked up a key of ID: " + this.id);
+            player.acquireKey(this);
+            // Remove the Key from the map
+            dungeon.removeEntity(this);
+            // Set the Console message
+            dungeon.setConsoleText("Player has found a Key");
             return true;
         }
         // Otherwise disallow the Player from acquiring the key as the player already is holding a current key
-        else {
-            return false;
-        }  
+        dungeon.setConsoleText("Player cannot hold more than 1 Key");
+        return false;
     }
 }

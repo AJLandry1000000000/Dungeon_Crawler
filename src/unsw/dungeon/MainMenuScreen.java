@@ -14,19 +14,17 @@ public class MainMenuScreen {
     private Scene scene;
     
 
-    public MainMenuScreen(Stage stage) throws IOException {
+    public MainMenuScreen(Stage stage) {
         this.stage = stage;
-        title = "Main Menu";
+        this.title = "Main Menu";
         this.controller = new MainMenuController(stage);
+    }
 
+    public void start() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("MainMenu.fxml"));
         loader.setController(controller);
         Parent root = loader.load();
-
         this.scene = new Scene(root);
-    }
-
-    public void start() {
         stage.setTitle(title);
         stage.setScene(scene);
         stage.show();

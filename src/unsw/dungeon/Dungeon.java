@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 
 
 /**
@@ -24,7 +26,9 @@ public class Dungeon {
     private Player player;
     private Boolean exitReached;
     private Goal goal;
+    private ArrayList<Goal> goalTypes;
     private BooleanProperty gameOver;
+    private StringProperty consoleText;
 
     public Dungeon(int width, int height) {
         this.width = width;
@@ -32,10 +36,21 @@ public class Dungeon {
         this.entities = new ArrayList<Entity>();
         this.player = null;
         this.exitReached = false;
+        this.goalTypes = new ArrayList<Goal>();
         this.gameOver = new SimpleBooleanProperty(false);
+        this.consoleText = new SimpleStringProperty("");
     }
 
-    // Getters 
+    /* ----------------------------- JAVAFX --------------------------------- */
+    public StringProperty getConsoleText() {
+        return this.consoleText;
+    }
+
+    public BooleanProperty gameOver() {
+        return this.gameOver;
+    }
+
+    /* ----------------------------- GETTERS -------------------------------- */
     public int getWidth() {
         return width;
     }
@@ -50,6 +65,14 @@ public class Dungeon {
 
     public Goal getGoal() {
         return this.goal;
+    }
+
+    public Boolean getGameOver() {
+        return this.gameOver.get();
+    }
+
+    public ArrayList<Entity> getEntities() {
+        return this.entities;
     }
 
     /**
@@ -88,7 +111,9 @@ public class Dungeon {
     public ArrayList<Entity> getEnemies() {
         ArrayList<Entity> enemies = new ArrayList<Entity>();
         for (Entity e : entities) {
-            if (e instanceof Enemy) {
+            if (e.getClass().equals(Enemy.class)) {
+                enemies.add(e);
+            } else if (e.getClass().equals(Ghost.class)) {
                 enemies.add(e);
             }
         }
@@ -111,10 +136,6 @@ public class Dungeon {
         return check;
     }
 
-    public ArrayList<Entity> getEntities() {
-        return this.entities;
-    }
-
     /**
      * Find the corresponding Portal linked to the given Portal
      * @param portal Portal given to find corresponding
@@ -132,13 +153,21 @@ public class Dungeon {
         return null;
     }
 
-    // Setters
+    public ArrayList<Goal> getGoalTypes() {
+        return this.goalTypes;
+    }
+
+    /* ----------------------------- SETTERS -------------------------------- */
     public void setPlayer(Player player) {
         this.player = player;
     }
 
     public void addEntity(Entity entity) {
         entities.add(entity);
+    }
+
+    public void addGoalType(Goal goal) {
+        this.goalTypes.add(goal);
     }
 
     public void removeEntity(Entity entity) {
@@ -162,10 +191,18 @@ public class Dungeon {
         this.gameOver.set(true);
     }
 
-    public boolean getGameOver() {
-        return this.gameOver.get();
+    public void setConsoleText(String message) {
+        this.consoleText.set(message);
     }
 
+    public void clearConsoleText() {
+        this.consoleText.set("");
+    }
+
+    /**
+     * Find the corresponding Door and change its image
+     * @param id
+     */
     public void alertDoor(int id) {
         for (Entity e : entities) {
             if (e.getClass().equals(Door.class)) {
@@ -177,15 +214,14 @@ public class Dungeon {
         }
     }
 
-
-    // Checkers
+    /* ----------------------------- CHECKERS ------------------------------- */
     /**
      * Check if the x and y coordinates are in the boundaries of the level
      * @param x coordinate location
      * @param y coordinate location
      * @return either true if location is valid, otherwise false
      */
-    public boolean checkBoundaries(int x, int y) {
+    public Boolean checkBoundaries(int x, int y) {
         return ((x >= 0 && x < getWidth()) && (y >= 0 && y < getHeight()));
     }
 
@@ -193,7 +229,7 @@ public class Dungeon {
      * Check if the Player is currently interacting with an exit
      * @return either true if the player is at the exit, otherwise false
      */
-    public boolean checkExitReached() {
+    public Boolean checkExitReached() {
         return this.exitReached;
     }
 
@@ -203,7 +239,7 @@ public class Dungeon {
      */
     public Boolean goalsCompleted() {
         if (this.goal.isCompleted(this)) {
-            System.out.println("All Goals completed, Level is Complete");
+            setGameOver();
             return true;
         }
         return false;
@@ -215,9 +251,5 @@ public class Dungeon {
      */
     public Boolean isGameOver() {
         return this.gameOver.get();
-    }
-
-    public BooleanProperty gameOver() {
-        return this.gameOver;
     }
 }

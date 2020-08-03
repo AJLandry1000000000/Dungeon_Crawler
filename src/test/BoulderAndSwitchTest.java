@@ -1,10 +1,19 @@
 package test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import unsw.dungeon.*;
+import javafx.scene.control.CheckBox;
+import unsw.dungeon.Boulder;
+import unsw.dungeon.Direction;
+import unsw.dungeon.Dungeon;
+import unsw.dungeon.GoalTreasure;
+import unsw.dungeon.Player;
+import unsw.dungeon.Switch;
+import unsw.dungeon.Wall;
 
 /**
  * Testing functionality of Player interacting with Boulders and Floor Switches
@@ -20,7 +29,8 @@ public class BoulderAndSwitchTest {
         // Create dungeon.
         this.dungeon = new Dungeon(10, 10);
         // Give the dungeon a random goal (to avoid null pointer error).
-        GoalTreasure goalTreasure = new GoalTreasure();
+        CheckBox placeholder = new CheckBox();
+        GoalTreasure goalTreasure = new GoalTreasure(placeholder);
         this.dungeon.setGoal(goalTreasure);
         // Create Player.
         this.player = new Player(4, 4, dungeon);

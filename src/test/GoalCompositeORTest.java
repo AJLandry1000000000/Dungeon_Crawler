@@ -3,6 +3,8 @@ package test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import javafx.scene.layout.VBox;
+
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -23,7 +25,8 @@ public class GoalCompositeORTest {
     @BeforeEach
     public void initialise() {
         DungeonMockLoader dungeonLoader = new DungeonMockLoader(JSONDungeons.advancedOR());
-        this.dungeon = dungeonLoader.load();
+        VBox placeholder = new VBox();
+        this.dungeon = dungeonLoader.load(placeholder);
         this.player = dungeon.getPlayer();
     }
 

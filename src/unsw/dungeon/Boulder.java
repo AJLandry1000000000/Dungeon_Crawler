@@ -38,7 +38,6 @@ public class Boulder extends Entity implements Moveable, Interactable {
      * Check if the Boulder is allowed to move in a desired Direction
      */
     public Boolean canMove(Direction direction) {
-        Dungeon dungeon = getDungeon();
         // Calculate new position of boulder based on player's direction
         int newPositionX = getX() + direction.getX();
         int newPositionY = getY() + direction.getY();
@@ -46,7 +45,8 @@ public class Boulder extends Entity implements Moveable, Interactable {
         // Determine if there is an entity at the new position
         Entity checkEntity = dungeon.getEntity(newPositionX, newPositionY);
         // If the entity is a floor switch, but already has a Boulder on it
-        if (checkEntity.getClass().equals(Switch.class)) { 
+
+        if (checkEntity != null && checkEntity.getClass().equals(Switch.class)) { 
             if (((Switch)checkEntity).isActivated()) {
                 return false;
             }
@@ -68,7 +68,6 @@ public class Boulder extends Entity implements Moveable, Interactable {
      */
     @Override
     public Boolean move(Direction direction) {
-        Dungeon dungeon = getDungeon();
         // Calculate new position of boulder based on player's direction
         int newPositionX = getX() + direction.getX();
         int newPositionY = getY() + direction.getY();
@@ -77,7 +76,7 @@ public class Boulder extends Entity implements Moveable, Interactable {
         Entity checkEntity = dungeon.getEntity(newPositionX, newPositionY);
 
         // If the entity is a floor switch, but already has a Boulder on it
-        if (checkEntity instanceof Switch) {
+        if (checkEntity != null && checkEntity.getClass().equals(Switch.class)) {
             if (!((Switch)checkEntity).interact(this)) {
                 return false;
             }
@@ -92,7 +91,6 @@ public class Boulder extends Entity implements Moveable, Interactable {
             // Move the Boulder onto the new position
             x().set(newPositionX);
             y().set(newPositionY);
-
             // Update former Switch's activation
             if (getSwitch() != null) {
                 getSwitch().deactivateSwitch();
@@ -101,6 +99,8 @@ public class Boulder extends Entity implements Moveable, Interactable {
             // If boulder is moving onto a switch
             if (checkEntity instanceof Switch) {
                 addSwitch((Switch)checkEntity);
+            } else {
+                dungeon.setConsoleText("Player has pushed a Boulder");
             }
             return true;
         }

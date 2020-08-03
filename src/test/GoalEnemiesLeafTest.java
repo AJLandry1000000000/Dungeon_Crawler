@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 
 import javafx.scene.image.ImageView;
-
+import javafx.scene.layout.VBox;
 import unsw.dungeon.*;
 
 /**
@@ -29,7 +29,8 @@ public class GoalEnemiesLeafTest {
     @BeforeEach
     public void initialise() {
         DungeonMockLoader dungeonLoader = new DungeonMockLoader(JSONDungeons.simpleEnemies());
-        this.dungeon = dungeonLoader.load();
+        VBox placeholder = new VBox();
+        this.dungeon = dungeonLoader.load(placeholder);
         this.controller = new DungeonController(dungeon, new ArrayList<ImageView>());
         this.player = dungeon.getPlayer();
     }
