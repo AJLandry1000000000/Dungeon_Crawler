@@ -90,13 +90,14 @@ public class DungeonController {
                     if (checkGoals()) {
                         timeline.stop();
                     }
+
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
 		    };
         };
         // Keyframe is set to every 0.5 seconds indefinitely 
-        timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(1), ticker));
+        timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(1.25), ticker));
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
     }
@@ -206,6 +207,8 @@ public class DungeonController {
         if (this.dungeon.goalsCompleted()) {
             return;
         }
+
+        this.enemies = dungeon.getEnemies();
         // Consider all the possible moves for each enemy, and make the move which
         // minimises or maximises the distance between Player and Enemy depending on if
         // the Player has a potion.
@@ -237,7 +240,6 @@ public class DungeonController {
                     optimalMove(en, "maximise", left, right, up, down, stay);
                 }
             }
-            this.enemies = dungeon.getEnemies();
         }
     }
 
@@ -287,6 +289,7 @@ public class DungeonController {
         else if (this.dungeon.isGameOver()) {
             System.out.println("Player has been Defeated");
             failureScreen();
+            return true;
         }
         return false;
     }

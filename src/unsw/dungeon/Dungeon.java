@@ -92,6 +92,8 @@ public class Dungeon {
         for (Entity e : entities) {
             if (e.getClass().equals(Enemy.class)) {
                 enemies.add(e);
+            } else if (e.getClass().equals(Ghost.class)) {
+                enemies.add(e);
             }
         }
         return enemies;
