@@ -8,7 +8,7 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <ImageView fx:id="boulderGoalMark" fitHeight="50.0" fitWidth="50.0" layoutX="19.0" layoutY="103.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="boulderGoalMark" fitHeight="50.0" fitWidth="50.0" layoutX="20.0" layoutY="95.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@images/fail.png" />
          </image></ImageView>
@@ -32,11 +32,6 @@
             <Font size="20.0" />
          </font>
       </Label>
-      <ImageView fx:id="treasureGoalMark" fitHeight="50.0" fitWidth="50.0" layoutX="14.0" layoutY="281.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@images/fail.png" />
-         </image>
-      </ImageView>
       <Label layoutX="78.0" layoutY="163.0" text="Get to the exit">
          <font>
             <Font size="20.0" />
@@ -82,11 +77,6 @@
             <Font size="20.0" />
          </font>
       </Label>
-      <ImageView fx:id="treasureGoalMark1" fitHeight="50.0" fitWidth="50.0" layoutX="300.0" layoutY="162.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@images/fail.png" />
-         </image>
-      </ImageView>
       <Label layoutX="360.0" layoutY="113.0" text="Destroy all the enemies">
          <font>
             <Font size="20.0" />
@@ -112,5 +102,45 @@
             <Font size="20.0" />
          </font>
       </Label>
+      <ImageView fx:id="boulderGoalMark1" fitHeight="50.0" fitWidth="50.0" layoutX="20.0" layoutY="35.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@images/fail.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="boulderGoalMark2" fitHeight="50.0" fitWidth="50.0" layoutX="20.0" layoutY="155.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@images/fail.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="boulderGoalMark3" fitHeight="50.0" fitWidth="50.0" layoutX="20.0" layoutY="278.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@images/fail.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="boulderGoalMark11" fitHeight="50.0" fitWidth="50.0" layoutX="20.0" layoutY="218.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@images/fail.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="boulderGoalMark21" fitHeight="50.0" fitWidth="50.0" layoutX="20.0" layoutY="338.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@images/fail.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="boulderGoalMark31" fitHeight="50.0" fitWidth="50.0" layoutX="303.0" layoutY="168.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@images/fail.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="boulderGoalMark111" fitHeight="50.0" fitWidth="50.0" layoutX="303.0" layoutY="108.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@images/fail.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="boulderGoalMark211" fitHeight="50.0" fitWidth="50.0" layoutX="303.0" layoutY="228.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@images/fail.png" />
+         </image>
+      </ImageView>
    </children>
 </Pane>
