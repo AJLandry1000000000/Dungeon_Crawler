@@ -24,7 +24,7 @@ public class Ghost extends Enemy {
 
         
         // If this entity is a Player
-        if (checkEntity instanceof Player) {
+        if (checkEntity != null && checkEntity.getClass().equals(Player.class)) {
             // If this Enemy can destroy the player, return true
             // Otherwise return false (e.g. if the player has an Invincibility potion).
             ((Interactable)checkEntity).interact(this);

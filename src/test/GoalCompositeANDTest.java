@@ -38,6 +38,7 @@ public class GoalCompositeANDTest {
     public void moveAndNotify(Direction direction) {
         player.move(direction);
         controller.notifyObservers();
+        controller.notifyObservers();
     }
     @Test
     public void enemyTreasureOrder() {

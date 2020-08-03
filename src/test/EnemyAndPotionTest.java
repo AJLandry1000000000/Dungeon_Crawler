@@ -167,21 +167,26 @@ public class EnemyAndPotionTest {
 
         // Check that the Enemy now moves away from the Player after every call to notifyObservers().
         dc.notifyObservers();
+        dc.notifyObservers();
         assertEquals(4, en.getX());
         assertEquals(4, en.getY());
 
+        dc.notifyObservers();
         dc.notifyObservers();
         assertEquals(5, en.getX());
         assertEquals(4, en.getY());
 
         dc.notifyObservers();
+        dc.notifyObservers();
         assertEquals(6, en.getX());
         assertEquals(4, en.getY());
 
         dc.notifyObservers();
+        dc.notifyObservers();
         assertEquals(7, en.getX());
         assertEquals(4, en.getY());
 
+        dc.notifyObservers();
         dc.notifyObservers();
         assertEquals(8, en.getX());
         assertEquals(4, en.getY());

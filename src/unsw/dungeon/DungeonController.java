@@ -99,19 +99,6 @@ public class DungeonController {
         timeline.getKeyFrames().add(new KeyFrame(Duration.seconds(1), ticker));
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
-
-
-
-        /*
-         * dungeon.goalsCompleted().addListener(new ChangeListener<Boolean>() {
-         * 
-         * @Override public void changed(ObservableValue<? extends Boolean> observable,
-         * Boolean oldValue, Boolean newValue) { try { checkGoals(); } catch
-         * (IOException e) { e.printStackTrace(); }
-         * 
-         * } });
-         */
-
     }
 
     /**
@@ -237,17 +224,15 @@ public class DungeonController {
 
             if (!player.hasPotion()) {
                 // Play does not have a potion. So move the enemies closer to the player.
-                if (e instanceof Ghost) {
-                    if (this.steps % 3 == 0)
-                        optimalMove(en, "minimise", left, right, up, down, stay);
+                if (e.getClass().equals(Ghost.class)) {
+                    if (this.steps % 3 == 0) optimalMove(en, "minimise", left, right, up, down, stay);
                 } else {
                     optimalMove(en, "minimise", left, right, up, down, stay);
                 }
             } else {
                 // Play does have a potion. So move the enemies further from the player.
-                if (e instanceof Ghost) {
-                    if (this.steps % 3 == 0)
-                        optimalMove(en, "maximise", left, right, up, down, stay);
+                if (e.getClass().equals(Ghost.class)) {
+                    if (this.steps % 3 == 0) optimalMove(en, "maximise", left, right, up, down, stay);
                 } else if (this.steps % 2 == 0) {
                     optimalMove(en, "maximise", left, right, up, down, stay);
                 }

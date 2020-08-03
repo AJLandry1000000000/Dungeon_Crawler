@@ -2,11 +2,9 @@ package unsw.dungeon;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import org.json.JSONObject;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -18,7 +16,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import org.json.JSONTokener;
 
 
 public class MenuBarController {
@@ -40,8 +37,6 @@ public class MenuBarController {
 
     private Dungeon dungeon;
 
-    private JSONObject jsonGoals;
-
     private DungeonControllerLoader dungeonLoader;
 
     private VBox goals;
@@ -52,10 +47,6 @@ public class MenuBarController {
         this.stage = stage;
         this.file = file;
         this.dungeonLoader = dungeonLoader;
-
-        // Get the goals JSONObject for the 'Goals' button
-        JSONObject json = new JSONObject(new JSONTokener(new FileReader("dungeons/" + file)));
-        this.jsonGoals = (JSONObject)json.get("goal-condition");
     }
 
     public void setDungeon(Dungeon dungeon) {
@@ -81,13 +72,13 @@ public class MenuBarController {
         } else if (file.equals("level2.json")) {
             level2GoalScreen();
         } else if (file.equals("level3.json")) {
-            
-            
+            level3GoalScreen();
         } else if (file.equals("level4.json")) {
-
+            level4GoalScreen();
         } else if (file.equals("level5.json")) {
-
+            level5GoalScreen();
         } else if (file.equals("level6.json")) {
+            //level6GoalScreen();
         }
     }
 
@@ -155,6 +146,110 @@ public class MenuBarController {
         s.setScene(sc);
         s.show();
     }
+
+
+    public void level3GoalScreen() throws IOException {
+        // Create a new stage.
+        Stage s = new Stage();
+        s.setTitle("Goals");
+
+        // Load the goals for this level.
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("level3Goals.fxml"));
+        Parent root = loader.load();
+        Scene sc = new Scene(root);
+
+        ArrayList<Goal> level2Goals = this.dungeon.getGoalTypes();
+        for (Goal g : level2Goals) {
+            // Get each specific goal.
+            if (g.getClass().equals(GoalTreasure.class)) {
+                GoalTreasure gt = (GoalTreasure) g;
+                if (gt.isCompleted(this.dungeon)) {
+                    Image im = new Image((new File("images/success.png")).toURI().toString());
+                    ImageView i = (ImageView) sc.lookup("#treasureGoalMark");
+                    i.setImage(im);
+                }
+            } else if (g.getClass().equals(GoalEnemies.class)) {
+                GoalEnemies ge = (GoalEnemies) g;
+                if (ge.isCompleted(this.dungeon)) {
+                    Image im = new Image((new File("images/success.png")).toURI().toString());
+                    ImageView i = (ImageView) sc.lookup("#enemyGoalMark");
+                    i.setImage(im);
+                }
+            } else if (g.getClass().equals(GoalExit.class)) {
+                GoalExit gex = (GoalExit) g;
+                if (gex.isCompleted(this.dungeon)) {
+                    Image im = new Image((new File("images/success.png")).toURI().toString());
+                    ImageView i = (ImageView) sc.lookup("#exitGoalMark");
+                    i.setImage(im);
+                }
+            } 
+        }
+
+        // Show the stage.
+        root.requestFocus();
+        s.setScene(sc);
+        s.show();
+    }
+
+    public void level4GoalScreen() throws IOException {
+        // Create a new stage.
+        Stage s = new Stage();
+        s.setTitle("Goals");
+
+        // Load the goals for this level.
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("level4Goals.fxml"));
+        Parent root = loader.load();
+        Scene sc = new Scene(root);
+
+        ArrayList<Goal> level2Goals = this.dungeon.getGoalTypes();
+        for (Goal g : level2Goals) {
+            // Get each specific goal.
+            if (g.getClass().equals(GoalExit.class)) {
+                GoalExit gex = (GoalExit) g;
+                if (gex.isCompleted(this.dungeon)) {
+                    Image im = new Image((new File("images/success.png")).toURI().toString());
+                    ImageView i = (ImageView) sc.lookup("#exitGoalMark");
+                    i.setImage(im);
+                }
+            } 
+        }
+
+        // Show the stage.
+        root.requestFocus();
+        s.setScene(sc);
+        s.show();
+    }
+
+    public void level5GoalScreen() throws IOException {
+        // Create a new stage.
+        Stage s = new Stage();
+        s.setTitle("Goals");
+
+        // Load the goals for this level.
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("level3Goals.fxml"));
+        Parent root = loader.load();
+        Scene sc = new Scene(root);
+
+        ArrayList<Goal> level2Goals = this.dungeon.getGoalTypes();
+        for (Goal g : level2Goals) {
+            // Get each specific goal.
+            if (g.getClass().equals(GoalTreasure.class)) {
+                GoalTreasure gt = (GoalTreasure) g;
+                if (gt.isCompleted(this.dungeon)) {
+                    Image im = new Image((new File("images/success.png")).toURI().toString());
+                    ImageView i = (ImageView) sc.lookup("#treasureGoalMark");
+                    i.setImage(im);
+                }
+            } else if (g.getClass().equals(GoalBoulders.class)) {
+                GoalBoulders gb = (GoalBoulders) g;
+                if (gb.isCompleted(this.dungeon)) {
+                    Image im = new Image((new File("images/success.png")).toURI().toString());
+                    ImageView i = (ImageView) sc.lookup("#boulderGoalMark");
+                    i.setImage(im);
+                }
+            }
+        }
+}
     /*
     pass dungeon to menuBarController via DungeonController
     write a isGoalPassed(String) function
