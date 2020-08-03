@@ -92,8 +92,8 @@ public class MenuBarController {
         Parent root = loader.load();
         Scene sc = new Scene(root);
 
-        ArrayList<Goal> level1Goals = this.dungeon.getGoalTypes();
-        for (Goal g : level1Goals) {
+        ArrayList<Goal> levelGoals = this.dungeon.getGoalTypes();
+        for (Goal g : levelGoals) {
             // Get each specific goal.
             if (g.getClass().equals(GoalBoulders.class)) {
                 GoalBoulders gb = (GoalBoulders) g;
@@ -121,8 +121,8 @@ public class MenuBarController {
         Parent root = loader.load();
         Scene sc = new Scene(root);
 
-        ArrayList<Goal> level2Goals = this.dungeon.getGoalTypes();
-        for (Goal g : level2Goals) {
+        ArrayList<Goal> levelGoals = this.dungeon.getGoalTypes();
+        for (Goal g : levelGoals) {
             // Get each specific goal.
             if (g.getClass().equals(GoalTreasure.class)) {
                 GoalTreasure gt = (GoalTreasure) g;
@@ -158,8 +158,8 @@ public class MenuBarController {
         Parent root = loader.load();
         Scene sc = new Scene(root);
 
-        ArrayList<Goal> level2Goals = this.dungeon.getGoalTypes();
-        for (Goal g : level2Goals) {
+        ArrayList<Goal> levelGoals = this.dungeon.getGoalTypes();
+        for (Goal g : levelGoals) {
             // Get each specific goal.
             if (g.getClass().equals(GoalTreasure.class)) {
                 GoalTreasure gt = (GoalTreasure) g;
@@ -201,8 +201,8 @@ public class MenuBarController {
         Parent root = loader.load();
         Scene sc = new Scene(root);
 
-        ArrayList<Goal> level2Goals = this.dungeon.getGoalTypes();
-        for (Goal g : level2Goals) {
+        ArrayList<Goal> levelGoals = this.dungeon.getGoalTypes();
+        for (Goal g : levelGoals) {
             // Get each specific goal.
             if (g.getClass().equals(GoalExit.class)) {
                 GoalExit gex = (GoalExit) g;
@@ -230,8 +230,8 @@ public class MenuBarController {
         Parent root = loader.load();
         Scene sc = new Scene(root);
 
-        ArrayList<Goal> level2Goals = this.dungeon.getGoalTypes();
-        for (Goal g : level2Goals) {
+        ArrayList<Goal> levelGoals = this.dungeon.getGoalTypes();
+        for (Goal g : levelGoals) {
             // Get each specific goal.
             if (g.getClass().equals(GoalTreasure.class)) {
                 GoalTreasure gt = (GoalTreasure) g;
@@ -266,8 +266,8 @@ public class MenuBarController {
         Parent root = loader.load();
         Scene sc = new Scene(root);
 
-        ArrayList<Goal> level2Goals = this.dungeon.getGoalTypes();
-        for (Goal g : level2Goals) {
+        ArrayList<Goal> levelGoals = this.dungeon.getGoalTypes();
+        for (Goal g : levelGoals) {
             // Get each specific goal.
             if (g.getClass().equals(GoalTreasure.class)) {
                 GoalTreasure gt = (GoalTreasure) g;
