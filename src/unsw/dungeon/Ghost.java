@@ -28,6 +28,12 @@ public class Ghost extends Enemy {
             ((Interactable)checkEntity).interact(this);
         }
 
+        // Disallow a Ghost to move onto another Ghost
+        if (dungeon.getEntities(newX, newY).stream()
+            .filter(o -> o.getClass().equals(Ghost.class)).findFirst().isPresent()) {
+            return false;
+        }
+
         // If the Ghost can attack the Player or If the Ghost is moving onto an empty space
         // And the new position must be within the dungeon boundaries
         if (dungeon.checkBoundaries(newX, newY)) {

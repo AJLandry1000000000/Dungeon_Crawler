@@ -31,6 +31,7 @@ public class DungeonControllerLoader extends DungeonLoader {
     private List<ImageView> baseLayer;
     private List<ImageView> collectableLayer;
     private List<ImageView> moveableLayer;
+    private List<ImageView> topLayer;
 
     //Images
     private Image playerImage;
@@ -68,6 +69,7 @@ public class DungeonControllerLoader extends DungeonLoader {
         baseLayer = new ArrayList<>();
         collectableLayer = new ArrayList<>();
         moveableLayer = new ArrayList<>();
+        topLayer = new ArrayList<>();
         inventoryEntities = new ArrayList<EntityData>();
 
         // Process Image files
@@ -196,7 +198,7 @@ public class DungeonControllerLoader extends DungeonLoader {
     public void onLoad(Entity player) {
         ImageView view = new ImageView(playerImage);
         this.player = ((Player)player);
-        addEntity(player, view, 3);
+        addEntity(player, view, 4);
     }
     @Override
     public void onLoad(Wall wall) {
@@ -273,7 +275,7 @@ public class DungeonControllerLoader extends DungeonLoader {
     public void onLoad(Ghost ghost) {
         ImageView view = new ImageView(ghostImage);
         ((Node)view).setId("ghost");
-        addEntity(ghost, view, 3);
+        addEntity(ghost, view, 4);
     }
 
     /**
@@ -292,6 +294,9 @@ public class DungeonControllerLoader extends DungeonLoader {
                 break;
             case 3:
                 moveableLayer.add(view);
+                break;
+            case 4:
+                topLayer.add(view);
                 break;
         }
         trackMoveable(entity, view);
@@ -520,7 +525,7 @@ public class DungeonControllerLoader extends DungeonLoader {
      */
     public DungeonController loadController(VBox goals, Label console) throws FileNotFoundException {
         // Feed the Entities as sorted by their given layers
-        return new DungeonController(load(goals), console, Stream.of(baseLayer, collectableLayer, moveableLayer)
+        return new DungeonController(load(goals), console, Stream.of(baseLayer, collectableLayer, moveableLayer, topLayer)
             .flatMap(x -> x.stream())
             .collect(Collectors.toList())
         );
