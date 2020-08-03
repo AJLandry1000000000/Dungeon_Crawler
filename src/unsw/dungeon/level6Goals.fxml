@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ImageView fx:id="boulderGoalMark" fitHeight="50.0" fitWidth="50.0" layoutX="19.0" layoutY="110.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@images/fail.png" />
+         </image></ImageView>
+      <Label layoutX="208.0" text="Level 6 Goals">
+         <font>
+            <Font name="System Bold" size="30.0" />
+         </font>
+      </Label>
+      <Label layoutX="78.0" layoutY="60.0" text="Activate Floor Switches">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="141.0" layoutY="209.0" text="OR">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="78.0" layoutY="120.0" prefHeight="30.0" prefWidth="215.0" text="Collect all the treasures">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <ImageView fx:id="treasureGoalMark" fitHeight="50.0" fitWidth="50.0" layoutX="14.0" layoutY="288.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@images/fail.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="78.0" layoutY="179.0" text="Get to the exit">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="75.0" layoutY="252.0" text="Destroy all the enemies">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="78.0" layoutY="90.0" text="AND">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="78.0" layoutY="149.0" text="AND">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="78.0" layoutY="346.0" text="Get to the exit">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="78.0" layoutY="273.0" text="AND">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="78.0" layoutY="323.0" text="AND">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="78.0" layoutY="298.0" prefHeight="30.0" prefWidth="215.0" text="Collect all the treasures">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="435.0" layoutY="75.0" text="OR">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <ImageView fx:id="treasureGoalMark1" fitHeight="50.0" fitWidth="50.0" layoutX="300.0" layoutY="169.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@images/fail.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="360.0" layoutY="120.0" text="Destroy all the enemies">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="360.0" layoutY="237.0" text="Get to the exit">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="360.0" layoutY="149.0" text="AND">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="360.0" layoutY="209.0" text="AND">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="358.0" layoutY="179.0" text="Activate Floor Switches">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+   </children>
+</Pane>
