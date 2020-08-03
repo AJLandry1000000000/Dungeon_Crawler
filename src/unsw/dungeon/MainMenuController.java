@@ -86,9 +86,6 @@ public class MainMenuController {
     public void handleLevel6Button(ActionEvent event) {
         changeStage("level6.json");
     }
-
-    
-
 }
 
 
