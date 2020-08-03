@@ -61,7 +61,7 @@ public class MainMenuController {
 
     @FXML
     public void handleLevel1Button(ActionEvent event) {
-        changeStage("test.json", 1);
+        changeStage("level1.json", 1);
     }
 
     @FXML
