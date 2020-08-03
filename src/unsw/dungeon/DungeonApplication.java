@@ -31,22 +31,6 @@ public class DungeonApplication extends Application {
         root.requestFocus();
         primaryStage.setScene(scene);
         primaryStage.show();
-
-        
-        /*
-        primaryStage.setTitle("Dungeon");
-        // Read from a JSON file
-        DungeonControllerLoader dungeonLoader = new DungeonControllerLoader("advanced.json");
-        DungeonController controller = dungeonLoader.loadController();
-        // JavaFX processing
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("DungeonView.fxml"));
-        loader.setController(controller);
-        Parent root = loader.load();
-        Scene scene = new Scene(root);
-        root.requestFocus();
-        primaryStage.setScene(scene);
-        primaryStage.show();
-        */
     }
 
     public static void main(String[] args) {

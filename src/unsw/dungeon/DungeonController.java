@@ -89,21 +89,6 @@ public class DungeonController {
 
             }
         });
-        /*
-        dungeon.goalsCompleted().addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observable,
-                Boolean oldValue, Boolean newValue) {
-                    try {
-                        checkGoals();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-
-            }
-        });*/
-        
-
     }
 
     /**
