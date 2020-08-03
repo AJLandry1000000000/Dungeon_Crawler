@@ -168,7 +168,7 @@ public class Player extends Entity implements Moveable, Interactable {
     public void decrementPotionSteps() {
         if (hasPotion()) {
             potionStepsLeft().set(potionStepsLeft().get() - 1);
-            dungeon.setConsoleText("Player has " + (potionStepsLeft().get()) + " steps of potion left");
+            dungeon.setConsoleText("Player has " + (potionStepsLeft().get() - 1) + " steps of potion left");
         }
     }
 

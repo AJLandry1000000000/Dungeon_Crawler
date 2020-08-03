@@ -456,6 +456,8 @@ public class DungeonControllerLoader extends DungeonLoader {
                     // If a Player drinks a potion show the potion image effect on the player
                     if (newValue.intValue() == 11) {
                         inventoryEntities().add(new EntityData(player.getPotion(), new ImageView(potionImage)));
+                    } else {
+                        renderInventory();
                     }
                     // Process potion effect and any currently equipped items
                     if (newValue.intValue() > 1) {

@@ -268,7 +268,7 @@ public class DungeonController {
 
     @FXML
     public void handleKeyPress(KeyEvent event) throws IOException {
-
+        notifyObservers();
         // Update all enemies and potion.
         switch (event.getCode()) {
             case UP:
@@ -299,7 +299,6 @@ public class DungeonController {
             default:
                 break;
         }
-        notifyObservers();
     }
 
     /**
