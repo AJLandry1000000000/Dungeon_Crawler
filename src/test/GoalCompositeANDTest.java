@@ -40,6 +40,7 @@ public class GoalCompositeANDTest {
         controller.notifyObservers();
         controller.notifyObservers();
     }
+
     @Test
     public void enemyTreasureOrder() {
         // Player moves onto Sword

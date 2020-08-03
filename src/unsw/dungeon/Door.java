@@ -33,7 +33,7 @@ public class Door extends Entity implements Interactable {
         return this.key;
     }
 
-    public boolean isOpen() {
+    public Boolean isOpen() {
         return this.open.get();
     }
 

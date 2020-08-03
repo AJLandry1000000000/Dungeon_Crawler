@@ -96,7 +96,7 @@ public class Player extends Entity implements Moveable, Interactable {
     }
 
     /**
-     * @return the number of Treasures the Player has collected
+     * @return the number of Treasures t+ he Player has collected
      */
     public int getNumTreasures() {
         return numTreasures().get();
@@ -203,7 +203,7 @@ public class Player extends Entity implements Moveable, Interactable {
     /**
      * @return true if the Player has leftover invincible steps
      */
-    public boolean hasPotion() {
+    public Boolean hasPotion() {
         return potionStepsLeft().get() > 0 ? true : false;
     }
 
@@ -211,7 +211,7 @@ public class Player extends Entity implements Moveable, Interactable {
      * Check if the Player is currently wielding a hammer
      * @return true if the player has a hammer already, otherwise false
      */
-    public boolean hasHammer() {
+    public Boolean hasHammer() {
         return isHammerEquipped().get();
     }
 
@@ -219,7 +219,7 @@ public class Player extends Entity implements Moveable, Interactable {
      * Check if the Player is currently wielding a Sword
      * @return true if the player has a Sword already, otherwise false
      */
-    public boolean hasSword() {
+    public Boolean hasSword() {
         return isSwordEquipped().get();
     }
 
@@ -227,7 +227,7 @@ public class Player extends Entity implements Moveable, Interactable {
      * Check if the Player is currently holding a Key
      * @return true if the player has a Key already, otherwise false
      */
-    public boolean hasKey() {
+    public Boolean hasKey() {
         return isHoldingKey().get();
     }
 
@@ -278,7 +278,6 @@ public class Player extends Entity implements Moveable, Interactable {
      */
     @Override
     public Boolean interact(Entity entity) {
-        Dungeon dungeon = getDungeon();
         // If the enemy does not exist 
         if (!dungeon.findEntity(entity)) {
             return true;

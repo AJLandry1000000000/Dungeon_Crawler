@@ -20,11 +20,12 @@ public class PlayerTest {
 
     @BeforeEach
     public void initialize() {
+        System.out.println("H");
         // Create dungeon.
         this.dungeon = new Dungeon(10, 10);
-        CheckBox placeholder = new CheckBox();
         // Give the dungeon a random goal (to avoid null pointer error).
-        GoalTreasure goalTreasure = new GoalTreasure(placeholder);
+        GoalTreasure goalTreasure = new GoalTreasure(new CheckBox());
+        System.out.println("E");
         this.dungeon.setGoal(goalTreasure);
         // Create Player.
         this.player = new Player(4, 4, dungeon);

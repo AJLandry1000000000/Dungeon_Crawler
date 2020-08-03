@@ -67,6 +67,10 @@ public class Dungeon {
         return this.goal;
     }
 
+    public Boolean getGameOver() {
+        return this.gameOver.get();
+    }
+
     public ArrayList<Entity> getEntities() {
         return this.entities;
     }
@@ -149,6 +153,10 @@ public class Dungeon {
         return null;
     }
 
+    public ArrayList<Goal> getGoalTypes() {
+        return this.goalTypes;
+    }
+
     /* ----------------------------- SETTERS -------------------------------- */
     public void setPlayer(Player player) {
         this.player = player;
@@ -183,10 +191,6 @@ public class Dungeon {
         this.gameOver.set(true);
     }
 
-    public boolean getGameOver() {
-        return this.gameOver.get();
-    }
-
     public void setConsoleText(String message) {
         this.consoleText.set(message);
     }
@@ -217,7 +221,7 @@ public class Dungeon {
      * @param y coordinate location
      * @return either true if location is valid, otherwise false
      */
-    public boolean checkBoundaries(int x, int y) {
+    public Boolean checkBoundaries(int x, int y) {
         return ((x >= 0 && x < getWidth()) && (y >= 0 && y < getHeight()));
     }
 
@@ -225,7 +229,7 @@ public class Dungeon {
      * Check if the Player is currently interacting with an exit
      * @return either true if the player is at the exit, otherwise false
      */
-    public boolean checkExitReached() {
+    public Boolean checkExitReached() {
         return this.exitReached;
     }
 
@@ -247,9 +251,5 @@ public class Dungeon {
      */
     public Boolean isGameOver() {
         return this.gameOver.get();
-    }
-
-    public ArrayList<Goal> getGoalTypes() {
-        return this.goalTypes;
     }
 }
