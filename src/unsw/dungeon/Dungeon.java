@@ -90,7 +90,7 @@ public class Dungeon {
     public ArrayList<Entity> getEnemies() {
         ArrayList<Entity> enemies = new ArrayList<Entity>();
         for (Entity e : entities) {
-            if (e instanceof Enemy) {
+            if (e.getClass().equals(Enemy.class)) {
                 enemies.add(e);
             }
         }

@@ -39,8 +39,6 @@ public class MenuBarController {
 
     private Dungeon dungeon;
 
-    private JSONObject jsonGoals;
-
     private DungeonControllerLoader dungeonLoader;
 
 
@@ -48,10 +46,6 @@ public class MenuBarController {
         this.stage = stage;
         this.file = file;
         this.dungeonLoader = dungeonLoader;
-
-        // Get the goals JSONObject for the 'Goals' button
-        JSONObject json = new JSONObject(new JSONTokener(new FileReader("dungeons/" + file)));
-        this.jsonGoals = (JSONObject)json.get("goal-condition");
     }
 
     public void setDungeon(Dungeon dungeon) {
@@ -254,7 +248,7 @@ public class MenuBarController {
                 }
             }
         }
-    
+}
     /*
     pass dungeon to menuBarController via DungeonController
     write a isGoalPassed(String) function

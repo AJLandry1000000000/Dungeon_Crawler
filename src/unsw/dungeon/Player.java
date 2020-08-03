@@ -1,5 +1,6 @@
 package unsw.dungeon;
 
+
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -142,6 +143,7 @@ public class Player extends Entity implements Moveable, Interactable {
      */
     public void takeKey() {
         this.holdingKey.set(false);
+        this.key = null;
         this.actionTaken().set("Player has used a Key to open a Door");
     }
 
@@ -250,7 +252,7 @@ public class Player extends Entity implements Moveable, Interactable {
 
         // Assume that the player cannot interact with the new entity.
         Boolean canInteract = false;
-        if (checkEntity instanceof Interactable) {
+        if (checkEntity != null && checkEntity instanceof Interactable) {
             // Check if the Player is allowed to interact with the entity at the new position
             canInteract = ((Interactable)checkEntity).interact(this);
         }
@@ -260,7 +262,7 @@ public class Player extends Entity implements Moveable, Interactable {
 
         }
         // If the entity at the new position is a Portal, allow the Player to access it
-        if (checkEntity instanceof Portal) {
+        if (checkEntity != null && checkEntity.getClass().equals(Portal.class)) {
             return true;
         }
 
