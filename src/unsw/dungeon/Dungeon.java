@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 
 
 /**
@@ -26,6 +28,7 @@ public class Dungeon {
     private Goal goal;
     private ArrayList<Goal> goalTypes;
     private BooleanProperty gameOver;
+    private StringProperty consoleText;
 
     public Dungeon(int width, int height) {
         this.width = width;
@@ -35,9 +38,19 @@ public class Dungeon {
         this.exitReached = false;
         this.goalTypes = new ArrayList<Goal>();
         this.gameOver = new SimpleBooleanProperty(false);
+        this.consoleText = new SimpleStringProperty("");
     }
 
-    // Getters 
+    /* ----------------------------- JAVAFX --------------------------------- */
+    public StringProperty getConsoleText() {
+        return this.consoleText;
+    }
+
+    public BooleanProperty gameOver() {
+        return this.gameOver;
+    }
+
+    /* ----------------------------- GETTERS -------------------------------- */
     public int getWidth() {
         return width;
     }
@@ -52,6 +65,10 @@ public class Dungeon {
 
     public Goal getGoal() {
         return this.goal;
+    }
+
+    public ArrayList<Entity> getEntities() {
+        return this.entities;
     }
 
     /**
@@ -115,10 +132,6 @@ public class Dungeon {
         return check;
     }
 
-    public ArrayList<Entity> getEntities() {
-        return this.entities;
-    }
-
     /**
      * Find the corresponding Portal linked to the given Portal
      * @param portal Portal given to find corresponding
@@ -136,7 +149,7 @@ public class Dungeon {
         return null;
     }
 
-    // Setters
+    /* ----------------------------- SETTERS -------------------------------- */
     public void setPlayer(Player player) {
         this.player = player;
     }
@@ -174,6 +187,18 @@ public class Dungeon {
         return this.gameOver.get();
     }
 
+    public void setConsoleText(String message) {
+        this.consoleText.set(message);
+    }
+
+    public void clearConsoleText() {
+        this.consoleText.set("");
+    }
+
+    /**
+     * Find the corresponding Door and change its image
+     * @param id
+     */
     public void alertDoor(int id) {
         for (Entity e : entities) {
             if (e.getClass().equals(Door.class)) {
@@ -185,8 +210,7 @@ public class Dungeon {
         }
     }
 
-
-    // Checkers
+    /* ----------------------------- CHECKERS ------------------------------- */
     /**
      * Check if the x and y coordinates are in the boundaries of the level
      * @param x coordinate location
@@ -211,7 +235,6 @@ public class Dungeon {
      */
     public Boolean goalsCompleted() {
         if (this.goal.isCompleted(this)) {
-            System.out.println("All Goals completed, Level is Complete");
             setGameOver();
             return true;
         }
@@ -224,10 +247,6 @@ public class Dungeon {
      */
     public Boolean isGameOver() {
         return this.gameOver.get();
-    }
-
-    public BooleanProperty gameOver() {
-        return this.gameOver;
     }
 
     public ArrayList<Goal> getGoalTypes() {

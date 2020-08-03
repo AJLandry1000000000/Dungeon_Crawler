@@ -4,9 +4,11 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
 import java.util.Collections;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
@@ -15,6 +17,8 @@ import javafx.stage.Stage;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.util.Duration;
@@ -32,16 +36,12 @@ public class DungeonController {
     private GridPane squares;
 
     private List<ImageView> initialEntities;
-
     private Player player;
-
     private Dungeon dungeon;
-
     private ArrayList<Entity> enemies;
-
     private int steps;
-
     private Stage stage;
+    private Label console;
 
     public DungeonController(Dungeon dungeon, List<ImageView> initialEntities) {
         this.dungeon = dungeon;
@@ -49,6 +49,15 @@ public class DungeonController {
         this.enemies = dungeon.getEnemies();
         this.initialEntities = new ArrayList<>(initialEntities);
         this.steps = 0;
+    }
+
+    public DungeonController(Dungeon dungeon, Label console, List<ImageView> initialEntities) {
+        this.dungeon = dungeon;
+        this.player = dungeon.getPlayer();
+        this.enemies = dungeon.getEnemies();
+        this.initialEntities = new ArrayList<>(initialEntities);
+        this.steps = 0;        
+        this.console = console;
     }
 
     public void setStage(Stage stage) {
@@ -67,6 +76,10 @@ public class DungeonController {
         return this.squares;
     }
 
+    public Label getConsole() {
+        return this.console;
+    }
+
     @FXML
     public void initialize() throws IOException {
         Image ground = new Image((new File("images/dirt_0_new.png")).toURI().toString());
@@ -81,12 +94,22 @@ public class DungeonController {
             squares.getChildren().add(entity);
         }
 
+        // Add a listener to update the mini console display
+        dungeon.getConsoleText().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable,
+                String oldValue, String newValue) {
+                getConsole().setText(newValue);
+            }
+        }); 
+        
+        // Add a timeline and event handler that checks for when the game reaches a finish state
         Timeline timeline = new Timeline();
-        // Event handler that triggers a tick of the game
         EventHandler<ActionEvent> ticker = new EventHandler<ActionEvent>() {
             @Override
 			public void handle(ActionEvent event) {
                 try {
+                    // Check if the goals are completed or if the player has lost
                     if (checkGoals()) {
                         timeline.stop();
                     }
@@ -246,7 +269,6 @@ public class DungeonController {
     @FXML
     public void handleKeyPress(KeyEvent event) throws IOException {
 
-        notifyObservers();
         // Update all enemies and potion.
         switch (event.getCode()) {
             case UP:
@@ -277,28 +299,41 @@ public class DungeonController {
             default:
                 break;
         }
+        notifyObservers();
     }
 
+    /**
+     * Determine if all the goals have been completed, and change screen accordingly
+     * If the Player has been killed, transition to a game over screen
+     * @return
+     * @throws IOException
+     */
     public Boolean checkGoals() throws IOException {
         if (this.dungeon.goalsCompleted()) {
-            System.out.println("All Goals Completed, Level is Complete :)");
             successScreen();
             return true;
         }         
         // If the Player has lost the game, disallow movement
         else if (this.dungeon.isGameOver()) {
-            System.out.println("Player has been Defeated");
             failureScreen();
             return true;
         }
         return false;
     }
 
+    /**
+     * Transition into a success screen
+     * @throws IOException
+     */
     public void successScreen() throws IOException {
         SuccessScreen ss = new SuccessScreen(this.stage);
         ss.start();
     }
 
+    /**
+     * Transition into a failure screen
+     * @throws IOException
+     */
     public void failureScreen() throws IOException {
         FailScreen fc = new FailScreen(this.stage);
         fc.start();

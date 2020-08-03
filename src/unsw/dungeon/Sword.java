@@ -9,10 +9,11 @@ package unsw.dungeon;
 public class Sword extends Entity implements Interactable {
 
     private int hits;
+    private final int numHits = 5;
 
     public Sword(int x, int y, Dungeon dungeon) {
         super(x, y, dungeon);
-        this.hits = 5;
+        this.hits = numHits;
     }
 
     public int getHits() {
@@ -24,26 +25,29 @@ public class Sword extends Entity implements Interactable {
     }
 
     /**
-     * If the entity is a Player, and that Player doesn't have a Sword, give this Sword to them. 
-     * If the Player does have a Sword already, do not let them interact with this Sword.
-     * @param entity - This is a Player. If it is anything else, don't let it interact with the Sword.
+     * Allow for a Player to equip a Sword only when they do not have one already equipped.
+     * @param entity Player interacting with the Sword
      */
     @Override
     public Boolean interact(Entity entity) {
-        // Only a Player is allowed to interact with a Sword
+        // Disallow any non-Player from interacting with a Sword
         if (!(entity.getClass().equals(Player.class))) {
             return false;
         }
 
-        Player player = (Player)entity;
         // Determine if the Player does not have a current Sword
+        Player player = (Player)entity;
         if (!player.hasSword()) {
             // Player acquires the Sword which is then removed from the level
-            player.giveSword(this);
+            player.equipSword(this);
+            // Remove the Sword from the map
+            dungeon.removeEntity(this);
+            // Update the console
+            dungeon.setConsoleText("Played has equipped a Sword");
             return true;
-        } else {
-            // Otherwise disallow the interaction as the Player has a current Sword
-            return false;
-        }  
+        } 
+        // Otherwise disallow the interaction as the Player has a current Sword and update console
+        dungeon.setConsoleText("Played is already wielding a Sword");
+        return false;
     }
 }

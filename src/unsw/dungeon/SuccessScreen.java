@@ -24,7 +24,6 @@ public class SuccessScreen {
 
         this.scene = new Scene(root);
         start();
-        System.out.println("Started");
     }
 
     public void start() {

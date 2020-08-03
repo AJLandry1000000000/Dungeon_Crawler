@@ -18,8 +18,8 @@ public class Switch extends Entity implements Interactable {
     /**
      * @param entity Boulder entity to be saved
      */
-    public void activateSwitch(Entity entity) {
-        this.boulder = (Boulder)entity;
+    public void activateSwitch(Boulder boulder) {
+        this.boulder = boulder;
         this.activated = true;
     }
 
@@ -32,17 +32,17 @@ public class Switch extends Entity implements Interactable {
     }
 
     /**
-     * @return true if Switch is activated, otherwise false
-     */
-    public Boolean isActivated() {
-        return this.activated;
-    }
-
-    /**
      * @return the saved Boulder that is on top of the Floor Switch Entity
      */
     public Boulder getBoulder() {
         return this.boulder;
+    }
+
+    /**
+     * @return true if Switch is activated, otherwise false
+     */
+    public Boolean isActivated() {
+        return this.activated;
     }
 
     /**
@@ -64,7 +64,9 @@ public class Switch extends Entity implements Interactable {
                     deactivateSwitch();
                     // Move the Boulder off the switch
                     boulder.move(Direction.getDirection(newX, newY));
+                    dungeon.setConsoleText("Floor Switch has been deactivated");
                 } else {
+                    dungeon.setConsoleText("Path is blocked for Boulder move");
                     return false;
                 }
             } 
@@ -75,9 +77,10 @@ public class Switch extends Entity implements Interactable {
             // If the Switch does not have a current Boulder on it
             if (!isActivated()) {
                 // Activate the Floor Switch with the given Boulder
-                activateSwitch(entity);
+                activateSwitch((Boulder)entity);
                 // Check if all goal conditions have been completed
                 getDungeon().goalsCompleted();
+                dungeon.setConsoleText("Player has activated a Floor Switch");
                 return true;
             } 
         }

@@ -44,26 +44,25 @@ public abstract class DungeonLoader {
 
     /**
      * Parses the JSON to create a dungeon.
-     * 
-     * @return
+     * @return the create Dungeon
      */
     public Dungeon load(VBox goals) {
+        // Get the size of the dungeon and set it
         int width = json.getInt("width");
         int height = json.getInt("height");
+        this.dungeon = new Dungeon(width, height);
 
-        Dungeon dungeon = new Dungeon(width, height);
-
+        // Parse the JSON file for the Entities
         JSONArray jsonEntities = json.getJSONArray("entities");
-
         List<JSONObject> jsonValues = new ArrayList<JSONObject>();
         for (int i = 0; i < jsonEntities.length(); i++) {
             jsonValues.add(jsonEntities.getJSONObject(i));
         }
 
+        // Load each entity into the Dungeon
         for (int i = 0; i < jsonEntities.length(); i++) {
             loadEntity(dungeon, jsonEntities.getJSONObject(i));
         }
-        this.dungeon = dungeon;
 
         // Extract the goal and process it
         JSONObject jsonGoals = (JSONObject) json.get("goal-condition");
@@ -73,21 +72,21 @@ public abstract class DungeonLoader {
 
     /**
      * Process Goals turning them into potential Leaf and Composite Goals
-     * 
      * @param dungeon   the given dungeon level
      * @param jsonGoals the JSONObject that is holding 1 or more Goals
      * @return the overall Goal that will hold potential further Goals
      */
     public Goal processGoals(JSONObject jsonGoals, VBox goals, int level) {
+        // Extract the Goal
         String goalCondition = jsonGoals.getString("goal");
         GoalComposite goal = null;
         Goal newLeafGoal = null;
+        // Create a checkbox and label display for the goals
         CheckBox check = new CheckBox();
         check.setDisable(true);
         HBox container = new HBox();
         container.setSpacing(10);
         VBox.setMargin(container, new Insets(0, 0, 0, level));
-
         Label goalLabel = new Label();
         goalLabel.setStyle(
             "-fx-text-fill: white;" +
@@ -95,6 +94,7 @@ public abstract class DungeonLoader {
             "-fx-opacity: 0.75;" +
             "-fx-background-color: rgba(0, 0, 0, .25);"
         );
+        // Add a listener that handles a hover over effect to gain opacity
         goalLabel.addEventHandler(MouseEvent.MOUSE_ENTERED,
         new EventHandler<MouseEvent>() {
             @Override
@@ -110,6 +110,7 @@ public abstract class DungeonLoader {
                 );
             }
         });
+        // If mouse does not hover over goals, then opacity of goals are lowered
         goalLabel.addEventHandler(MouseEvent.MOUSE_EXITED,
         new EventHandler<MouseEvent>() {
             public void handle(MouseEvent e) {
@@ -124,11 +125,11 @@ public abstract class DungeonLoader {
                 );
             }
         });
-
+        // Add goal to overall VBox container
         container.getChildren().addAll(check, goalLabel);
         goals.getChildren().add(container);
 
-        // Determine the type of Goal Condition
+        // Determine the type of Goal Condition and set the label accordingly
         switch (goalCondition) {
         case "exit":
             goalLabel.setText("Reach Exit");
@@ -193,7 +194,6 @@ public abstract class DungeonLoader {
             onLoad(wall);
             entity = wall;
             break;
-        // Addition Entity cases are added here
         case "boulder":
             Boulder boulder = new Boulder(x, y, dungeon);
             onLoad(boulder);
@@ -265,26 +265,26 @@ public abstract class DungeonLoader {
         }
         // Check and process if Entities are on the same location
         if (!checkEntityLocation(dungeon, entity, x, y)) {
-            System.out.println("Too many entities on same position");
+            System.out.println("Warning: Too many entities on same position");
         }
         dungeon.addEntity(entity);
     }
 
     /**
-     * 
-     * @param dungeon
-     * @param entity
-     * @param x
-     * @param y
-     * @return
+     * If a boulder is originally loaded onto a switch, the the switch will be activated
+     * @param dungeon The Dungeon that holds the entities
+     * @param entity Entity processed will either be a Boulder or Switch
+     * @param x Coordinate
+     * @param y Coordinate
+     * @return False if too many entities at given Coordinate
      */
     private Boolean checkEntityLocation(Dungeon dungeon, Entity entity, int x, int y) {
         if (dungeon.getEntities(x, y).size() > 0) {
             Entity check = dungeon.getEntity(x, y);
             if (check.getClass().equals(Boulder.class)) {
-                ((Switch)entity).activateSwitch(check);
+                ((Switch)entity).activateSwitch((Boulder)check);
             } else if (check.getClass().equals(Switch.class)) {
-                ((Switch)check).activateSwitch(entity);
+                ((Switch)check).activateSwitch((Boulder)entity);
             } else {
                 return false;
             }

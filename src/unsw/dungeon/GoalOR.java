@@ -57,8 +57,6 @@ public class GoalOR implements GoalComposite {
         Boolean flag = null;
         for (Goal g : goals) {
             if (g.isCompleted(dungeon)) {
-                Player player = dungeon.getPlayer();
-                player.actionTaken().set("Player has completed a Goal");
                 checkCompleted().set(true);
                 flag = true;
             }

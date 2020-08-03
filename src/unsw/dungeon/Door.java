@@ -69,8 +69,7 @@ public class Door extends Entity implements Interactable {
             // Check if the Player is holding a Key
             Key playersKey = player.getKey();
             if (playersKey == null) {
-                System.out.println(playersKey);
-                player.actionTaken().set("Player must find a Key to open this Door");
+                dungeon.setConsoleText("Player must find a Key to open this Door");
                 return false;
             }
             
@@ -78,7 +77,7 @@ public class Door extends Entity implements Interactable {
             if(this.id == playersKey.getId()) {
                 // If we do have this doors key, open the door, remove the key from the player, and return true.
                 openDoor();
-                player.takeKey();
+                player.useKey();
                 return true;
             } 
             // Otherwise the Key does not match the Door

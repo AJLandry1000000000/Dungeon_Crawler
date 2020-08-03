@@ -58,8 +58,6 @@ public class GoalBoulders implements Goal {
                 return false;
             }
         }
-        Player player = dungeon.getPlayer();
-        player.actionTaken().set("Player has completed a Goal");
         checkCompleted().set(true);
         return true;
     }

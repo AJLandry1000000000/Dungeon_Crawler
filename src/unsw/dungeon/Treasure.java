@@ -13,22 +13,24 @@ public class Treasure extends Entity implements Interactable {
     }
 
     /**
-     * When the Player interacts with the Treasure, the Treasure is removed from the map, and goals is updated.
-     * @param entity - This should be the Player interacting with the Treasure.
+     * Allow for a Player to collect a Treasure
+     * @param entity The Player interacting with the Treasure
      */
     @Override
     public Boolean interact(Entity entity) {
-        // Only a Player is allowed to interact with a Treasure
+        // Disallow any non-Player to interact with the Treasure
         if (!(entity.getClass().equals(Player.class))) {
             return false;
         }
-        Player player = ((Player)entity);
+        
+        // Increase the Treasure counter the Player has collected
         ((Player)entity).addTreasure();
-        // Player acquires the treasure which is removed from the level
-        getDungeon().removeEntity(this);
-        player.actionTaken().set("Played has found a Treasure");
-        // Check is all goal conditions have been met
-        getDungeon().goalsCompleted();
+        // Remove the treasure from the map
+        dungeon.removeEntity(this);
+        // Update the console
+        dungeon.setConsoleText("Played has found a Treasure");
+        // Check and determine if all goal conditions have been completed
+        dungeon.goalsCompleted();
         return true;
     }
 

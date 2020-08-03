@@ -24,20 +24,21 @@ public class Portal extends Entity implements Interactable {
      */
     @Override
     public Boolean interact(Entity entity) {
-        // Only a Player can interact with a Portal.
+        // Disallow any non-Player from interacting with a Portal
         if (!(entity.getClass().equals(Player.class))) {
             return false;
         }
 
         // Find the corresponding Portal based on its ID.
-        Portal portal = getDungeon().getPortal(this);
+        Portal portal = dungeon.getPortal(this);
         if (portal == null) {
             return false;
         }
-        Player player = (Player) entity;
+        Player player = (Player)entity;
 
         // Process the movement of the Player to the corresponding Portal.
         player.teleport(portal.getX(), portal.getY());
+        dungeon.setConsoleText("Player has teleported through a Portal");
         return true;
     }
 }

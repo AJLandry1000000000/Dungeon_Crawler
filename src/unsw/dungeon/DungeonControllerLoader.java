@@ -27,6 +27,7 @@ import javafx.scene.layout.VBox;
  */
 public class DungeonControllerLoader extends DungeonLoader {
 
+    // ImageView Entities
     private List<ImageView> baseLayer;
     private List<ImageView> collectableLayer;
     private List<ImageView> moveableLayer;
@@ -69,6 +70,7 @@ public class DungeonControllerLoader extends DungeonLoader {
         moveableLayer = new ArrayList<>();
         inventoryEntities = new ArrayList<EntityData>();
 
+        // Process Image files
         playerImage = new Image((new File("images/human_new.png")).toURI().toString());
         wallImage = new Image((new File("images/brick_brown_0.png")).toURI().toString());
         boulderImage = new Image((new File("images/boulder.png")).toURI().toString());
@@ -94,12 +96,21 @@ public class DungeonControllerLoader extends DungeonLoader {
         ghostImage = new Image((new File("images/ghost_new.png")).toURI().toString());
     }
 
+    /**
+     * Theme of the Dungeon is altered according to provided Theme string
+     * @param theme String of the theme
+     */
     public void changeTheme(String theme) {
         changeImages(baseLayer, theme);
         changeImages(collectableLayer, theme);
         changeImages(moveableLayer, theme); 
     }
 
+    /**
+     * Method that reads from a theme folder and sets new images for Entities
+     * @param images
+     * @param theme
+     */
     public void changeImages(List<ImageView> images, String theme) {
         Image newImage = null;
         for (Node n : images) {
@@ -111,18 +122,23 @@ public class DungeonControllerLoader extends DungeonLoader {
     }
 
 
-    public Label getConsoleDisplay() {
-        return ((Label)this.inventory.getChildren().get(0));
-    }
-
+    /**
+     * @return The inventory display
+     */
     public GridPane getInventory() {
         return ((GridPane)this.inventory.getChildren().get(2));
     }
 
+    /**
+     * Entities that are shown on the inventory display
+     */
     public ArrayList<EntityData> inventoryEntities() {
         return this.inventoryEntities;
     }
 
+    /**
+     * Remove an entity from the inventory display
+     */
     public void removeInventoryEntity(Entity entity) {
         for (EntityData e : inventoryEntities()) {
             if (e.getEntity() != null && e.getEntity().equals(entity)) {
@@ -132,14 +148,18 @@ public class DungeonControllerLoader extends DungeonLoader {
         }
     }
 
+    /**
+     * Render the inventory with the Player's current items
+     */
     public void renderInventory() {
         GridPane inventory = getInventory();
         ArrayList<EntityData> entities = inventoryEntities();
+        // Reset the previous inventory
         inventory.getChildren().clear();
         for (int i = 0; i < entities.size(); i++) {
             EntityData entity = entities.get(i);
             inventory.add(entity.getImage(), i, 0);
-
+            // Set a bubble of the count for an Entity
             Label counter = new Label();
             if (entity.getEntity() == null) {
                 counter.setText(String.valueOf(this.player.getNumTreasures()));
@@ -150,7 +170,7 @@ public class DungeonControllerLoader extends DungeonLoader {
                 Hammer hammer = ((Hammer)entity.getEntity());
                 counter.setText(String.valueOf(hammer.getHits()));
             } else if (entity.getEntity().getClass().equals(Potion.class)) {
-                counter.setText(String.valueOf(this.player.potionStepsLeft() - 1));
+                counter.setText(String.valueOf(this.player.potionStepsLeft().get() - 1));
             } else if (entity.getEntity().getClass().equals(Treasure.class)) {
                 counter.setText(String.valueOf(1));
             } else if (entity.getEntity().getClass().equals(Key.class)) {
@@ -215,16 +235,12 @@ public class DungeonControllerLoader extends DungeonLoader {
     @Override
     public void onLoad(Portal portal) {
         ImageView view = new ImageView(portalImage);
-
-        //Instantiating the ColorAdjust class 
+        // Colour a Portal Pair
         ColorAdjust colorAdjust = new ColorAdjust(); 
-
         if (portal.getID() % 2 == 0) colorAdjust.setHue((portal.getID() % 15) * 0.075);     
         else colorAdjust.setHue((portal.getID() % 10) * -0.1);     
-
         view.setEffect(colorAdjust);
         ((Node)view).setId("portal");
-
         addEntity(portal, view, 2);
     }
     @Override
@@ -260,6 +276,12 @@ public class DungeonControllerLoader extends DungeonLoader {
         addEntity(ghost, view, 3);
     }
 
+    /**
+     * Processing the split the entities into their different layers
+     * @param entity The Dungeon Entity
+     * @param view The Image
+     * @param level The given layer level
+     */
     private void addEntity(Entity entity, ImageView view, int level) {
         switch (level) {
             case 1:
@@ -289,12 +311,13 @@ public class DungeonControllerLoader extends DungeonLoader {
     private void trackMoveable(Entity entity, Node node) {
         GridPane.setColumnIndex(node, entity.getX());
         GridPane.setRowIndex(node, entity.getY());
-        
+        // Listeners for when the player's position changes
         entity.x().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observable,
                     Number oldValue, Number newValue) {
                 GridPane.setColumnIndex(node, newValue.intValue());
+                // On every step render the inventory
                 if (entity.getClass().equals(Player.class)) {
                     renderInventory();
                 }
@@ -305,6 +328,7 @@ public class DungeonControllerLoader extends DungeonLoader {
             public void changed(ObservableValue<? extends Number> observable,
                     Number oldValue, Number newValue) {
                 GridPane.setRowIndex(node, newValue.intValue());
+                // On every step render the inventory
                 if (entity.getClass().equals(Player.class)) {
                     renderInventory();
                 }            
@@ -312,10 +336,14 @@ public class DungeonControllerLoader extends DungeonLoader {
         });
     }
 
+    /**
+     * Track the interaction of entities with event listeners
+     */
     private void trackInteractable(Entity entity, Node node) {
         GridPane.setColumnIndex(node, entity.getX());
         GridPane.setRowIndex(node, entity.getY());
 
+        // When an entity is collected or destroyed remove its image from the map
         entity.visible().addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable,
@@ -326,6 +354,7 @@ public class DungeonControllerLoader extends DungeonLoader {
 
         if (entity.getClass().equals(Door.class)) {
             Door door = ((Door)entity);
+            // If a Player has opened a Door, switch its image to an Opened Door
             door.doorStatus().addListener(new ChangeListener<Boolean>() {
                 @Override
                 public void changed(ObservableValue<? extends Boolean> observable,
@@ -333,6 +362,7 @@ public class DungeonControllerLoader extends DungeonLoader {
                     ((ImageView)node).setImage(doorOpenImage);
                 }
             });
+            // If the Player is holding a key, switch the Door image to an Alerted Door
             door.keyStatus().addListener(new ChangeListener<Boolean>() {
                 @Override
                 public void changed(ObservableValue<? extends Boolean> observable,
@@ -344,12 +374,14 @@ public class DungeonControllerLoader extends DungeonLoader {
         
         else if (entity.getClass().equals(Player.class)) {
             Player player = ((Player)entity);
-
+            // If the Player is holding a Sword
             player.isSwordEquipped().addListener(new ChangeListener<Boolean>() {
                 @Override
                 public void changed(ObservableValue<? extends Boolean> observable,
                     Boolean oldValue, Boolean newValue) {
                     if (newValue) {
+                        // Set a new Image of the Player wielding currently held items
+                        // Check whether a player has a potion or hammer already
                         if (player.hasPotion() && player.hasHammer()) {
                             ((ImageView)node).setImage(playerSwordHammerPotionImage);
                         } else if (player.hasPotion()) {
@@ -359,9 +391,12 @@ public class DungeonControllerLoader extends DungeonLoader {
                         } else {
                             ((ImageView)node).setImage(playerSwordImage);
                         }
+                        // Add the Sword to inventory display
                         inventoryEntities().add(new EntityData(player.getSword(), new ImageView(swordImage)));
 
                     } else {
+                        // Reset the Player's image wielding a Sword
+                        // Check whether a player has a potion or hammer already
                         if (player.hasPotion() && player.hasHammer()) {
                             ((ImageView)node).setImage(playerHammerPotionImage);
                         } else if (player.hasPotion()) {
@@ -371,14 +406,18 @@ public class DungeonControllerLoader extends DungeonLoader {
                         }  else {
                             ((ImageView)node).setImage(playerImage);
                         }
+                        // Remove the Sword from the inventory display
                         removeInventoryEntity(player.getSword());
                     }
                 }
             });
+            // If the Player is holding a Hammer
             player.isHammerEquipped().addListener(new ChangeListener<Boolean>() {
                 @Override
                 public void changed(ObservableValue<? extends Boolean> observable,
                     Boolean oldValue, Boolean newValue) {
+                    // Set a new Image of the Player wielding currently held items
+                    // Check whether a player has a potion or sword already
                     if (newValue) {
                         if (player.hasPotion() && player.hasSword()) {
                             ((ImageView)node).setImage(playerSwordHammerPotionImage);
@@ -390,7 +429,10 @@ public class DungeonControllerLoader extends DungeonLoader {
                             ((ImageView)node).setImage(playerHammerImage);
                         }
                         inventoryEntities().add(new EntityData(player.getHammer(), new ImageView(hammerImage)));
-                    } else {
+                    } 
+                    // Reset the Player's image wielding a Hammer
+                    // Check whether a player has a potion or sword already
+                    else {
                         if (player.hasSword() && player.hasPotion()) {
                             ((ImageView)node).setImage(playerSwordPotionImage);
                         } else if (player.hasSword()) {
@@ -400,19 +442,22 @@ public class DungeonControllerLoader extends DungeonLoader {
                         }  else {
                             ((ImageView)node).setImage(playerImage);
                         }
+                        // Remove the Hammer from the inventory display
                         removeInventoryEntity(player.getHammer()); 
                     }
                 }
             });
 
-
-            player.potionSteps().addListener(new ChangeListener<Number>() {
+            // If the Player has a Potion active
+            player.potionStepsLeft().addListener(new ChangeListener<Number>() {
                 @Override
                 public void changed(ObservableValue<? extends Number> observable,
                     Number oldValue, Number newValue) {
+                    // If a Player drinks a potion show the potion image effect on the player
                     if (newValue.intValue() == 11) {
                         inventoryEntities().add(new EntityData(player.getPotion(), new ImageView(potionImage)));
                     }
+                    // Process potion effect and any currently equipped items
                     if (newValue.intValue() > 1) {
                         if (player.hasSword() && player.hasHammer()) {
                             ((ImageView)node).setImage(playerSwordHammerPotionImage);
@@ -423,7 +468,9 @@ public class DungeonControllerLoader extends DungeonLoader {
                         } else {
                             ((ImageView)node).setImage(playerPotionImage);
                         }
-                    } else {
+                    } 
+                    // If the Potion has run out, remove effect from player image
+                    else {
                         if (player.hasSword() && player.hasHammer()) {
                             ((ImageView)node).setImage(playerSwordHammerImage);
                         } else if (player.hasSword()) {
@@ -438,6 +485,7 @@ public class DungeonControllerLoader extends DungeonLoader {
                 }
             });
 
+            // Add a treasure and it's count to the inventory display when picked up
             player.numTreasures().addListener(new ChangeListener<Number>() {
                 @Override
                 public void changed(ObservableValue<? extends Number> observable,
@@ -448,7 +496,8 @@ public class DungeonControllerLoader extends DungeonLoader {
                 }
             });
 
-            player.holdingKey().addListener(new ChangeListener<Boolean>() {
+            // Add a key to the inventory display when picked up
+            player.isHoldingKey().addListener(new ChangeListener<Boolean>() {
                 @Override
                 public void changed(ObservableValue<? extends Boolean> observable,
                     Boolean oldValue, Boolean newValue) {
@@ -459,18 +508,6 @@ public class DungeonControllerLoader extends DungeonLoader {
                         }
                 }
             });
-
-            player.actionTaken().addListener(new ChangeListener<String>() {
-                @Override
-                public void changed(ObservableValue<? extends String> observable,
-                    String oldValue, String newValue) {
-                        if (!newValue.equals(oldValue)) {
-                            getConsoleDisplay().setText(newValue);
-                        } else {
-                            getConsoleDisplay().setText("");
-                        }
-                }
-            }); 
         }
     }
     /**
@@ -479,9 +516,9 @@ public class DungeonControllerLoader extends DungeonLoader {
      * @return
      * @throws FileNotFoundException
      */
-    public DungeonController loadController(VBox goals) throws FileNotFoundException {
-        
-        return new DungeonController(load(goals), Stream.of(baseLayer, collectableLayer, moveableLayer)
+    public DungeonController loadController(VBox goals, Label console) throws FileNotFoundException {
+        // Feed the Entities as sorted by their given layers
+        return new DungeonController(load(goals), console, Stream.of(baseLayer, collectableLayer, moveableLayer)
             .flatMap(x -> x.stream())
             .collect(Collectors.toList())
         );

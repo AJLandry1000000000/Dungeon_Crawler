@@ -32,14 +32,11 @@ public class MenuBarController {
     private MenuItem Theme;    
     
     private Stage stage;
-    
     private String file;
-
     private Dungeon dungeon;
-
     private DungeonControllerLoader dungeonLoader;
-
     private VBox goals;
+    private String theme;
 
 
     public MenuBarController(Stage stage, String file, DungeonControllerLoader dungeonLoader, VBox goals) throws FileNotFoundException {
@@ -47,16 +44,22 @@ public class MenuBarController {
         this.stage = stage;
         this.file = file;
         this.dungeonLoader = dungeonLoader;
+        this.theme = null;
     }
 
     public void setDungeon(Dungeon dungeon) {
         this.dungeon = dungeon;
     }
 
+    public void setTheme(String theme) {
+        this.theme = theme;
+    }
+
     @FXML
     public void HandleRestartButton(ActionEvent event) throws IOException {
         LevelLoader levelScreen = new LevelLoader(this.stage, this.file);
         levelScreen.load();
+        if (this.theme != null) levelScreen.loadTheme(this.theme);
     }
 
     @FXML
@@ -324,26 +327,31 @@ public class MenuBarController {
 
     @FXML
     public void HandleNormalButton(ActionEvent event) throws IOException {
+        this.theme = "normal";
         dungeonLoader.changeTheme("normal");
     }
 
     @FXML
     public void HandleIceButton(ActionEvent event) throws IOException {
+        this.theme = "ice";
         dungeonLoader.changeTheme("ice");
     }
 
     @FXML
     public void HandleLavaButton(ActionEvent event) throws IOException {
+        this.theme = "lava";
         dungeonLoader.changeTheme("lava");
     }
 
     @FXML
     public void HandleMossButton(ActionEvent event) throws IOException {
+        this.theme = "moss";
         dungeonLoader.changeTheme("moss");
     }
 
     @FXML
     public void HandleWaterButton(ActionEvent event) throws IOException {
+        this.theme = "water";
         dungeonLoader.changeTheme("water");
     }
 }

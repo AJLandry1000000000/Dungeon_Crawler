@@ -39,7 +39,7 @@ public class MainMenuController {
         this.stage = stage;
     }
 
-    public void changeStage(String file, int level) {
+    public void changeStage(String file) {
         try {
             LevelLoader levelScreen = new LevelLoader(this.stage, file);
             levelScreen.load();
@@ -49,10 +49,8 @@ public class MainMenuController {
             System.out.println("Input/Output problem with " + file);
             io.printStackTrace();
         }
-
     }
 
-        
     @FXML
     public void handleInstructionsButton(ActionEvent event) throws IOException {
         InstructionsScreen in = new InstructionsScreen(this.stage);
@@ -61,32 +59,32 @@ public class MainMenuController {
 
     @FXML
     public void handleLevel1Button(ActionEvent event) {
-        changeStage("level1.json", 1);
+        changeStage("level1.json");
     }
 
     @FXML
     public void handleLevel2Button(ActionEvent event) {
-        changeStage("level2.json", 2);
+        changeStage("level2.json");
     }
 
     @FXML
     public void handleLevel3Button(ActionEvent event) {
-        changeStage("level3.json", 3);
+        changeStage("level3.json");
     }
 
     @FXML
     public void handleLevel4Button(ActionEvent event) {
-        changeStage("level4.json", 4);
+        changeStage("level4.json");
     }
 
     @FXML
     public void handleLevel5Button(ActionEvent event) {
-        changeStage("level5.json", 5);
+        changeStage("level5.json");
     }
 
     @FXML
     public void handleLevel6Button(ActionEvent event) {
-        changeStage("level6.json", 6);
+        changeStage("level6.json");
     }
 
     

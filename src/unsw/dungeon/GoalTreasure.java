@@ -51,8 +51,6 @@ public class GoalTreasure implements Goal {
             .count();
         // Check if there are no Treasure entities remaining
         if (totalTreasures == 0) {
-            Player player = dungeon.getPlayer();
-            player.actionTaken().set("Player has completed a Goal");
             checkCompleted().set(true);
             return true;
         }

@@ -9,6 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import unsw.dungeon.Direction;
 import unsw.dungeon.Dungeon;
@@ -72,8 +73,9 @@ public class EnemyAndPotionTest {
         dungeon.addEntity(p1);
         player.move(Direction.RIGHT);
         
+        Label placeholder = null;
         // Make 11 updates to observer. These updates are done in DungeonController after every move. Check each time that the player still has a potion. On the 11th move check that the Player no longer has a potion.
-        DungeonController dc = new DungeonController(dungeon, new ArrayList<ImageView>());
+        DungeonController dc = new DungeonController(dungeon, placeholder, new ArrayList<ImageView>());
         dc.notifyObservers();// Because normally notifyObservers() is run on the move to collecting the potion
     
         // Move 1.
@@ -135,7 +137,8 @@ public class EnemyAndPotionTest {
 
         // Check that the Enemy is moving towards the Player after every call to notifyObservers().
         // Note: notifyObservers() is called after every Player move in DungeonController to indicate that the Player moved. It allows Enemies to make a move. (It also changes how long the potion remains active for.)
-        DungeonController dc = new DungeonController(dungeon, new ArrayList<ImageView>());
+        Label placeholder = null;
+        DungeonController dc = new DungeonController(dungeon, placeholder, new ArrayList<ImageView>());
         dc.notifyObservers();
         assertEquals(8, en.getX());
         assertEquals(4, en.getY());
@@ -199,7 +202,8 @@ public class EnemyAndPotionTest {
         // It then moves on the Player and interacts with the Player. Player has no Sword or Potion. So Player dies and is removed from the dungeon.
         Enemy en = new Enemy(5, 4, dungeon);
         dungeon.addEntity(en);
-        DungeonController dc = new DungeonController(dungeon, new ArrayList<ImageView>());
+        Label placeholder = null;
+        DungeonController dc = new DungeonController(dungeon, placeholder, new ArrayList<ImageView>());
         dc.notifyObservers();
 
         // Check that the Player has been removed from the dungeon, and that the game is over.
