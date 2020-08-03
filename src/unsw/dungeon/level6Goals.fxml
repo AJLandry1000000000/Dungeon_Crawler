@@ -6,13 +6,13 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.4" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <ImageView fx:id="boulderGoalMark" fitHeight="50.0" fitWidth="50.0" layoutX="20.0" layoutY="95.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="treasureGoalMark1" fitHeight="50.0" fitWidth="50.0" layoutX="20.0" layoutY="95.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@images/fail.png" />
          </image></ImageView>
-      <Label layoutX="208.0" text="Level 6 Goals">
+      <Label layoutX="190.0" text="Level 6 Goals">
          <font>
             <Font name="System Bold" size="30.0" />
          </font>
@@ -107,37 +107,37 @@
             <Image url="@images/fail.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="boulderGoalMark2" fitHeight="50.0" fitWidth="50.0" layoutX="20.0" layoutY="155.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="exitGoalMark1" fitHeight="50.0" fitWidth="50.0" layoutX="20.0" layoutY="155.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@images/fail.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="boulderGoalMark3" fitHeight="50.0" fitWidth="50.0" layoutX="20.0" layoutY="278.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="treasureGoalMark2" fitHeight="50.0" fitWidth="50.0" layoutX="20.0" layoutY="278.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@images/fail.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="boulderGoalMark11" fitHeight="50.0" fitWidth="50.0" layoutX="20.0" layoutY="218.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="enemyGoalMark1" fitHeight="50.0" fitWidth="50.0" layoutX="20.0" layoutY="218.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@images/fail.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="boulderGoalMark21" fitHeight="50.0" fitWidth="50.0" layoutX="20.0" layoutY="338.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="exitGoalMark2" fitHeight="50.0" fitWidth="50.0" layoutX="20.0" layoutY="338.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@images/fail.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="boulderGoalMark31" fitHeight="50.0" fitWidth="50.0" layoutX="303.0" layoutY="168.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="boulderGoalMark2" fitHeight="50.0" fitWidth="50.0" layoutX="303.0" layoutY="168.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@images/fail.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="boulderGoalMark111" fitHeight="50.0" fitWidth="50.0" layoutX="303.0" layoutY="108.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="enemyGoalMark2" fitHeight="50.0" fitWidth="50.0" layoutX="303.0" layoutY="108.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@images/fail.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="boulderGoalMark211" fitHeight="50.0" fitWidth="50.0" layoutX="303.0" layoutY="228.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="exitGoalMark3" fitHeight="50.0" fitWidth="50.0" layoutX="303.0" layoutY="228.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@images/fail.png" />
          </image>
