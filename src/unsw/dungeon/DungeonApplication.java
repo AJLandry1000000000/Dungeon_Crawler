@@ -6,7 +6,8 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 
 /**
- * Dungeon Application that reads from a JSON file to create and populate a Dungeon
+ * Dungeon Application that reads from a JSON file to create and populate a
+ * Dungeon
  *
  * @author Sean Smith
  * @author Austin Landry
