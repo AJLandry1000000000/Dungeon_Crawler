@@ -13,7 +13,7 @@
     </Menu>
     <Menu mnemonicParsing="false" text="Goals">
       <items>
-        <MenuItem fx:id="Goals" mnemonicParsing="false" onAction="#HandleGoalButton" text="List goals" />
+        <!-- <MenuItem fx:id="Goals" mnemonicParsing="false" onAction="#HandleGoalButton" text="List goals" /> -->
             <MenuItem mnemonicParsing="false" onAction="#HandleGoalOverlay" text="Overlay Goals" />
       </items>
     </Menu>
