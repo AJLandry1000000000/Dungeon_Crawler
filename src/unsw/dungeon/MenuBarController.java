@@ -5,7 +5,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,7 +15,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-
 
 public class MenuBarController {
     @FXML
@@ -29,8 +27,8 @@ public class MenuBarController {
     private MenuItem Goals;
 
     @FXML
-    private MenuItem Theme;    
-    
+    private MenuItem Theme;
+
     private Stage stage;
     private String file;
     private Dungeon dungeon;
@@ -38,8 +36,8 @@ public class MenuBarController {
     private VBox goals;
     private String theme;
 
-
-    public MenuBarController(Stage stage, String file, DungeonControllerLoader dungeonLoader, VBox goals) throws FileNotFoundException {
+    public MenuBarController(Stage stage, String file, DungeonControllerLoader dungeonLoader, VBox goals)
+            throws FileNotFoundException {
         this.goals = goals;
         this.stage = stage;
         this.file = file;
@@ -59,7 +57,8 @@ public class MenuBarController {
     public void HandleRestartButton(ActionEvent event) throws IOException {
         LevelLoader levelScreen = new LevelLoader(this.stage, this.file);
         levelScreen.load();
-        if (this.theme != null) levelScreen.loadTheme(this.theme);
+        if (this.theme != null)
+            levelScreen.loadTheme(this.theme);
     }
 
     @FXML
@@ -70,17 +69,18 @@ public class MenuBarController {
 
     @FXML
     public void HandleGoalButton(ActionEvent event) throws IOException {
-        if (file.equals("level1.json")) {
+        System.out.println(file);
+        if (file.endsWith("level1.json")) {
             level1GoalScreen();
-        } else if (file.equals("level2.json")) {
+        } else if (file.endsWith("level2.json")) {
             level2GoalScreen();
-        } else if (file.equals("level3.json")) {
+        } else if (file.endsWith("level3.json")) {
             level3GoalScreen();
-        } else if (file.equals("level4.json")) {
+        } else if (file.endsWith("level4.json")) {
             level4GoalScreen();
-        } else if (file.equals("level5.json")) {
+        } else if (file.endsWith("level5.json")) {
             level5GoalScreen();
-        } else if (file.equals("level6.json")) {
+        } else if (file.endsWith("level6.json")) {
             level6GoalScreen();
         }
     }
@@ -150,7 +150,6 @@ public class MenuBarController {
         s.show();
     }
 
-
     public void level3GoalScreen() throws IOException {
         // Create a new stage.
         Stage s = new Stage();
@@ -185,7 +184,7 @@ public class MenuBarController {
                     ImageView i = (ImageView) sc.lookup("#exitGoalMark");
                     i.setImage(im);
                 }
-            } 
+            }
         }
 
         // Show the stage.
@@ -214,7 +213,7 @@ public class MenuBarController {
                     ImageView i = (ImageView) sc.lookup("#exitGoalMark");
                     i.setImage(im);
                 }
-            } 
+            }
         }
 
         // Show the stage.
@@ -301,7 +300,8 @@ public class MenuBarController {
                     ImageView i3 = (ImageView) sc.lookup("#exitGoalMark3");
                     i3.setImage(im);
                 }
-            } if (g.getClass().equals(GoalEnemies.class)) {
+            }
+            if (g.getClass().equals(GoalEnemies.class)) {
                 GoalEnemies ge = (GoalEnemies) g;
                 if (ge.isCompleted(this.dungeon)) {
                     Image im = new Image((new File("images/success.png")).toURI().toString());
@@ -318,7 +318,6 @@ public class MenuBarController {
         s.setScene(sc);
         s.show();
     }
-
 
     @FXML
     public void HandleGoalOverlay(ActionEvent event) throws IOException {
