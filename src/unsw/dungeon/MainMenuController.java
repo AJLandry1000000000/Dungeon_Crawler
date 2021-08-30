@@ -8,14 +8,13 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
-
 public class MainMenuController {
 
     private Stage stage;
-    
+
     @FXML
     private Button InstructionsButton;
-    
+
     @FXML
     private Button level1;
 
@@ -34,7 +33,6 @@ public class MainMenuController {
     @FXML
     private Button level6;
 
-  
     public MainMenuController(Stage stage) {
         this.stage = stage;
     }
@@ -59,36 +57,31 @@ public class MainMenuController {
 
     @FXML
     public void handleLevel1Button(ActionEvent event) {
-        changeStage("level1.json");
+        changeStage(System.getProperty("user.dir") + "/dungeons/level1.json");
     }
 
     @FXML
     public void handleLevel2Button(ActionEvent event) {
-        changeStage("level2.json");
+        changeStage(System.getProperty("user.dir") + "/dungeons/level2.json");
     }
 
     @FXML
     public void handleLevel3Button(ActionEvent event) {
-        changeStage("level3.json");
+        changeStage(System.getProperty("user.dir") + "/dungeons/level3.json");
     }
 
     @FXML
     public void handleLevel4Button(ActionEvent event) {
-        changeStage("level4.json");
+        changeStage(System.getProperty("user.dir") + "/dungeons/level4.json");
     }
 
     @FXML
     public void handleLevel5Button(ActionEvent event) {
-        changeStage("level5.json");
+        changeStage(System.getProperty("user.dir") + "/dungeons/level5.json");
     }
 
     @FXML
     public void handleLevel6Button(ActionEvent event) {
-        changeStage("level6.json");
+        changeStage(System.getProperty("user.dir") + "/dungeons/level6.json");
     }
 }
-
-
-
-
-

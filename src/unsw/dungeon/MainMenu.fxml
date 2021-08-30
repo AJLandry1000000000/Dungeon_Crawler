@@ -22,9 +22,9 @@
       <Button fx:id="level1" layoutX="120.0" layoutY="113.0" mnemonicParsing="false" onAction="#handleLevel1Button" text="Level 1" />
       <Button fx:id="level2" layoutX="120.0" layoutY="213.0" mnemonicParsing="false" onAction="#handleLevel2Button" text="Level 2" />
       <Button fx:id="level3" layoutX="250.0" layoutY="113.0" mnemonicParsing="false" onAction="#handleLevel3Button" text="Level 3" />
+      <Button fx:id="level4" layoutX="250.0" layoutY="213.0" mnemonicParsing="false" onAction="#handleLevel4Button" text="Level 4" />
       <Button fx:id="level5" layoutX="380.0" layoutY="113.0" mnemonicParsing="false" onAction="#handleLevel5Button" text="Level 5" />
       <Button fx:id="level6" layoutX="380.0" layoutY="213.0" mnemonicParsing="false" onAction="#handleLevel6Button" text="Level 6" />
       <Button fx:id="InstructionsButton" layoutX="237.0" layoutY="306.0" mnemonicParsing="false" onAction="#handleInstructionsButton" text="Instructions" />
-      <Button fx:id="level4" layoutX="250.0" layoutY="213.0" mnemonicParsing="false" onAction="#handleLevel4Button" text="Level 4" />
    </children>
 </Pane>

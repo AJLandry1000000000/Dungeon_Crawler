@@ -21,6 +21,7 @@ import javafx.scene.layout.VBox;
 /**
  * A DungeonLoader that also creates the necessary ImageViews for the UI,
  * connects them via listeners to the model, and creates a controller.
+ * 
  * @author Sean Smith
  * @author Austin Landry
  *
@@ -33,7 +34,7 @@ public class DungeonControllerLoader extends DungeonLoader {
     private List<ImageView> moveableLayer;
     private List<ImageView> topLayer;
 
-    //Images
+    // Images
     private Image playerImage;
     private Image wallImage;
     private Image boulderImage;
@@ -92,7 +93,8 @@ public class DungeonControllerLoader extends DungeonLoader {
         playerHammerImage = new Image((new File("images/player_w_hammer.png")).toURI().toString());
         playerSwordPotionImage = new Image((new File("images/player_w_potion_sword.png")).toURI().toString());
         playerHammerPotionImage = new Image((new File("images/player_w_potion_hammer.png")).toURI().toString());
-        playerSwordHammerPotionImage = new Image((new File("images/player_w_potion_sword_hammer.png")).toURI().toString());
+        playerSwordHammerPotionImage = new Image(
+                (new File("images/player_w_potion_sword_hammer.png")).toURI().toString());
         playerSwordHammerImage = new Image((new File("images/player_w_sword_hammer.png")).toURI().toString());
         hammerImage = new Image((new File("images/hammer.png")).toURI().toString());
         ghostImage = new Image((new File("images/ghost_new.png")).toURI().toString());
@@ -100,16 +102,18 @@ public class DungeonControllerLoader extends DungeonLoader {
 
     /**
      * Theme of the Dungeon is altered according to provided Theme string
+     * 
      * @param theme String of the theme
      */
     public void changeTheme(String theme) {
         changeImages(baseLayer, theme);
         changeImages(collectableLayer, theme);
-        changeImages(moveableLayer, theme); 
+        changeImages(moveableLayer, theme);
     }
 
     /**
      * Method that reads from a theme folder and sets new images for Entities
+     * 
      * @param images
      * @param theme
      */
@@ -118,17 +122,16 @@ public class DungeonControllerLoader extends DungeonLoader {
         for (Node n : images) {
             if (n.getId() != null) {
                 newImage = new Image((new File("images/" + theme + "/" + n.getId() + ".png")).toURI().toString());
-                ((ImageView)n).setImage(newImage);
+                ((ImageView) n).setImage(newImage);
             }
         }
     }
-
 
     /**
      * @return The inventory display
      */
     public GridPane getInventory() {
-        return ((GridPane)this.inventory.getChildren().get(2));
+        return ((GridPane) this.inventory.getChildren().get(2));
     }
 
     /**
@@ -166,10 +169,10 @@ public class DungeonControllerLoader extends DungeonLoader {
             if (entity.getEntity() == null) {
                 counter.setText(String.valueOf(this.player.getNumTreasures()));
             } else if (entity.getEntity().getClass().equals(Sword.class)) {
-                Sword sword = ((Sword)entity.getEntity());
+                Sword sword = ((Sword) entity.getEntity());
                 counter.setText(String.valueOf(sword.getHits()));
             } else if (entity.getEntity().getClass().equals(Hammer.class)) {
-                Hammer hammer = ((Hammer)entity.getEntity());
+                Hammer hammer = ((Hammer) entity.getEntity());
                 counter.setText(String.valueOf(hammer.getHits()));
             } else if (entity.getEntity().getClass().equals(Potion.class)) {
                 counter.setText(String.valueOf(this.player.potionStepsLeft().get() - 1));
@@ -178,15 +181,9 @@ public class DungeonControllerLoader extends DungeonLoader {
             } else if (entity.getEntity().getClass().equals(Key.class)) {
                 continue;
             }
-            counter.setStyle(
-                "-fx-background-radius: 5em; " +
-                "-fx-background-size: 50;" +
-                "-fx-min-width: 16;" +
-                "-fx-text-fill: white;" +
-                "-fx-font-weight: bold;" +
-                "-fx-font-weight: bold;" +
-                "-fx-background-color: black;"
-            );
+            counter.setStyle("-fx-background-radius: 5em; " + "-fx-background-size: 50;" + "-fx-min-width: 16;"
+                    + "-fx-text-fill: white;" + "-fx-font-weight: bold;" + "-fx-font-weight: bold;"
+                    + "-fx-background-color: black;");
             counter.setAlignment(Pos.CENTER);
             counter.setTranslateX(1);
             counter.setTranslateY(-6);
@@ -197,92 +194,108 @@ public class DungeonControllerLoader extends DungeonLoader {
     @Override
     public void onLoad(Entity player) {
         ImageView view = new ImageView(playerImage);
-        this.player = ((Player)player);
+        this.player = ((Player) player);
         addEntity(player, view, 4);
     }
+
     @Override
     public void onLoad(Wall wall) {
         ImageView view = new ImageView(wallImage);
-        ((Node)view).setId("wall");
+        ((Node) view).setId("wall");
         addEntity(wall, view, 1);
     }
+
     @Override
     public void onLoad(Boulder boulder) {
         ImageView view = new ImageView(boulderImage);
-        ((Node)view).setId("boulder");
+        ((Node) view).setId("boulder");
         addEntity(boulder, view, 3);
     }
+
     @Override
     public void onLoad(Door door) {
         ImageView view = new ImageView(doorClosedImage);
         addEntity(door, view, 2);
     }
+
     @Override
     public void onLoad(Enemy enemy) {
         ImageView view = new ImageView(enemyImage);
-        ((Node)view).setId("enemy");
+        ((Node) view).setId("enemy");
         addEntity(enemy, view, 3);
     }
+
     @Override
     public void onLoad(Exit exit) {
         ImageView view = new ImageView(exitImage);
-        ((Node)view).setId("exit");
+        ((Node) view).setId("exit");
         addEntity(exit, view, 2);
     }
+
     @Override
     public void onLoad(Key key) {
         ImageView view = new ImageView(keyImage);
         addEntity(key, view, 2);
     }
+
     @Override
     public void onLoad(Portal portal) {
         ImageView view = new ImageView(portalImage);
         // Colour a Portal Pair
-        ColorAdjust colorAdjust = new ColorAdjust(); 
-        if (portal.getID() % 2 == 0) colorAdjust.setHue((portal.getID() % 15) * 0.075);     
-        else colorAdjust.setHue((portal.getID() % 10) * -0.1);     
+        ColorAdjust colorAdjust = new ColorAdjust();
+        if (portal.getID() % 2 == 0)
+            colorAdjust.setHue((portal.getID() % 15) * 0.075);
+        else
+            colorAdjust.setHue((portal.getID() % 10) * -0.1);
         view.setEffect(colorAdjust);
-        ((Node)view).setId("portal");
+        ((Node) view).setId("portal");
         addEntity(portal, view, 2);
     }
+
     @Override
     public void onLoad(Potion potion) {
         ImageView view = new ImageView(potionImage);
         addEntity(potion, view, 2);
     }
+
     @Override
     public void onLoad(Switch floor) {
         ImageView view = new ImageView(switchImage);
-        ((Node)view).setId("floor");
+        ((Node) view).setId("floor");
         addEntity(floor, view, 1);
     }
+
     @Override
     public void onLoad(Sword sword) {
         ImageView view = new ImageView(swordImage);
         addEntity(sword, view, 2);
     }
+
     @Override
     public void onLoad(Treasure treasure) {
         ImageView view = new ImageView(treasureImage);
         addEntity(treasure, view, 2);
     }
+
     @Override
     public void onLoad(Hammer hammer) {
         ImageView view = new ImageView(hammerImage);
         addEntity(hammer, view, 2);
     }
+
     @Override
     public void onLoad(Ghost ghost) {
         ImageView view = new ImageView(ghostImage);
-        ((Node)view).setId("ghost");
+        ((Node) view).setId("ghost");
         addEntity(ghost, view, 4);
     }
 
     /**
      * Processing the split the entities into their different layers
+     * 
      * @param entity The Dungeon Entity
-     * @param view The Image
-     * @param level The given layer level
+     * @param view   The Image
+     * @param level  The given layer level
      */
     private void addEntity(Entity entity, ImageView view, int level) {
         switch (level) {
@@ -304,12 +317,13 @@ public class DungeonControllerLoader extends DungeonLoader {
     }
 
     /**
-     * Set a node in a GridPane to have its position track the position of an
-     * entity in the dungeon.
+     * Set a node in a GridPane to have its position track the position of an entity
+     * in the dungeon.
      *
      * By connecting the model with the view in this way, the model requires no
-     * knowledge of the view and changes to the position of entities in the
-     * model will automatically be reflected in the view.
+     * knowledge of the view and changes to the position of entities in the model
+     * will automatically be reflected in the view.
+     * 
      * @param entity
      * @param node
      */
@@ -319,8 +333,7 @@ public class DungeonControllerLoader extends DungeonLoader {
         // Listeners for when the player's position changes
         entity.x().addListener(new ChangeListener<Number>() {
             @Override
-            public void changed(ObservableValue<? extends Number> observable,
-                    Number oldValue, Number newValue) {
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
                 GridPane.setColumnIndex(node, newValue.intValue());
                 // On every step render the inventory
                 if (entity.getClass().equals(Player.class)) {
@@ -330,13 +343,12 @@ public class DungeonControllerLoader extends DungeonLoader {
         });
         entity.y().addListener(new ChangeListener<Number>() {
             @Override
-            public void changed(ObservableValue<? extends Number> observable,
-                    Number oldValue, Number newValue) {
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
                 GridPane.setRowIndex(node, newValue.intValue());
                 // On every step render the inventory
                 if (entity.getClass().equals(Player.class)) {
                     renderInventory();
-                }            
+                }
             }
         });
     }
@@ -351,50 +363,46 @@ public class DungeonControllerLoader extends DungeonLoader {
         // When an entity is collected or destroyed remove its image from the map
         entity.visible().addListener(new ChangeListener<Boolean>() {
             @Override
-            public void changed(ObservableValue<? extends Boolean> observable,
-                    Boolean oldValue, Boolean newValue) {
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
                 node.setVisible(false);
             }
         });
 
         if (entity.getClass().equals(Door.class)) {
-            Door door = ((Door)entity);
+            Door door = ((Door) entity);
             // If a Player has opened a Door, switch its image to an Opened Door
             door.doorStatus().addListener(new ChangeListener<Boolean>() {
                 @Override
-                public void changed(ObservableValue<? extends Boolean> observable,
-                        Boolean oldValue, Boolean newValue) {
-                    ((ImageView)node).setImage(doorOpenImage);
+                public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                    ((ImageView) node).setImage(doorOpenImage);
                 }
             });
             // If the Player is holding a key, switch the Door image to an Alerted Door
             door.keyStatus().addListener(new ChangeListener<Boolean>() {
                 @Override
-                public void changed(ObservableValue<? extends Boolean> observable,
-                Boolean oldValue, Boolean newValue) {
-                    ((ImageView)node).setImage(doorAlertImage);  
+                public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                    ((ImageView) node).setImage(doorAlertImage);
                 }
             });
         }
-        
+
         else if (entity.getClass().equals(Player.class)) {
-            Player player = ((Player)entity);
+            Player player = ((Player) entity);
             // If the Player is holding a Sword
             player.isSwordEquipped().addListener(new ChangeListener<Boolean>() {
                 @Override
-                public void changed(ObservableValue<? extends Boolean> observable,
-                    Boolean oldValue, Boolean newValue) {
+                public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
                     if (newValue) {
                         // Set a new Image of the Player wielding currently held items
                         // Check whether a player has a potion or hammer already
                         if (player.hasPotion() && player.hasHammer()) {
-                            ((ImageView)node).setImage(playerSwordHammerPotionImage);
+                            ((ImageView) node).setImage(playerSwordHammerPotionImage);
                         } else if (player.hasPotion()) {
-                            ((ImageView)node).setImage(playerSwordPotionImage);
+                            ((ImageView) node).setImage(playerSwordPotionImage);
                         } else if (player.hasHammer()) {
-                            ((ImageView)node).setImage(playerSwordHammerImage);
+                            ((ImageView) node).setImage(playerSwordHammerImage);
                         } else {
-                            ((ImageView)node).setImage(playerSwordImage);
+                            ((ImageView) node).setImage(playerSwordImage);
                         }
                         // Add the Sword to inventory display
                         inventoryEntities().add(new EntityData(player.getSword(), new ImageView(swordImage)));
@@ -403,13 +411,13 @@ public class DungeonControllerLoader extends DungeonLoader {
                         // Reset the Player's image wielding a Sword
                         // Check whether a player has a potion or hammer already
                         if (player.hasPotion() && player.hasHammer()) {
-                            ((ImageView)node).setImage(playerHammerPotionImage);
+                            ((ImageView) node).setImage(playerHammerPotionImage);
                         } else if (player.hasPotion()) {
-                            ((ImageView)node).setImage(playerPotionImage);
+                            ((ImageView) node).setImage(playerPotionImage);
                         } else if (player.hasHammer()) {
-                            ((ImageView)node).setImage(playerHammerImage);
-                        }  else {
-                            ((ImageView)node).setImage(playerImage);
+                            ((ImageView) node).setImage(playerHammerImage);
+                        } else {
+                            ((ImageView) node).setImage(playerImage);
                         }
                         // Remove the Sword from the inventory display
                         removeInventoryEntity(player.getSword());
@@ -419,36 +427,35 @@ public class DungeonControllerLoader extends DungeonLoader {
             // If the Player is holding a Hammer
             player.isHammerEquipped().addListener(new ChangeListener<Boolean>() {
                 @Override
-                public void changed(ObservableValue<? extends Boolean> observable,
-                    Boolean oldValue, Boolean newValue) {
+                public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
                     // Set a new Image of the Player wielding currently held items
                     // Check whether a player has a potion or sword already
                     if (newValue) {
                         if (player.hasPotion() && player.hasSword()) {
-                            ((ImageView)node).setImage(playerSwordHammerPotionImage);
+                            ((ImageView) node).setImage(playerSwordHammerPotionImage);
                         } else if (player.hasPotion()) {
-                            ((ImageView)node).setImage(playerHammerPotionImage);
+                            ((ImageView) node).setImage(playerHammerPotionImage);
                         } else if (player.hasSword()) {
-                            ((ImageView)node).setImage(playerSwordHammerImage);
+                            ((ImageView) node).setImage(playerSwordHammerImage);
                         } else {
-                            ((ImageView)node).setImage(playerHammerImage);
+                            ((ImageView) node).setImage(playerHammerImage);
                         }
                         inventoryEntities().add(new EntityData(player.getHammer(), new ImageView(hammerImage)));
-                    } 
+                    }
                     // Reset the Player's image wielding a Hammer
                     // Check whether a player has a potion or sword already
                     else {
                         if (player.hasSword() && player.hasPotion()) {
-                            ((ImageView)node).setImage(playerSwordPotionImage);
+                            ((ImageView) node).setImage(playerSwordPotionImage);
                         } else if (player.hasSword()) {
-                            ((ImageView)node).setImage(playerSwordImage);
+                            ((ImageView) node).setImage(playerSwordImage);
                         } else if (player.hasPotion()) {
-                            ((ImageView)node).setImage(playerPotionImage);
-                        }  else {
-                            ((ImageView)node).setImage(playerImage);
+                            ((ImageView) node).setImage(playerPotionImage);
+                        } else {
+                            ((ImageView) node).setImage(playerImage);
                         }
                         // Remove the Hammer from the inventory display
-                        removeInventoryEntity(player.getHammer()); 
+                        removeInventoryEntity(player.getHammer());
                     }
                 }
             });
@@ -456,8 +463,7 @@ public class DungeonControllerLoader extends DungeonLoader {
             // If the Player has a Potion active
             player.potionStepsLeft().addListener(new ChangeListener<Number>() {
                 @Override
-                public void changed(ObservableValue<? extends Number> observable,
-                    Number oldValue, Number newValue) {
+                public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
                     // If a Player drinks a potion show the potion image effect on the player
                     if (newValue.intValue() == 11) {
                         inventoryEntities().add(new EntityData(player.getPotion(), new ImageView(potionImage)));
@@ -467,25 +473,25 @@ public class DungeonControllerLoader extends DungeonLoader {
                     // Process potion effect and any currently equipped items
                     if (newValue.intValue() > 1) {
                         if (player.hasSword() && player.hasHammer()) {
-                            ((ImageView)node).setImage(playerSwordHammerPotionImage);
+                            ((ImageView) node).setImage(playerSwordHammerPotionImage);
                         } else if (player.hasSword()) {
-                            ((ImageView)node).setImage(playerSwordPotionImage);
+                            ((ImageView) node).setImage(playerSwordPotionImage);
                         } else if (player.hasHammer()) {
-                            ((ImageView)node).setImage(playerHammerPotionImage);
+                            ((ImageView) node).setImage(playerHammerPotionImage);
                         } else {
-                            ((ImageView)node).setImage(playerPotionImage);
+                            ((ImageView) node).setImage(playerPotionImage);
                         }
-                    } 
+                    }
                     // If the Potion has run out, remove effect from player image
                     else {
                         if (player.hasSword() && player.hasHammer()) {
-                            ((ImageView)node).setImage(playerSwordHammerImage);
+                            ((ImageView) node).setImage(playerSwordHammerImage);
                         } else if (player.hasSword()) {
-                            ((ImageView)node).setImage(playerSwordImage);
+                            ((ImageView) node).setImage(playerSwordImage);
                         } else if (player.hasHammer()) {
-                            ((ImageView)node).setImage(playerHammerImage);
-                        }  else {
-                            ((ImageView)node).setImage(playerImage);
+                            ((ImageView) node).setImage(playerHammerImage);
+                        } else {
+                            ((ImageView) node).setImage(playerImage);
                         }
                         removeInventoryEntity(player.getPotion());
                     }
@@ -495,41 +501,39 @@ public class DungeonControllerLoader extends DungeonLoader {
             // Add a treasure and it's count to the inventory display when picked up
             player.numTreasures().addListener(new ChangeListener<Number>() {
                 @Override
-                public void changed(ObservableValue<? extends Number> observable,
-                    Number oldValue, Number newValue) {
-                        if (newValue.intValue() == 1) {
-                            inventoryEntities().add(new EntityData(null, new ImageView(treasureImage)));
-                        }
+                public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                    if (newValue.intValue() == 1) {
+                        inventoryEntities().add(new EntityData(null, new ImageView(treasureImage)));
+                    }
                 }
             });
 
             // Add a key to the inventory display when picked up
             player.isHoldingKey().addListener(new ChangeListener<Boolean>() {
                 @Override
-                public void changed(ObservableValue<? extends Boolean> observable,
-                    Boolean oldValue, Boolean newValue) {
-                        if (newValue) {
-                            inventoryEntities().add(new EntityData(player.getKey(), new ImageView(keyImage)));
-                        } else {
-                            removeInventoryEntity(player.getKey());
-                        }
+                public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                    if (newValue) {
+                        inventoryEntities().add(new EntityData(player.getKey(), new ImageView(keyImage)));
+                    } else {
+                        removeInventoryEntity(player.getKey());
+                    }
                 }
             });
         }
     }
+
     /**
      * Create a controller that can be attached to the DungeonView with all the
      * loaded entities.
+     * 
      * @return
      * @throws FileNotFoundException
      */
     public DungeonController loadController(VBox goals, Label console) throws FileNotFoundException {
         // Feed the Entities as sorted by their given layers
-        return new DungeonController(load(goals), console, Stream.of(baseLayer, collectableLayer, moveableLayer, topLayer)
-            .flatMap(x -> x.stream())
-            .collect(Collectors.toList())
-        );
+        return new DungeonController(load(goals), console,
+                Stream.of(baseLayer, collectableLayer, moveableLayer, topLayer).flatMap(x -> x.stream())
+                        .collect(Collectors.toList()));
     }
-
 
 }

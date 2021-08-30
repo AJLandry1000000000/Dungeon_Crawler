@@ -2,10 +2,11 @@ package unsw.dungeon;
 
 import javafx.event.EventHandler;
 import java.io.FileNotFoundException;
+import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -35,7 +36,9 @@ public abstract class DungeonLoader {
     private Dungeon dungeon;
 
     public DungeonLoader(String filename) throws FileNotFoundException {
-        json = new JSONObject(new JSONTokener(new FileReader("dungeons/" + filename)));
+
+        JSONTokener token = new JSONTokener(new FileReader(filename));
+        json = new JSONObject(token);
     }
 
     public DungeonLoader(JSONObject json) {
@@ -44,6 +47,7 @@ public abstract class DungeonLoader {
 
     /**
      * Parses the JSON to create a dungeon.
+     * 
      * @return the create Dungeon
      */
     public Dungeon load(VBox goals) {
@@ -72,6 +76,7 @@ public abstract class DungeonLoader {
 
     /**
      * Process Goals turning them into potential Leaf and Composite Goals
+     * 
      * @param dungeon   the given dungeon level
      * @param jsonGoals the JSONObject that is holding 1 or more Goals
      * @return the overall Goal that will hold potential further Goals
@@ -88,41 +93,23 @@ public abstract class DungeonLoader {
         container.setSpacing(10);
         VBox.setMargin(container, new Insets(0, 0, 0, level));
         Label goalLabel = new Label();
-        goalLabel.setStyle(
-            "-fx-text-fill: white;" +
-            "-fx-font-size: 14px;" +
-            "-fx-opacity: 0.75;" +
-            "-fx-background-color: rgba(0, 0, 0, .25);"
-        );
+        goalLabel.setStyle("-fx-text-fill: white;" + "-fx-font-size: 14px;" + "-fx-opacity: 0.75;"
+                + "-fx-background-color: rgba(0, 0, 0, .25);");
         // Add a listener that handles a hover over effect to gain opacity
-        goalLabel.addEventHandler(MouseEvent.MOUSE_ENTERED,
-        new EventHandler<MouseEvent>() {
+        goalLabel.addEventHandler(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent e) {
-                goalLabel.setStyle(
-                    "-fx-text-fill: white;" +
-                    "-fx-font-size: 14px;" +
-                    "-fx-opacity: 1;" +
-                    "-fx-background-color: rgba(0, 0, 0, .5);"
-                );
-                check.setStyle(
-                    "-fx-opacity: 8;"
-                );
+                goalLabel.setStyle("-fx-text-fill: white;" + "-fx-font-size: 14px;" + "-fx-opacity: 1;"
+                        + "-fx-background-color: rgba(0, 0, 0, .5);");
+                check.setStyle("-fx-opacity: 8;");
             }
         });
         // If mouse does not hover over goals, then opacity of goals are lowered
-        goalLabel.addEventHandler(MouseEvent.MOUSE_EXITED,
-        new EventHandler<MouseEvent>() {
+        goalLabel.addEventHandler(MouseEvent.MOUSE_EXITED, new EventHandler<MouseEvent>() {
             public void handle(MouseEvent e) {
-                goalLabel.setStyle(
-                    "-fx-text-fill: white;" +
-                    "-fx-font-size: 14px;" +
-                    "-fx-opacity: 0.75;" +
-                    "-fx-background-color: rgba(0, 0, 0, .22);"
-                );
-                check.setStyle(
-                    "-fx-opacity: 0.5;"
-                );
+                goalLabel.setStyle("-fx-text-fill: white;" + "-fx-font-size: 14px;" + "-fx-opacity: 0.75;"
+                        + "-fx-background-color: rgba(0, 0, 0, .22);");
+                check.setStyle("-fx-opacity: 0.5;");
             }
         });
         // Add goal to overall VBox container
@@ -131,49 +118,51 @@ public abstract class DungeonLoader {
 
         // Determine the type of Goal Condition and set the label accordingly
         switch (goalCondition) {
-        case "exit":
-            goalLabel.setText("Reach Exit");
-            newLeafGoal = new GoalExit(check);
-            this.dungeon.addGoalType(newLeafGoal);
-            return newLeafGoal;
-        case "enemies": 
-            goalLabel.setText("Kill Enemies");
-            newLeafGoal = new GoalEnemies(check);
-            this.dungeon.addGoalType(newLeafGoal);
-            return newLeafGoal;
-        case "boulders":
-            goalLabel.setText("Activate Floor Switches");
-            newLeafGoal = new GoalBoulders(check);
-            this.dungeon.addGoalType(newLeafGoal);
-            return newLeafGoal;
-        case "treasure":
-            goalLabel.setText("Collect Treasures");
-            newLeafGoal = new GoalTreasure(check);
-            this.dungeon.addGoalType(newLeafGoal);
-            return newLeafGoal;
-        case "AND":
-            goalLabel.setText("AND Composite");            
-            goal = new GoalAND(check);
-            this.dungeon.addGoalType(goal);
-            break;
-        case "OR":
-            goalLabel.setText("OR Composite");
-            goal = new GoalOR(check);
-            this.dungeon.addGoalType(goal);
-            break;
+            case "exit":
+                goalLabel.setText("Reach Exit");
+                newLeafGoal = new GoalExit(check);
+                this.dungeon.addGoalType(newLeafGoal);
+                return newLeafGoal;
+            case "enemies":
+                goalLabel.setText("Kill Enemies");
+                newLeafGoal = new GoalEnemies(check);
+                this.dungeon.addGoalType(newLeafGoal);
+                return newLeafGoal;
+            case "boulders":
+                goalLabel.setText("Activate Floor Switches");
+                newLeafGoal = new GoalBoulders(check);
+                this.dungeon.addGoalType(newLeafGoal);
+                return newLeafGoal;
+            case "treasure":
+                goalLabel.setText("Collect Treasures");
+                newLeafGoal = new GoalTreasure(check);
+                this.dungeon.addGoalType(newLeafGoal);
+                return newLeafGoal;
+            case "AND":
+                goalLabel.setText("AND Composite");
+                goal = new GoalAND(check);
+                this.dungeon.addGoalType(goal);
+                break;
+            case "OR":
+                goalLabel.setText("OR Composite");
+                goal = new GoalOR(check);
+                this.dungeon.addGoalType(goal);
+                break;
         }
         // If the Goal is composite, add subgoals to it
         JSONArray subGoals = jsonGoals.getJSONArray("subgoals");
         for (Object sub : subGoals) {
-            goal.add(processGoals((JSONObject)sub, goals, level + 15));
+            goal.add(processGoals((JSONObject) sub, goals, level + 15));
         }
-        return ((Goal)goal);
+        return ((Goal) goal);
     }
-    
+
     /**
-     * Load, process and add each Entity to the Dungeon whilst checking for potential multi layering
+     * Load, process and add each Entity to the Dungeon whilst checking for
+     * potential multi layering
+     * 
      * @param dungeon the given Dungeon level to house all entities
-     * @param json data carrying all Entity information and their positions
+     * @param json    data carrying all Entity information and their positions
      */
     private void loadEntity(Dungeon dungeon, JSONObject json) {
         String type = json.getString("type");
@@ -183,82 +172,82 @@ public abstract class DungeonLoader {
 
         Entity entity = null;
         switch (type) {
-        case "player":
-            Player player = new Player(x, y, dungeon);
-            dungeon.setPlayer(player);
-            onLoad(player);
-            entity = player;
-            break;
-        case "wall":
-            Wall wall = new Wall(x, y, dungeon);
-            onLoad(wall);
-            entity = wall;
-            break;
-        case "boulder":
-            Boulder boulder = new Boulder(x, y, dungeon);
-            onLoad(boulder);
-            entity = boulder;
-            break;
-        case "door":
-            id = json.getInt("id");
-            Door door = new Door(x, y, dungeon, id);
-            onLoad(door);
-            entity = door;
-            break;
-        case "enemy":
-            Enemy enemy = new Enemy(x, y, dungeon);
-            onLoad(enemy);
-            entity = enemy;
-            break;
-        case "exit":
-            Exit exit = new Exit(x, y, dungeon);
-            onLoad(exit);
-            entity = exit;
-            break;
-        case "key":
-            id = json.getInt("id");
-            Key key = new Key(x, y, dungeon, id);
-            onLoad(key);
-            entity = key;
-            break;
-        case "portal":
-            id = json.getInt("id");
-            Portal portal = new Portal(x, y, dungeon, id);
-            onLoad(portal);
-            entity = portal;
-            break;
-        case "invincibility":
-            Potion potion = new Potion(x, y, dungeon);
-            onLoad(potion);
-            entity = potion;
-            break;
-        case "switch":
-            Switch floor = new Switch(x, y, dungeon);
-            onLoad(floor);
-            entity = floor;
-            break;
-        case "sword":
-            Sword sword = new Sword(x, y, dungeon);
-            onLoad(sword);
-            entity = sword;
-            break;
-        case "treasure":
-            Treasure treasure = new Treasure(x, y, dungeon);
-            onLoad(treasure);
-            entity = treasure;
-            break;
-        case "hammer":
-            Hammer hammer = new Hammer(x, y, dungeon);
-            onLoad(hammer);
-            entity = hammer;
-            break;
-        case "ghost":
-            Ghost ghost = new Ghost(x, y, dungeon);
-            onLoad(ghost);
-            entity = ghost;
-            break;
-        default:
-            break;
+            case "player":
+                Player player = new Player(x, y, dungeon);
+                dungeon.setPlayer(player);
+                onLoad(player);
+                entity = player;
+                break;
+            case "wall":
+                Wall wall = new Wall(x, y, dungeon);
+                onLoad(wall);
+                entity = wall;
+                break;
+            case "boulder":
+                Boulder boulder = new Boulder(x, y, dungeon);
+                onLoad(boulder);
+                entity = boulder;
+                break;
+            case "door":
+                id = json.getInt("id");
+                Door door = new Door(x, y, dungeon, id);
+                onLoad(door);
+                entity = door;
+                break;
+            case "enemy":
+                Enemy enemy = new Enemy(x, y, dungeon);
+                onLoad(enemy);
+                entity = enemy;
+                break;
+            case "exit":
+                Exit exit = new Exit(x, y, dungeon);
+                onLoad(exit);
+                entity = exit;
+                break;
+            case "key":
+                id = json.getInt("id");
+                Key key = new Key(x, y, dungeon, id);
+                onLoad(key);
+                entity = key;
+                break;
+            case "portal":
+                id = json.getInt("id");
+                Portal portal = new Portal(x, y, dungeon, id);
+                onLoad(portal);
+                entity = portal;
+                break;
+            case "invincibility":
+                Potion potion = new Potion(x, y, dungeon);
+                onLoad(potion);
+                entity = potion;
+                break;
+            case "switch":
+                Switch floor = new Switch(x, y, dungeon);
+                onLoad(floor);
+                entity = floor;
+                break;
+            case "sword":
+                Sword sword = new Sword(x, y, dungeon);
+                onLoad(sword);
+                entity = sword;
+                break;
+            case "treasure":
+                Treasure treasure = new Treasure(x, y, dungeon);
+                onLoad(treasure);
+                entity = treasure;
+                break;
+            case "hammer":
+                Hammer hammer = new Hammer(x, y, dungeon);
+                onLoad(hammer);
+                entity = hammer;
+                break;
+            case "ghost":
+                Ghost ghost = new Ghost(x, y, dungeon);
+                onLoad(ghost);
+                entity = ghost;
+                break;
+            default:
+                break;
         }
         if (entity == null) {
             return;
@@ -271,20 +260,22 @@ public abstract class DungeonLoader {
     }
 
     /**
-     * If a boulder is originally loaded onto a switch, the the switch will be activated
+     * If a boulder is originally loaded onto a switch, the the switch will be
+     * activated
+     * 
      * @param dungeon The Dungeon that holds the entities
-     * @param entity Entity processed will either be a Boulder or Switch
-     * @param x Coordinate
-     * @param y Coordinate
+     * @param entity  Entity processed will either be a Boulder or Switch
+     * @param x       Coordinate
+     * @param y       Coordinate
      * @return False if too many entities at given Coordinate
      */
     private Boolean checkEntityLocation(Dungeon dungeon, Entity entity, int x, int y) {
         if (dungeon.getEntities(x, y).size() > 0) {
             Entity check = dungeon.getEntity(x, y);
             if (check.getClass().equals(Boulder.class)) {
-                ((Switch)entity).activateSwitch((Boulder)check);
+                ((Switch) entity).activateSwitch((Boulder) check);
             } else if (check.getClass().equals(Switch.class)) {
-                ((Switch)check).activateSwitch((Boulder)entity);
+                ((Switch) check).activateSwitch((Boulder) entity);
             } else {
                 return false;
             }
@@ -293,18 +284,31 @@ public abstract class DungeonLoader {
     }
 
     public abstract void onLoad(Entity player);
+
     public abstract void onLoad(Wall wall);
+
     public abstract void onLoad(Boulder boulder);
+
     public abstract void onLoad(Door door);
+
     public abstract void onLoad(Enemy enemy);
+
     public abstract void onLoad(Exit exit);
+
     public abstract void onLoad(Key key);
+
     public abstract void onLoad(Portal portal);
+
     public abstract void onLoad(Potion potion);
+
     public abstract void onLoad(Switch floor);
+
     public abstract void onLoad(Sword sword);
+
     public abstract void onLoad(Treasure treasure);
+
     public abstract void onLoad(Hammer hammer);
+
     public abstract void onLoad(Ghost ghost);
 
 }

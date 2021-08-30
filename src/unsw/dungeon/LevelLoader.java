@@ -38,16 +38,18 @@ public class LevelLoader {
 
         // Add an overall background to the HUD
         Image inventBG = new Image((new File("images/invent_bg.png")).toURI().toString());
+
         BackgroundPosition backgroundPosition = new BackgroundPosition(Side.LEFT, 0, false, Side.TOP, 0, false);
-        BackgroundImage backgroundImage = new BackgroundImage(inventBG,BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT,backgroundPosition, BackgroundSize.DEFAULT);
+        BackgroundImage backgroundImage = new BackgroundImage(inventBG, BackgroundRepeat.REPEAT,
+                BackgroundRepeat.REPEAT, backgroundPosition, BackgroundSize.DEFAULT);
         Background background = new Background(backgroundImage);
         root.setBackground(background);
-    
+
         // Create a HUD Inventory display
         FXMLLoader HUDLoader = new FXMLLoader(getClass().getResource("HUD.fxml"));
         Node HUD = HUDLoader.load();
         root.setBottom(HUD);
-        
+
         // StackPane allows for the Goals to be over-layed on top of the game window
         StackPane container = new StackPane();
         // Create a Goal Overlay
@@ -55,18 +57,18 @@ public class LevelLoader {
         goals.setVisible(false);
         goals.setPadding(new Insets(5, 0, 0, 5));
         goals.setSpacing(2);
-        
+
         // Game Window
-        DungeonControllerLoader dungeonLoader = new DungeonControllerLoader(this.file, ((VBox)HUD));
+        DungeonControllerLoader dungeonLoader = new DungeonControllerLoader(this.file, ((VBox) HUD));
         this.dungeonLoader = dungeonLoader;
         // Feed the console label into the dungeon controller
-        Node console = ((VBox)HUD).lookup("#console");
-        DungeonController gameController = dungeonLoader.loadController(goals, ((Label)console));
+        Node console = ((VBox) HUD).lookup("#console");
+        DungeonController gameController = dungeonLoader.loadController(goals, ((Label) console));
         gameController.setStage(this.stage);
         FXMLLoader game = new FXMLLoader(getClass().getResource("DungeonView.fxml"));
         game.setController(gameController);
         Node gameRoot = game.load();
-        
+
         // Set the Top Menu and it's buttons
         MenuBarController menuBarController = new MenuBarController(this.stage, this.file, dungeonLoader, goals);
         this.menuBarController = menuBarController;
@@ -75,10 +77,11 @@ public class LevelLoader {
         Node menu = menuBar.load();
         root.setTop(menu);
         menuBarController.setDungeon(gameController.getDungeon());
-        
-        // Add the container of the goals and game window to the center of the BorderPane
+
+        // Add the container of the goals and game window to the center of the
+        // BorderPane
         container.getChildren().addAll(gameRoot, goals);
-        root.setCenter(container);        
+        root.setCenter(container);
 
         // Show Scene
         Scene scene = new Scene(root);

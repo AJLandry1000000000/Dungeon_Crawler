@@ -12,7 +12,7 @@ public class InstructionsScreen {
     private String title;
     private InstructionsController controller;
     private Scene scene;
-    
+
     public InstructionsScreen(Stage stage) throws IOException {
         this.stage = stage;
         title = "Instructions";
@@ -29,6 +29,5 @@ public class InstructionsScreen {
         stage.setScene(scene);
         stage.show();
     }
-
 
 }
