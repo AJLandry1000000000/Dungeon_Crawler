@@ -4,7 +4,7 @@
 
 Dungeon Crawler is a dungeon puzzle game that allows a user to move a player around a dungeon and try to overcome various challenges. In order to "complete" the dungeon a 'goal' needs to be completed e.g. Killing all enemies, Finding all Treasures, Finding a key to the exit. 
 
-The program was built by myself and Austin Landry, and we utilised Java and JavaFX. We used various design patterns, drew appropriate UML diagrams and participated in a mock Agile environment.
+The program was built by myself and [Austin](https://github.com/AJLandry1000000000), and we utilised Java and JavaFX. We used various design patterns, drew appropriate UML diagrams and participated in a mock Agile environment.
 
 ## [Demo](https://replit.com/@seanik/Dungeon-Crawler#script.bash)
 
