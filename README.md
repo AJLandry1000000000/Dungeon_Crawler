@@ -21,4 +21,4 @@ Executing the ./script.bash script will compile and launch the program.
 
 ## [Original Spec](https://github.com/sseanik/Dungeon-Crawler/blob/master/SPEC.md)
 
-This program is based off a group project I was in 2020 for CS2511 written in Java. The specification was provided by CSE staff. Together with group project partner Austin, we wrote each `.java` file, whereas the spec and overall setup files are owned by UNSW CSE and the CS2511 course.
+This program is based off a group project I was in 2020 for CS2511 written in Java. The specification was provided by CSE staff. Together with group project partner Sean, we wrote each `.java` file, whereas the spec and overall setup files are owned by UNSW CSE and the CS2511 course.
